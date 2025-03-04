@@ -1,5 +1,6 @@
 <script setup>
 import {ref} from 'vue'
+import Carousel from '@/components/Carousel.vue'
 
 const logined = ref(false)
 
@@ -10,7 +11,12 @@ const login = () => {
 
 <template>
     <v-layout class="rounded rounded-md">
-        <v-app-bar title="Application bar">
+        <v-app-bar>
+            <RouterLink to="/">
+                <v-btn class="ml-2">
+                    back to index
+                </v-btn>
+            </RouterLink>
             <v-spacer/>
             <v-btn
                 class="mr-4"
@@ -34,21 +40,21 @@ const login = () => {
             </span>
         </v-app-bar>
 
-        <v-navigation-drawer>
+        <v-navigation-drawer class="border-none">
             <v-list>
                 <v-list-item title="Drawer left"></v-list-item>
             </v-list>
         </v-navigation-drawer>
 
-        <v-navigation-drawer location="right">
+        <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+            <Carousel/>
+        </v-main>
+
+        <v-navigation-drawer class="border-none" location="right">
             <v-list>
                 <v-list-item title="Drawer right"></v-list-item>
             </v-list>
         </v-navigation-drawer>
-
-        <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-            Main Content
-        </v-main>
     </v-layout>
 </template>
 

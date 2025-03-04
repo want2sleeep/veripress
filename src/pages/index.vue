@@ -44,8 +44,8 @@ import { RouterLink } from "vue-router";
             </v-col>
 
             <v-col cols="12" md="4" sm="6">
-                <RouterLink style="text-decoration: none" to="/carousel">
-                    <v-btn rounded="xs" size="x-large" block>carousel</v-btn>
+                <RouterLink style="text-decoration: none" to="/home">
+                    <v-btn rounded="xs" size="x-large" block>home</v-btn>
                 </RouterLink>
             </v-col>
         </v-row>
