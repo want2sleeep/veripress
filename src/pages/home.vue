@@ -1,17 +1,24 @@
 <script setup>
 import {ref} from 'vue'
 import Carousel from '@/components/Carousel.vue'
+import WelcomeLogin from '@/components/WelcomeLogin.vue'
 
 const logined = ref(false)
+const overlay = ref(false)
 
 const login = () => {
     logined.value = true
+    setTimeout(() => {
+        logined.value = false
+        overlay.value = false
+    }, 20000)
+    overlay.value = !overlay.value
 }
 </script>
 
 <template>
     <v-layout class="rounded rounded-md">
-        <v-app-bar>
+        <v-app-bar class="position-fixed">
             <RouterLink to="/">
                 <v-btn class="ml-2">
                     back to index
@@ -46,7 +53,7 @@ const login = () => {
             </v-list>
         </v-navigation-drawer>
 
-        <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+        <v-main class="d-flex align-center justify-center" style="min-height: 300px; height: 2000px">
             <Carousel/>
         </v-main>
 
@@ -55,7 +62,16 @@ const login = () => {
                 <v-list-item title="Drawer right"></v-list-item>
             </v-list>
         </v-navigation-drawer>
+
     </v-layout>
+    <v-overlay
+        class="align-center justify-center"
+        :model-value="overlay"
+        height="30%"
+        width="30%"
+    >
+        <WelcomeLogin />
+    </v-overlay>
 </template>
 
 <style scoped>
