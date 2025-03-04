@@ -1,7 +1,3 @@
-<script setup>
-import { RouterLink } from 'vue-router';
-</script>
-
 <template>
     <v-container
         fluid
@@ -169,11 +165,9 @@ import { RouterLink } from 'vue-router';
 
 </template>
 
+<script setup>
+import { RouterLink } from 'vue-router';
+</script>
 
 <style scoped>
-.fill-height {
-    min-height: 100vh;
-}
 </style>
-<script setup lang="ts">
-</script>
