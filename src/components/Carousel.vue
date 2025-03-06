@@ -13,11 +13,10 @@
 </template>
 <script setup>
 const slides = [
-        {Image: '/src/assets/cry.png'},
-        {Image: '/src/assets/sleep.png'},
-        {Image: '/src/assets/wink.gif'},
-    ]
+    { Image: "/src/assets/cry.png" },
+    { Image: "/src/assets/sleep.png" },
+    { Image: "/src/assets/wink.gif" },
+];
 </script>
 
-<style>
-</style>
+<style scoped></style>
