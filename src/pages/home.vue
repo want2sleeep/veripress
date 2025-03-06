@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import Carousel from "@/components/Carousel.vue";
 import Introduction from "@/components/Introduction.vue";
+import pie from "./pie.vue";
 
 const logined = ref(false);
 
@@ -47,6 +48,8 @@ const login = () => {
             <Introduction />
 
             <Carousel />
+
+            <pie />
         </v-main>
 
         <v-navigation-drawer class="border-none" location="right">
