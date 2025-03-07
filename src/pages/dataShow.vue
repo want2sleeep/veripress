@@ -7,7 +7,7 @@
         width="100%"
         rounded
     >
-        <v-card width>
+        <v-card width="100%">
             <v-toolbar color="blue" title="数据展示"> </v-toolbar>
 
             <div class="d-flex flex-row">
@@ -17,7 +17,7 @@
                     <v-tab text="雷达图" value="BasicRadarChart"></v-tab>
                 </v-tabs>
 
-                <v-tabs-window v-model="tab">
+                <v-tabs-window v-model="tab" style="margin: auto">
                     <v-tabs-window-item value="pie">
                         <NightingaleChart
                             :width="'700px'"
