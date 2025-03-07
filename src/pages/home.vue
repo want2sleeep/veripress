@@ -2,8 +2,7 @@
 import { ref } from "vue";
 import Carousel from "@/components/Carousel.vue";
 import Introduction from "@/components/Introduction.vue";
-import pie from "./pie.vue";
-
+import dataShow from "./dataShow.vue";
 const logined = ref(false);
 
 const login = () => {
@@ -45,11 +44,12 @@ const login = () => {
             class="d-flex flex-column align-center justify-center"
             style="min-height: 300px"
         >
+            <!-- 简介 -->
             <Introduction />
-
+            <!-- 轮播图 -->
             <Carousel />
-
-            <pie />
+            <!-- 数据展示 -->
+            <dataShow />
         </v-main>
 
         <v-navigation-drawer class="border-none" location="right">

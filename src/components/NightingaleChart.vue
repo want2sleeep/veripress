@@ -1,7 +1,7 @@
 <template>
     <div class="echarts-box">
         <div
-            id="myEcharts"
+            id="nightingaleChart"
             :style="{
                 width: this.width,
                 height: this.height,
@@ -19,33 +19,23 @@ export default {
     //name: "A",
     props: ["width", "height", "margin"],
     setup() {
-        let myEcharts = echarts;
+        let nightingaleChart = echarts;
 
         onMounted(() => {
             initChart();
         });
 
         onUnmounted(() => {
-            myEcharts.dispose;
+            nightingaleChart.dispose;
         });
 
         function initChart() {
-            let chart = myEcharts.init(
-                document.getElementById("myEcharts"),
+            let chart = nightingaleChart.init(
+                document.getElementById("nightingaleChart"),
                 "purple-passion"
             );
 
             chart.setOption({
-                title: {
-                    text: "数据分析",
-
-                    left: "center",
-                    textStyle: {
-                        fontSize: 30,
-                        //color: blue,
-                    },
-                },
-
                 legend: {
                     left: "center",
                     top: "bottom",

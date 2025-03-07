@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink } from "vue-router";
+import dataShow from "./dataShow.vue";
 </script>
 
 <template>
@@ -54,8 +55,8 @@ import { RouterLink } from "vue-router";
             </v-col>
             <!-- pie -->
             <v-col cols="12" md="4" sm="6">
-                <RouterLink style="text-decoration: none" to="/pie">
-                    <v-btn rounded="xs" size="x-large" block>pie</v-btn>
+                <RouterLink style="text-decoration: none" to="/dataShow">
+                    <v-btn rounded="xs" size="x-large" block>dataShow</v-btn>
                 </RouterLink>
             </v-col>
         </v-row>
