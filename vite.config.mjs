@@ -6,6 +6,7 @@ import Layouts from 'vite-plugin-vue-layouts'
 import Vue from '@vitejs/plugin-vue'
 import VueRouter from 'unplugin-vue-router/vite'
 import Vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
+import { viteMockServe } from 'vite-plugin-mock'
 
 // Utilities
 import {defineConfig} from 'vite'
@@ -15,9 +16,17 @@ import {fileURLToPath, URL} from 'node:url'
 export default defineConfig({
     plugins: [
         VueRouter(),
-        Layouts(),
+        Layouts({
+            layoutsDirs: "./src/layouts",
+            defaultLayout: "default"
+        }),
         Vue({
             template: {transformAssetUrls}
+        }),
+        viteMockServe({
+            logger: true,
+            localEnabled: true,
+            mockPath: './mock/'
         }),
         // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
         Vuetify({
