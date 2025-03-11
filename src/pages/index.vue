@@ -53,12 +53,6 @@ import dataShow from "./dataShow.vue";
                     <v-btn rounded="xs" size="x-large" block>home</v-btn>
                 </RouterLink>
             </v-col>
-            <!-- pie -->
-            <v-col cols="12" md="4" sm="6">
-                <RouterLink style="text-decoration: none" to="/dataShow">
-                    <v-btn rounded="xs" size="x-large" block>dataShow</v-btn>
-                </RouterLink>
-            </v-col>
         </v-row>
     </v-container>
 </template>
