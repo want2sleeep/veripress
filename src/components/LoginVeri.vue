@@ -3,13 +3,13 @@
 </script>
 
 <template>
-    <v-container fluid class="fill-height bg-grey-lighten-3">
+    <v-container fluid class="fill-height">
         <v-row align="center" justify="center">
             <v-col cols="12" sm="8" md="6" lg="4">
 
                 <v-card
+                    flat
                     class="py-8 px-6 text-center mx-auto ma-4"
-                    elevation="12"
                     max-width="400"
                     width="100%"
                 >
