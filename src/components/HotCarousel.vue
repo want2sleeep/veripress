@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-2 mt-10" width="65vw">
+    <v-card class="mx-2 mt-10" width="100%" rounded="xl">
         <v-carousel show-arrows="hover" cycle hide-delimiter-background>
             <v-carousel-item
                 class="align-end text-white"
