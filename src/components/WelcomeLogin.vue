@@ -13,6 +13,7 @@ const onLogin = async () => {
     await userStore.login(user)
     user.username = ''
     user.password = ''
+    user.email = ''
 }
 const onLogout = () => {
     userStore.logout()
@@ -25,7 +26,6 @@ const setChooseWay1 = () => {
 const setChooseWay2 = () => {
     chooseWay2.value = true
 }
-const email = ref('')
 const rules = {
     min: v => {
         return v.length >= 3 || 'Min 3 chars'
@@ -68,7 +68,7 @@ const items = [
 
                 <v-card-text>
                     <v-text-field
-                        v-model="email"
+                        v-model="user.email"
                         :rules="[rules.min]"
                         variant="underlined"
                         label="邮箱"
@@ -76,7 +76,7 @@ const items = [
                     <div class="mb-1 d-flex justify-space-between">
                         <v-btn
                             variant="text"
-                            text="忘记密码"
+                            text="立即注册"
                         />
                         <v-btn
                             variant="text"
@@ -173,15 +173,15 @@ const items = [
                 </v-list>
                 <v-card-actions class="pr-4">
                     <v-spacer/>
-                        <v-btn
-                            variant="text"
-                            rounded="pill"
-                            color="primary"
-                            width="100px"
-                            append-icon="mdi-arrow-right"
-                            @click="setChooseWay2"
-                            text="下一步"
-                        />
+                    <v-btn
+                        variant="text"
+                        rounded="pill"
+                        color="primary"
+                        width="100px"
+                        append-icon="mdi-arrow-right"
+                        @click="setChooseWay2"
+                        text="下一步"
+                    />
                 </v-card-actions>
             </v-card>
 
@@ -232,6 +232,27 @@ const items = [
                         />
                     </RouterLink>
                 </v-card-actions>
+            </v-card>
+
+            <v-card>
+                <v-text-field
+                    variant="underlined"
+                    type="password"
+                    label="密码"
+                    clearable
+                />
+                <v-btn
+                    block
+                    color="primary"
+                    class="mt-4"
+                    text="登录"
+                    @click="onLogin"
+                />
+                <v-btn
+                    text="退出"
+                    @click="onLogout"
+                    />
+                {{ userStore.email }}
             </v-card>
         </v-col>
     </v-row>

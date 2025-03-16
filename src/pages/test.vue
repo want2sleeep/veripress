@@ -1,8 +1,7 @@
 <script setup>
-import {ref, reactive} from 'vue'
-import useUserStore from '@/stores/user.js'
+import {ref} from 'vue'
 
-const text = ref('')
+const text = ref({})
 const img = ref('')
 let items
 
@@ -30,43 +29,69 @@ const copy = (event) => {
     }
 }
 
-const userData = reactive({
-    username: '',
-    password: '',
-})
-const userStore = useUserStore()
-const onLogin = async () => {
-    await userStore.login(userData)
-    userData.username = ''
-    userData.password = ''
+import ChooseWay from '@/components/login/ChooseWay.vue'
+import VerifyCode from '@/components/login/VerifyCode.vue'
+import Email from '@/components/login/Email.vue'
+import Password from '@/components/login/Password.vue'
+import Signup from '@/components/login/Signup.vue'
+
+const CARD_CONFIG = {
+    Email: {component: Email, targets: ['ChooseWay', 'Signup']},
+    ChooseWay: {component: ChooseWay, targets: ['Password', 'VerifyCode']},
+    Password: {component: Password, targets: []},
+    VerifyCode: {component: VerifyCode, targets: []},
+    Signup: {component: Signup, targets: ['Email']},
 }
-const onLogout = () => {
-    userStore.logout()
+const currentCard = ref('Email') // 初始卡片
+const history = ref([])
+const email = ref('')
+provide('email', email)
+
+// 计算属性
+const currentComponent = computed(() =>
+    CARD_CONFIG[currentCard.value].component,
+)
+
+const currentTargets = computed(() =>
+    CARD_CONFIG[currentCard.value].targets,
+)
+
+const hasHistory = computed(() =>
+    history.value.length > 0,
+)
+
+// 导航方法
+const handleNavigation = (target) => {
+    history.value.push(currentCard.value)
+    currentCard.value = target
 }
 </script>
 
 <template>
-    <v-textarea
-        v-model="text"
-        label="Label"
-        @paste="copy"
-    />
+    <!--    <v-textarea-->
+    <!--        v-model="text"-->
+    <!--        label="Label"-->
+    <!--        @paste="copy"-->
+    <!--    />-->
 
-    {{ items }}
+    <!--    {{ items }}-->
 
-    <v-img :src="img" v-if="img"/>
+    <!--    <v-img width="40" :src="img" v-if="img"/>-->
 
-    <div v-if="userStore.token">
-        {{ userStore.username }}
-        <br />
-        <v-btn @click="onLogout">Logout</v-btn>
-    </div>
-    <div v-else>
-        <v-text-field v-model="userData.username" label="Username" />
-        <v-text-field v-model="userData.password" label="Password" type="password" />
-        <v-btn @click="onLogin">Login</v-btn>
-    </div>
-    <v-btn @click="testmock">test mock</v-btn>
+    <v-container class="fill-height" fluid>
+        <v-row justify="center" align="center">
+            <v-col cols="12" sm="6" md="4">
+                <component
+                    :is="currentComponent"
+                    :key="currentCard"
+                    :targets="currentTargets"
+                    :can-go-back="hasHistory"
+                    @navigate="handleNavigation"
+                />
+            </v-col>
+        </v-row>
+    </v-container>
+
 </template>
 
 <route lang="yaml">
