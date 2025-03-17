@@ -102,5 +102,14 @@ const login = () => {
             location="right"
         >
         </v-navigation-drawer>
+
     </v-layout>
+    <v-overlay
+        class="align-center justify-center"
+        :model-value="overlay"
+        height="30%"
+        width="30%"
+    >
+        <WelcomeLogin />
+    </v-overlay>
 </template>
