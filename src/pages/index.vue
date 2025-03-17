@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink } from "vue-router";
+import dataShow from "./dataShow.vue";
 </script>
 
 <template>
@@ -33,19 +34,28 @@ import { RouterLink } from "vue-router";
 
             <v-col cols="12" md="4" sm="6">
                 <RouterLink style="text-decoration: none" to="/forgetPassword">
-                    <v-btn rounded="xs" size="x-large" block>forget-password</v-btn>
+                    <v-btn rounded="xs" size="x-large" block
+                        >forget-password</v-btn
+                    >
                 </RouterLink>
             </v-col>
 
             <v-col cols="12" md="4" sm="6">
                 <RouterLink style="text-decoration: none" to="/forgetPassword">
-                    <v-btn rounded="xs" size="x-large" block>forget-password</v-btn>
+                    <v-btn rounded="xs" size="x-large" block
+                        >forget-password</v-btn
+                    >
                 </RouterLink>
             </v-col>
 
             <v-col cols="12" md="4" sm="6">
                 <RouterLink style="text-decoration: none" to="/home">
                     <v-btn rounded="xs" size="x-large" block>home</v-btn>
+                </RouterLink>
+            </v-col>
+            <v-col cols="12" md="4" sm="6">
+                <RouterLink style="text-decoration: none" to="/hotshow">
+                    <v-btn rounded="xs" size="x-large" block>hotshow</v-btn>
                 </RouterLink>
             </v-col>
         </v-row>
