@@ -36,17 +36,17 @@ export default {
 
             chart.setOption({
                 legend: {
-                    data: ["Allocated Budget", "Actual Spending"],
+                    data: ["本模型", "市面主要模型"],
                 },
                 radar: {
                     // shape: 'circle',
                     indicator: [
-                        { name: "Sales", max: 6500 },
-                        { name: "Administration", max: 16000 },
-                        { name: "Information Technology", max: 30000 },
-                        { name: "Customer Support", max: 38000 },
-                        { name: "Development", max: 52000 },
-                        { name: "Marketing", max: 25000 },
+                        { name: "覆盖率", max: 6500 },
+                        { name: "准确率", max: 16000 },
+                        { name: "速率", max: 30000 },
+                        { name: "覆盖范围", max: 38000 },
+                        { name: "长文本识别能力", max: 52000 },
+                        { name: "图像识别能力", max: 25000 },
                     ],
                 },
                 color: [
@@ -61,18 +61,18 @@ export default {
                 ],
                 series: [
                     {
-                        name: "Budget vs spending",
+                        name: "本模型 vs 市面主要模型",
                         type: "radar",
                         data: [
                             {
                                 value: [4200, 3000, 20000, 35000, 50000, 18000],
-                                name: "Allocated Budget",
+                                name: "本模型",
                             },
                             {
                                 value: [
                                     5000, 14000, 28000, 26000, 42000, 21000,
                                 ],
-                                name: "Actual Spending",
+                                name: "市面主要模型",
                             },
                         ],
                     },

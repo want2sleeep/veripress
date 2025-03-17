@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from "vue";
-import Carousel from "@/components/Carousel.vue";
-import Introduction from "@/components/Introduction.vue";
-import dataShow from "./dataShow.vue";
+import RankShow from "@/components/RankShow.vue";
+import HotCarousel from "@/components/HotCarousel.vue";
+import HotNews from "@/components/HotNews.vue";
+import HotWords from "@/components/HotWords.vue";
 const logined = ref(false);
 
 const login = () => {
@@ -11,7 +12,10 @@ const login = () => {
 </script>
 
 <template>
-    <v-layout class="rounded rounded-md bg-blue-lighten-4">
+    <v-layout
+        class="rounded rounded-md border"
+        style="background-color: #b3e5fc"
+    >
         <v-app-bar color="blue-darken-2">
             <RouterLink to="/">
                 <v-btn class="ml-2" color="yellow-lighten-2">
@@ -25,15 +29,14 @@ const login = () => {
                 <v-tab
                     text="首页"
                     style="font-size: 20px; font-weight: 600"
+                    to="/home"
+                    color="yellow-lighten-2"
                 ></v-tab>
 
                 <v-tab
                     text="热点"
                     style="font-size: 20px; font-weight: 600"
-                    to="/hotshow"
-                    color="yellow-lighten-2"
                 ></v-tab>
-
                 <v-tab
                     text="国际"
                     style="font-size: 20px; font-weight: 600"
@@ -82,25 +85,32 @@ const login = () => {
             </span>
         </v-app-bar>
 
-        <v-navigation-drawer class="border-none bg-blue-lighten-4">
+        <v-navigation-drawer width="10%" class="border-none">
         </v-navigation-drawer>
 
-        <v-main
-            class="d-flex flex-column align-center justify-center"
-            style="min-height: 300px"
-        >
-            <!-- 简介 -->
-            <Introduction />
-            <!-- 轮播图 -->
-            <Carousel />
-            <!-- 数据展示 -->
-            <dataShow />
+        <v-navigation-drawer location="right" width="10%" class="border-none">
+        </v-navigation-drawer>
+
+        <v-main class="d-flex align-center justify-center">
+            <v-container>
+                <v-sheet width="100%" style="background-color: #b3e5fc">
+                    <v-layout class="rounded rounded-md" width="100%">
+                        <v-sheet
+                            class="d-flex align-start justify-center"
+                            width="100%"
+                            style="padding: 10px; background-color: #b3e5fc"
+                            ><HotCarousel width="65%" />
+                            <RankShow style="margin-top: 40px" width="30%" />
+                        </v-sheet>
+                    </v-layout>
+                    <!--  <v-row>
+                        <HotWords></HotWords>
+                    </v-row> -->
+                    <v-col> <HotNews></HotNews> </v-col
+                ></v-sheet>
+            </v-container>
         </v-main>
-
-        <v-navigation-drawer
-            class="border-none bg-blue-lighten-4"
-            location="right"
-        >
-        </v-navigation-drawer>
     </v-layout>
 </template>
+<script setup></script>
+<style scoped></style>

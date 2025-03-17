@@ -46,13 +46,7 @@ export default {
                     },
                 },
                 legend: {
-                    data: [
-                        "Email",
-                        "Union Ads",
-                        "Video Ads",
-                        "Direct",
-                        "Search Engine",
-                    ],
+                    data: ["政治", "军事", "文娱", "法治", "科技"],
                 },
                 toolbox: {
                     feature: {
@@ -90,7 +84,7 @@ export default {
 
                 series: [
                     {
-                        name: "Email",
+                        name: "政治",
                         type: "line",
                         stack: "Total",
                         areaStyle: {},
@@ -100,7 +94,7 @@ export default {
                         data: [120, 132, 101, 134, 90, 230, 210],
                     },
                     {
-                        name: "Union Ads",
+                        name: "军事",
                         type: "line",
                         stack: "Total",
                         areaStyle: {},
@@ -110,7 +104,7 @@ export default {
                         data: [220, 182, 191, 234, 290, 330, 310],
                     },
                     {
-                        name: "Video Ads",
+                        name: "文娱",
                         type: "line",
                         stack: "Total",
                         areaStyle: {},
@@ -120,7 +114,7 @@ export default {
                         data: [150, 232, 201, 154, 190, 330, 410],
                     },
                     {
-                        name: "Direct",
+                        name: "法治",
                         type: "line",
                         stack: "Total",
                         areaStyle: {},
@@ -130,7 +124,7 @@ export default {
                         data: [320, 332, 301, 334, 390, 330, 320],
                     },
                     {
-                        name: "Search Engine",
+                        name: "科技",
                         type: "line",
                         stack: "Total",
                         label: {
