@@ -1,7 +1,7 @@
 <template>
     <v-sheet
         class="d-flex align-center justify-center flex-wrap text-center mx-auto px-4"
-        height="850"
+        height="750"
         max-width="90vw"
         width="100%"
         rounded="xl"
