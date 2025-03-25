@@ -3,16 +3,20 @@ import AppFooter from '@/components/AppFooter.vue'
 
 const items = [
     {
+        text: '仪表盘',
+        route: '/dashboard'
+    },
+    {
         text: '上传文章',
-        route: '/uploadArticle'
+        route: '/upload'
+    },
+    {
+        text: '历史记录',
+        route: '/history'
     },
     {
         text: '测试',
         route: '/test'
-    },
-    {
-        text: '仪表盘',
-        route: 'dashboard'
     },
 ]
 </script>
@@ -46,7 +50,7 @@ const items = [
         </v-navigation-drawer>
 
         <v-main>
-            <RouterView/>
+            <RouterView />
         </v-main>
 
         <AppFooter/>

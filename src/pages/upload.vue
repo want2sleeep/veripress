@@ -119,7 +119,7 @@ const sendContent = async function () {
 </script>
 
 <template>
-    <v-container class="fill-height d-flex justify-center align-content-center">
+    <v-container class="d-flex justify-center align-content-center">
         <v-card
             class="mx-4 fill-height w-100 overflow-y-scroll"
             flat
@@ -179,7 +179,6 @@ const sendContent = async function () {
             </v-card-actions>
         </v-card>
     </v-container>
-
 </template>
 
 <style scoped>
@@ -190,5 +189,5 @@ const sendContent = async function () {
 
 <route lang="yaml">
 meta:
-layout: system
+  layout: system
 </route>
