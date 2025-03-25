@@ -63,6 +63,11 @@ import dataShow from "./dataShow.vue";
                     <v-btn rounded="xs" size="x-large" block>newsShow</v-btn>
                 </RouterLink>
             </v-col>
+            <v-col cols="12" md="4" sm="6">
+                <RouterLink style="text-decoration: none" to="/animation">
+                    <v-btn rounded="xs" size="x-large" block>animation</v-btn>
+                </RouterLink>
+            </v-col>
         </v-row>
     </v-container>
 </template>

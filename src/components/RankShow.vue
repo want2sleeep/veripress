@@ -42,6 +42,17 @@
     </v-card>
 </template>
 <script setup>
+/* import { onMounted } from "vue";
+import HotNews from "./HotNews.vue";
+import { useHotNewsStore } from "@/stores/hotnews";
+
+const hotNewsStore = useHotNewsStore();
+onMounted(() => {
+    hotNewsStore.fetchHotNews();
+});
+const hotNewsList = hotNewsStore.hotNewsList;
+const fetchHotNews = hotNewsStore.fetchHotNews;
+console.log(hotNewsList); */
 const messages = [
     {
         title: "总书记三场团组活动，强调同一个关键词",

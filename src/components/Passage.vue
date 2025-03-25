@@ -2,7 +2,7 @@
     <v-sheet
         rounded="xl"
         color="blue-darken-2"
-        style="margin: 60px 0px 40px 90px; padding: 40px"
+        style="margin: 30px 0px 40px 90px; padding: 40px"
     >
         <v-col>
             <div

@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import HeartStarComment from "@/components/HeartStarComment.vue";
 import RankShowInPassage from "@/components/RankShowInPassage.vue";
-import AnotherAuther from "@/components/AnotherAuther.vue";
+import FackRate from "@/components/FackRate.vue";
 import Passage from "@/components/Passage.vue";
 import Comment from "@/components/Comment.vue";
 const logined = ref(false);
@@ -114,7 +114,7 @@ const login = () => {
                             width="20%"
                         />
 
-                        <AnotherAuther
+                        <FackRate
                             style="position: fixed; margin-top: 5px"
                             width="20%"
                         /> </v-col></v-sheet
