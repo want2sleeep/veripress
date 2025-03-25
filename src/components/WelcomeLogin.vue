@@ -1,11 +1,31 @@
 <script setup>
-import {ref} from 'vue'
+import {reactive, ref} from 'vue'
+import useUserStore from '@/stores/user.js'
 
-const chooseWay = ref(true)
-const setChooseWay = () => {
-    chooseWay.value = !chooseWay.value
+const otp = ref('')
+const user = reactive({
+    username: '',
+    password: '',
+    email: '',
+})
+const userStore = useUserStore()
+const onLogin = async () => {
+    await userStore.login(user)
+    user.username = ''
+    user.password = ''
+    user.email = ''
 }
-const email = ref('')
+const onLogout = () => {
+    userStore.logout()
+}
+const chooseWay1 = ref(false)
+const chooseWay2 = ref(false)
+const setChooseWay1 = () => {
+    chooseWay1.value = true
+}
+const setChooseWay2 = () => {
+    chooseWay2.value = true
+}
 const rules = {
     min: v => {
         return v.length >= 3 || 'Min 3 chars'
@@ -18,7 +38,7 @@ const items = [
     },
     {
         text: '验证码',
-        icon: 'mdi-lock-outline',
+        icon: 'mdi-email-fast-outline',
     },
 ]
 </script>
@@ -27,7 +47,7 @@ const items = [
     <v-row class="fill-height" align="center" justify="center">
         <v-col cols="12" sm="8" md="6" lg="4">
             <v-card
-                v-if="chooseWay"
+                v-if="chooseWay1 === false && chooseWay2 === false"
                 flat
                 class="px-2 pt-2 pb-1"
             >
@@ -48,7 +68,7 @@ const items = [
 
                 <v-card-text>
                     <v-text-field
-                        v-model="email"
+                        v-model="user.email"
                         :rules="[rules.min]"
                         variant="underlined"
                         label="邮箱"
@@ -56,7 +76,7 @@ const items = [
                     <div class="mb-1 d-flex justify-space-between">
                         <v-btn
                             variant="text"
-                            text="忘记密码"
+                            text="立即注册"
                         />
                         <v-btn
                             variant="text"
@@ -65,7 +85,7 @@ const items = [
                             rounded="pill"
                             append-icon="mdi-arrow-right"
                             text="下一步"
-                            @click="setChooseWay"
+                            @click="setChooseWay1"
                         />
                     </div>
                     <p class="text-right ">
@@ -91,7 +111,7 @@ const items = [
             </v-card>
 
             <v-card
-                v-else="chooseWay"
+                v-if="chooseWay1 === true && chooseWay2 === false"
                 flat
                 class="px-2 pt-2 pb-1"
             >
@@ -153,17 +173,86 @@ const items = [
                 </v-list>
                 <v-card-actions class="pr-4">
                     <v-spacer/>
+                    <v-btn
+                        variant="text"
+                        rounded="pill"
+                        color="primary"
+                        width="100px"
+                        append-icon="mdi-arrow-right"
+                        @click="setChooseWay2"
+                        text="下一步"
+                    />
+                </v-card-actions>
+            </v-card>
+
+            <v-card
+                flat
+                v-if="chooseWay1 && chooseWay2"
+                class="px-2 pt-2 pb-1"
+            >
+                <v-card-title>
+                    <div class="d-flex justify-space-between">
+                        <v-icon
+                            icon="mdi-security"
+                            size="large"
+                        />
+                        <v-btn
+                            flat
+                            icon="mdi-arrow-left"
+                            size="small"
+                            @click="setChooseWay"
+                        >
+                        </v-btn>
+                    </div>
+                    <div class="text-h4">
+                        验证你的账户
+                    </div>
+                </v-card-title>
+
+                <v-card-subtitle class="text-wrap">
+                    我们已经向 {{ email }} 发送了一个验证码，请检查你的邮箱并粘贴下面的验证码。
+                </v-card-subtitle>
+
+                <v-card-text>
+                    <v-otp-input
+                        v-model="otp"
+                        variant="solo"
+                    />
+                </v-card-text>
+                <v-card-actions class="d-flex align-content-center">
+                    <v-spacer/>
+                    没有收到验证码？
                     <RouterLink to="/">
                         <v-btn
                             variant="text"
-                            rounded="pill"
-                            color="primary"
-                            width="100px"
-                            append-icon="mdi-arrow-right"
-                            text="下一步"
+                            class="font-weight-bold"
+                            color="black"
+                            text="重新发送"
+                            @click.prevent="otp = ''"
                         />
                     </RouterLink>
                 </v-card-actions>
+            </v-card>
+
+            <v-card>
+                <v-text-field
+                    variant="underlined"
+                    type="password"
+                    label="密码"
+                    clearable
+                />
+                <v-btn
+                    block
+                    color="primary"
+                    class="mt-4"
+                    text="登录"
+                    @click="onLogin"
+                />
+                <v-btn
+                    text="退出"
+                    @click="onLogout"
+                    />
+                {{ userStore.email }}
             </v-card>
         </v-col>
     </v-row>

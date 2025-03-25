@@ -1,15 +1,11 @@
 import Mock from "mockjs"
+import user from "./user"
 
-Mock.mock('http://localhost:3000/testmock', 'get', {
-    code: 200,
-    msg: 'mock test'
+const mocks = [...user]
+
+mocks.forEach(mock => {
+    Mock.mock(
+        new RegExp(mock.url + ".*"),
+        mock.response
+    )
 })
-
-// Mock.mock('http://localhost:3000/api/user/login', 'post', {
-//     code: 0,
-//     message: 'success',
-//     data: {
-//         token: 'Token',
-//         username: 'hahaha',
-//     },
-// })

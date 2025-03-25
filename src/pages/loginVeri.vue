@@ -1,5 +1,5 @@
 <script setup>
-import LoginVeri from "@/components/LoginVeri.vue";
+import LoginVeri from "@/components/login/VerifyCode.vue";
 </script>
 
 <template>

@@ -36,11 +36,11 @@ const router = createRouter({
         //     name: 'signup',
         //     component: lazy(() => import('../pages/signup.vue')),
         // },
-        // {
-        //     path: '/:pathMatch(.*)*',
-        //     name: '404',
-        //     component: NotFound,
-        // },
+        {
+            path: '/:pathMatch(.*)*',
+            name: '404',
+            component: NotFound,
+        },
     ],
 })
 
