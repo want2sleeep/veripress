@@ -16,10 +16,7 @@ import {fileURLToPath, URL} from 'node:url'
 export default defineConfig({
     plugins: [
         VueRouter(),
-        Layouts({
-            layoutsDirs: './src/layouts',
-            defaultLayout: 'default',
-        }),
+        Layouts(),
         Vue({
             template: {transformAssetUrls},
         }),
@@ -74,7 +71,7 @@ export default defineConfig({
         port: 3000,
         proxy: {
             '/api': {
-                target: 'http://47.108.139.11:9001',
+                target: 'http://47.108.139.11:9002',
                 changeOrigin: true,
             },
 
