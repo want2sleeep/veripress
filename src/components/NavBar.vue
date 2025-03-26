@@ -14,7 +14,7 @@ const login = () => {
         "
     >
         <RouterLink to="/">
-            <v-btn class="ml-2" color="transparent"> back to index </v-btn>
+            <v-btn class="ml-2" color="yellow-lighten-3"> back to index </v-btn>
         </RouterLink>
 
         <v-spacer />
@@ -29,7 +29,6 @@ const login = () => {
                 text="热点"
                 style="font-size: 20px; font-weight: 600"
                 to="/hotshow"
-                color="transparent"
             ></v-tab>
 
             <v-tab

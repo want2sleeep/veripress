@@ -23,17 +23,24 @@
         >
             <v-timeline align="start" density="compact">
                 <v-timeline-item
-                    v-for="message in messages"
-                    :key="message.rank"
-                    :dot-color="message.color"
+                    v-for="(item, index) in HNL"
+                    :key="index"
+                    :dot-color="
+                        index % 2 === 1 ? 'blue-darken-2' : 'blue-lighten-2'
+                    "
                     size="small"
                 >
                     <template v-slot:icon>
-                        <span style="color: #fffde7">{{ message.rank }}</span>
+                        <span style="color: #fffde7">{{ index + 1 }}</span>
                     </template>
-                    <v-alert :color="message.color" style="padding: 5px">
+                    <v-alert
+                        :color="
+                            index % 2 === 1 ? 'blue-darken-2' : 'blue-lighten-2'
+                        "
+                        style="padding: 5px"
+                    >
                         <div class="text-subtitle-2" style="color: #fffde7">
-                            <strong>{{ message.title }}</strong>
+                            <strong>{{ item.title }}</strong>
                         </div>
                     </v-alert>
                 </v-timeline-item>
@@ -42,18 +49,21 @@
     </v-card>
 </template>
 <script setup>
-/* import { onMounted } from "vue";
-import HotNews from "./HotNews.vue";
-import { useHotNewsStore } from "@/stores/hotnews";
+import { onMounted, ref } from "vue";
+import { useHotNewsStore } from "@/stores/newsService";
 
 const hotNewsStore = useHotNewsStore();
-onMounted(() => {
-    hotNewsStore.fetchHotNews();
+const HNL = ref([]);
+// 组件加载时获取数据
+onMounted(async () => {
+    await hotNewsStore.fetchHotNews();
+
+    HNL.value = hotNewsStore.hotNewsList;
+    HNL.value.forEach((item) => {
+        //console.log(item);
+    });
 });
-const hotNewsList = hotNewsStore.hotNewsList;
-const fetchHotNews = hotNewsStore.fetchHotNews;
-console.log(hotNewsList); */
-const messages = [
+/* const messages = [
     {
         title: "总书记三场团组活动，强调同一个关键词",
         intro: "2025年全国两会期间，习近平总书记参加团组审议讨论时，多次提到科技创新这一关键命题，强调“科技创新和产业创新，是发展新质生产力的基本路径”。",
@@ -114,5 +124,5 @@ const messages = [
         rank: "10",
         color: "blue-lighten-2",
     },
-];
+]; */
 </script>
