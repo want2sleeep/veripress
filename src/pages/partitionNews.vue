@@ -21,18 +21,6 @@ import NavBar from "@/components/NavBar.vue";
         <v-main class="d-flex align-center justify-center">
             <v-container>
                 <v-sheet width="100%" style="background-color: #b3e5fc">
-                    <v-layout class="rounded rounded-md" width="100%">
-                        <v-sheet
-                            class="d-flex align-start justify-center"
-                            width="100%"
-                            style="padding: 10px; background-color: #b3e5fc"
-                            ><HotCarousel width="65%" />
-                            <RankShow style="margin-top: 40px" width="30%" />
-                        </v-sheet>
-                    </v-layout>
-                    <!--  <v-row>
-                        <HotWords></HotWords>
-                    </v-row> -->
                     <v-col> <HotNews></HotNews> </v-col
                 ></v-sheet>
             </v-container>

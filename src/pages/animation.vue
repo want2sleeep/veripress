@@ -1,9 +1,14 @@
 <script setup>
-import Carousel from "@/components/Carousel.vue";
+import { ref } from "vue";
 import TitleAnimation from "@/components/TitleAnimation.vue";
+import ColorAnimation from "@/components/ColorAnimation.vue";
 import CardAnimation from "@/components/CardAnimation.vue";
 import ScrollAnimation from "@/components/ScrollAnimation.vue";
-import NavBar from "@/components/NavBar.vue";
+const logined = ref(false);
+
+const login = () => {
+    logined.value = true;
+};
 </script>
 
 <template>
@@ -11,20 +16,95 @@ import NavBar from "@/components/NavBar.vue";
         class="rounded rounded-md bg-animation"
         style="min-height: auto; height: 100%"
     >
-        <NavBar></NavBar>
+        <v-app-bar color="blue-darken-2">
+            <RouterLink to="/">
+                <v-btn class="ml-2" color="yellow-lighten-2">
+                    back to index
+                </v-btn>
+            </RouterLink>
+
+            <v-spacer />
+
+            <v-tabs bg-color="blue-darken-2" color="yellow-lighten-2">
+                <v-tab
+                    text="首页"
+                    style="font-size: 20px; font-weight: 600"
+                ></v-tab>
+
+                <v-tab
+                    text="热点"
+                    style="font-size: 20px; font-weight: 600"
+                    to="/hotshow"
+                    color="yellow-lighten-2"
+                ></v-tab>
+
+                <v-tab
+                    text="国际"
+                    style="font-size: 20px; font-weight: 600"
+                ></v-tab>
+                <v-tab
+                    text="国内"
+                    style="font-size: 20px; font-weight: 600"
+                ></v-tab>
+                <v-tab
+                    text="社会"
+                    style="font-size: 20px; font-weight: 600"
+                ></v-tab>
+                <v-tab
+                    text="经济"
+                    style="font-size: 20px; font-weight: 600"
+                ></v-tab>
+                <v-tab
+                    text="文娱"
+                    style="font-size: 20px; font-weight: 600"
+                ></v-tab>
+                <v-tab
+                    text="科技"
+                    style="font-size: 20px; font-weight: 600"
+                ></v-tab>
+                <v-tab
+                    text="法治"
+                    style="font-size: 20px; font-weight: 600"
+                ></v-tab>
+            </v-tabs>
+            <v-spacer />
+
+            <v-btn
+                class="mr-5"
+                color="yellow-lighten-2"
+                variant="flat"
+                @click="login"
+                v-if="!logined"
+            >
+                登录
+            </v-btn>
+            <span class="mr-4" v-if="logined">
+                <span class="mr-2"> John Doe </span>
+                <v-avatar>
+                    <v-img src="https://cdn.vuetifyjs.com/images/john.jpg" />
+                </v-avatar>
+            </span>
+        </v-app-bar>
+
+        <!--  <v-navigation-drawer class="border-none bg-blue-lighten-4">
+        </v-navigation-drawer> -->
+
         <v-main
             class="d-flex flex-column align-center justify-center"
             style="min-height: 300px; padding: 10%"
         >
+            <!-- <ColorAnimation></ColorAnimation> -->
             <!-- 简介 -->
             <TitleAnimation></TitleAnimation>
-            <!-- 轮播图 -->
-            <Carousel />
-            <!-- 数据展示 -->
-            <CardAnimation></CardAnimation>
-
-            <ScrollAnimation></ScrollAnimation>
+            <ScrollAnimation />
+            <CardAnimation />
         </v-main>
+
+        <!--    <v-navigation-drawer
+            class="border-none bg-blue-lighten-4"
+            location="right"
+        >
+        </v-navigation-drawer> -->
     </v-layout>
     <v-overlay
         class="align-center justify-center"

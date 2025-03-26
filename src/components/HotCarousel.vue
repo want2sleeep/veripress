@@ -1,11 +1,16 @@
 <template>
     <v-card class="mx-2 mt-10" width="100%" rounded="xl">
-        <v-carousel show-arrows="hover" cycle hide-delimiter-background>
+        <v-carousel
+            v-if="displayNews.length > 0"
+            show-arrows="hover"
+            cycle
+            hide-delimiter-background
+        >
             <v-carousel-item
                 class="justify-space-between align-center text-white"
-                v-for="(slide, i) in slides"
-                :key="i"
-                :src="slide.Image"
+                v-for="(item, index) in displayNews"
+                :key="index"
+                :src="item.coverImage"
                 cover
             >
                 <v-row>
@@ -21,38 +26,57 @@
                         <v-card color="transparent" width="100%">
                             <v-card-text
                                 style="font-size: 22px; font-weight: 700"
-                                >{{ slides[i].title }}</v-card-text
+                                >{{ item.title }}</v-card-text
                             >
 
                             <v-card-text>
-                                <div>{{ slides[i].intro }}</div>
+                                <div>{{ item.createTime }}</div>
                             </v-card-text>
                         </v-card>
                         <v-btn value="favorites">
                             <v-icon>mdi-heart</v-icon>
 
-                            <span>点赞</span>
+                            <span>{{ item.likes }}</span>
                         </v-btn>
 
                         <v-btn value="recent">
                             <v-icon>mdi-star</v-icon>
 
-                            <span>收藏</span>
+                            <span>{{ item.collection }}</span>
                         </v-btn>
 
                         <v-btn value="nearby">
                             <v-icon>mdi-comment</v-icon>
 
-                            <span>评论</span>
+                            <span>{{ item.commentCounts }}</span>
                         </v-btn>
                     </v-bottom-navigation></v-row
                 >
             </v-carousel-item>
         </v-carousel>
+        <v-img v-else src="../assets/image.png" width="100%" cover />
     </v-card>
 </template>
 <script setup>
-const slides = [
+import { computed, onMounted, ref } from "vue";
+import { useHotNewsStore } from "@/stores/newsService";
+
+const hotNewsStore = useHotNewsStore();
+const HNL = ref([]);
+// 组件加载时获取数据
+onMounted(async () => {
+    await hotNewsStore.fetchHotNews();
+
+    HNL.value = hotNewsStore.hotNewsList;
+    const displayNews = computed(() => HNL.value.slice(0, 5));
+    console.log(displayNews);
+    /* HNL.value.forEach((item) => {
+        //console.log(item);
+
+    }); */
+});
+const displayNews = computed(() => HNL.value.slice(1, 5));
+/* const slides = [
     {
         Image: "/src/assets/1.jpg",
         title: "总书记三场团组活动，强调同一个关键词",
@@ -71,5 +95,5 @@ const slides = [
         intro: "记者了解到，2024年以来，市场监管总局（国家标准委）围绕消费品重点领域发布国家标准618项，通过强化标准引领，深入推动消费品领域产品和服务质量提升，为高质量发展创造更为有利的消费环境。",
         rank: "3",
     },
-];
+]; */
 </script>
