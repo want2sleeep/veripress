@@ -56,7 +56,6 @@
                                             <v-btn
                                                 class="ms-2"
                                                 size="small"
-                                                text="点击查看"
                                                 variant="text"
                                                 color="yellow-lighten-2"
                                                 value="favorites"
@@ -69,7 +68,6 @@
                                             <v-btn
                                                 class="ms-2"
                                                 size="small"
-                                                text="点击查看"
                                                 variant="text"
                                                 color="yellow-lighten-2"
                                                 value="recent"
@@ -82,7 +80,6 @@
                                             <v-btn
                                                 class="ms-2"
                                                 size="small"
-                                                text="点击查看"
                                                 variant="text"
                                                 color="yellow-lighten-2"
                                                 value="nearby"
