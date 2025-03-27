@@ -119,9 +119,8 @@ const sendContent = async function () {
 </script>
 
 <template>
-    <v-container class="d-flex justify-center align-content-center">
+    <v-container class="pa-2">
         <v-card
-            class="mx-4 fill-height w-100 overflow-y-scroll"
             flat
             min-width="800"
             outlined
@@ -130,7 +129,7 @@ const sendContent = async function () {
                 上传文章
             </v-card-title>
 
-            <v-card-text class="pb-8">
+            <v-card-item class="pb-8">
                 <div>
                     文章标题
                 </div>
@@ -140,9 +139,9 @@ const sendContent = async function () {
                     ref="editor"
                     @paste="a"
                 />
-            </v-card-text>
+            </v-card-item>
 
-            <v-card-text>
+            <v-card-item>
                 <div>
                     文章封面
                 </div>
@@ -154,9 +153,9 @@ const sendContent = async function () {
                     density="compact"
                     show-size
                 />
-            </v-card-text>
+            </v-card-item>
 
-            <v-card-text>
+            <v-card-item>
                 <div>
                     文章内容
                 </div>
@@ -166,7 +165,7 @@ const sendContent = async function () {
                     ref="editor"
                     @paste="a"
                 />
-            </v-card-text>
+            </v-card-item>
 
             <v-card-actions>
                 <v-spacer/>
@@ -183,7 +182,7 @@ const sendContent = async function () {
 
 <style scoped>
 .editor {
-    min-height: 200px;
+    min-height: 50vh;
 }
 </style>
 
