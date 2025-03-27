@@ -275,5 +275,5 @@ export default {
 
 <route lang="yaml">
 meta:
-layout: system
+  layout: system
 </route>
