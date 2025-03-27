@@ -6,7 +6,7 @@ import Layouts from 'vite-plugin-vue-layouts'
 import Vue from '@vitejs/plugin-vue'
 import VueRouter from 'unplugin-vue-router/vite'
 import Vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
-import { viteMockServe } from 'vite-plugin-mock'
+import {viteMockServe} from 'vite-plugin-mock'
 
 // Utilities
 import {defineConfig} from 'vite'
@@ -16,17 +16,14 @@ import {fileURLToPath, URL} from 'node:url'
 export default defineConfig({
     plugins: [
         VueRouter(),
-        Layouts({
-            layoutsDirs: "./src/layouts",
-            defaultLayout: "default"
-        }),
+        Layouts(),
         Vue({
-            template: {transformAssetUrls}
+            template: {transformAssetUrls},
         }),
         viteMockServe({
             logger: true,
-            localEnabled: true,
-            mockPath: './mock/'
+            localEnabled: false,
+            mockPath: './mock/',
         }),
         // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
         Vuetify({
@@ -58,7 +55,7 @@ export default defineConfig({
     define: {'process.env': {}},
     resolve: {
         alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url))
+            '@': fileURLToPath(new URL('./src', import.meta.url)),
         },
         extensions: [
             '.js',
@@ -72,6 +69,13 @@ export default defineConfig({
     },
     server: {
         port: 3000,
+        proxy: {
+            '/api': {
+                target: 'http://47.108.139.11:9002',
+                changeOrigin: true,
+            },
+
+        },
     },
     css: {
         preprocessorOptions: {

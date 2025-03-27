@@ -1,16 +1,27 @@
-// src/mock/user.js
+import qs from 'qs'
+import Mock from 'mockjs'
+
 export default [
     {
         url: '/api/user/login',
         method: 'post',
-        response: () => ({
-            code: 0,
-            message: 'success',
-            data: {
-                token: 'Token',
-                username: 'hahaha',
-            },
-        }),
+        response: (options) => {
+            const data = qs.parse(options.body)
+            console.log(data)
+            if (data.email === 'admin') {
+                return Mock.mock({
+                    code: 0,
+                    message: 'admin',
+                })
+            } else {
+                return Mock.mock({
+                    code: 0,
+                    message: 'user',
+                    data: {
+                        asdadad: data
+                    }
+                })
+            }
+        },
     },
 ]
-

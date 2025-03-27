@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import dataShow from "./dataShow.vue";
+import UploadArticle from '@/pages/uploadArticle.vue'
 </script>
 
 <template>
@@ -19,9 +20,9 @@ import dataShow from "./dataShow.vue";
             </v-col>
 
             <v-col cols="12" md="4" sm="6">
-                <RouterLink style="text-decoration: none" to="/forgetPassword">
+                <RouterLink style="text-decoration: none" to="/aaaa">
                     <v-btn rounded="xs" size="x-large" block
-                        >forget-password</v-btn
+                        >aaaa</v-btn
                     >
                 </RouterLink>
             </v-col>
@@ -33,17 +34,17 @@ import dataShow from "./dataShow.vue";
             </v-col>
 
             <v-col cols="12" md="4" sm="6">
-                <RouterLink style="text-decoration: none" to="/forgetPassword">
+                <RouterLink style="text-decoration: none" to="/uploadArticle">
                     <v-btn rounded="xs" size="x-large" block
-                        >forget-password</v-btn
+                        >upload-article</v-btn
                     >
                 </RouterLink>
             </v-col>
 
             <v-col cols="12" md="4" sm="6">
-                <RouterLink style="text-decoration: none" to="/forgetPassword">
+                <RouterLink style="text-decoration: none" to="/system">
                     <v-btn rounded="xs" size="x-large" block
-                        >forget-password</v-btn
+                        >v8oiqhq</v-btn
                     >
                 </RouterLink>
             </v-col>
