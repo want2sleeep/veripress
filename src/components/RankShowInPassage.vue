@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto" rounded="xl">
+    <v-card class="mx-auto" rounded="xl" max-width="368">
         <v-toolbar color="yellow-lighten-3">
             <template v-slot:prepend>
                 <div

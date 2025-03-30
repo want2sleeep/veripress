@@ -6,8 +6,9 @@
                 icon="mdi-heart"
                 size="50"
                 variant="elevated"
-                color="blue-lighten-2"
+                :color="isLiked ? 'red' : 'blue-lighten-2'"
                 class="text-yellow-lighten-2"
+                @click="handleLike"
             ></v-btn>
             <span class="text-blue-darken-2">99+</span></v-sheet
         >
@@ -37,9 +38,8 @@
     </v-sheet>
 </template>
 <script setup>
-import { ref } from "vue";
+import { defineProps } from "vue";
 import { likeArticle } from "@/stores/newsService";
-import Passage from "./Passage.vue";
 
 const props = defineProps({
     passageId: String,

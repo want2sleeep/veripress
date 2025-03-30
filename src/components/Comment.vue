@@ -16,7 +16,10 @@
             >
                 评论
             </div>
+
             <v-card
+                v-for="(comment, index) in comments"
+                :key="index"
                 elevation="0"
                 rounded="xl"
                 style="padding: 10px; margin-top: 15px"
@@ -28,30 +31,42 @@
                             <template v-slot:prepend>
                                 <v-avatar
                                     color="grey-darken-3"
-                                    image="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                                    :image="comment.avatar"
                                 ></v-avatar>
                             </template>
                             <v-list-item-title
                                 class="text-blue-darken-3 font-weight-bold"
                             >
-                                authorName
+                                {{ comment.username }}
                             </v-list-item-title>
                         </v-list-item>
                     </v-card-actions>
 
                     <div style="margin-left: 80px" width="100%">
-                        <div width="100%" class="d-flex text-blue-darken-3">
-                            <div>这是一条评论</div>
+                        <div
+                            width="100%"
+                            class="d-flex flex-column text-blue-darken-3"
+                        >
+                            <div>{{ comment.content }}</div>
+                            <div
+                                style="
+                                    font-size: 12px;
+                                    margin-top: 10px;
+                                    color: rgba(0, 0, 0, 0.4);
+                                "
+                            >
+                                {{ comment.createTime }}
+                            </div>
                             <v-spacer></v-spacer>
                         </div>
 
                         <v-expand-transition>
-                            <div v-show="showMore">
+                            <div v-show="showMoreMap[comment.id]">
                                 <v-divider></v-divider>
                                 <v-card-text>
                                     <div
-                                        v-for="(reply, index) in visibleReplies"
-                                        :key="index"
+                                        v-for="reply in repliesMap[comment.id]"
+                                        :key="reply.id"
                                         class="mb-2 text-darken-3"
                                     >
                                         <v-list-item class="w-100">
@@ -59,192 +74,54 @@
                                                 <v-avatar
                                                     size="25"
                                                     color="grey-darken-3"
-                                                    image="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                                                    :image="reply.avatar"
                                                 ></v-avatar>
                                             </template>
                                             <v-list-item-title class="text-h7">
-                                                {{ reply.author }}
+                                                {{ reply.username }}
                                             </v-list-item-title>
                                         </v-list-item>
-                                        <div style="margin-left: 60px">
-                                            {{ reply.content }}
+                                        <div class="d-flex flex-column">
+                                            <div style="margin-left: 60px">
+                                                {{ reply.content }}
+                                            </div>
+                                            <div
+                                                style="
+                                                    font-size: 12px;
+                                                    margin-left: 60px;
+                                                    color: rgba(0, 0, 0, 0.4);
+                                                "
+                                            >
+                                                {{ reply.createTime }}
+                                            </div>
                                         </div>
                                     </div>
                                 </v-card-text>
                             </div>
                         </v-expand-transition>
 
-                        <v-card-actions>
-                            <v-text class="text-blue tex-h7"
-                                ><strong>展开</strong></v-text
+                        <v-card-actions v-if="comment.replyCount > 0">
+                            <v-btn
+                                @click="toggleReplies(comment)"
+                                v-if="comment.replyCount > 0"
+                                class="text-blue-lighten-2"
+                                style="font-size: 14px; font-weight: 400"
+                                ><strong
+                                    >展开剩下{{
+                                        comment.replyCount
+                                    }}条评论</strong
+                                ></v-btn
                             >
 
                             <v-spacer></v-spacer>
 
                             <v-btn
-                                :icon="
-                                    showMore
-                                        ? 'mdi-chevron-up'
-                                        : 'mdi-chevron-down'
+                                @click="clearSubComment(comment)"
+                                v-if="showMoreMap[comment.id]"
+                                icon="
+                                   mdi-chevron-up
                                 "
                                 color="blue"
-                                @click="toggleReplies"
-                            ></v-btn>
-                        </v-card-actions>
-                    </div>
-                </div>
-            </v-card>
-            <v-card
-                elevation="0"
-                rounded="xl"
-                style="padding: 10px; margin-top: 15px"
-                color="yellow-lighten-4"
-            >
-                <div class="d-flex flex-column flex-no-wrap">
-                    <v-card-actions>
-                        <v-list-item class="w-100">
-                            <template v-slot:prepend>
-                                <v-avatar
-                                    color="grey-darken-3"
-                                    image="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                                ></v-avatar>
-                            </template>
-                            <v-list-item-title
-                                class="text-blue-darken-3 font-weight-bold"
-                            >
-                                authorName
-                            </v-list-item-title>
-                        </v-list-item>
-                    </v-card-actions>
-
-                    <div style="margin-left: 80px" width="100%">
-                        <div width="100%" class="d-flex text-blue-darken-3">
-                            <div>这是一条评论</div>
-                            <v-spacer></v-spacer>
-                        </div>
-
-                        <v-expand-transition>
-                            <div v-show="showMore">
-                                <v-divider></v-divider>
-                                <v-card-text>
-                                    <div
-                                        v-for="(reply, index) in visibleReplies"
-                                        :key="index"
-                                        class="mb-2 text-darken-3"
-                                    >
-                                        <v-list-item class="w-100">
-                                            <template v-slot:prepend>
-                                                <v-avatar
-                                                    size="25"
-                                                    color="grey-darken-3"
-                                                    image="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                                                ></v-avatar>
-                                            </template>
-                                            <v-list-item-title class="text-h7">
-                                                {{ reply.author }}
-                                            </v-list-item-title>
-                                        </v-list-item>
-                                        <div style="margin-left: 60px">
-                                            {{ reply.content }}
-                                        </div>
-                                    </div>
-                                </v-card-text>
-                            </div>
-                        </v-expand-transition>
-
-                        <v-card-actions>
-                            <v-text class="text-blue tex-h7"
-                                ><strong>展开</strong></v-text
-                            >
-
-                            <v-spacer></v-spacer>
-
-                            <v-btn
-                                :icon="
-                                    showMore
-                                        ? 'mdi-chevron-up'
-                                        : 'mdi-chevron-down'
-                                "
-                                color="blue"
-                                @click="toggleReplies"
-                            ></v-btn>
-                        </v-card-actions>
-                    </div>
-                </div>
-            </v-card>
-            <v-card
-                elevation="0"
-                rounded="xl"
-                style="padding: 10px; margin-top: 15px"
-                color="yellow-lighten-4"
-            >
-                <div class="d-flex flex-column flex-no-wrap">
-                    <v-card-actions>
-                        <v-list-item class="w-100">
-                            <template v-slot:prepend>
-                                <v-avatar
-                                    color="grey-darken-3"
-                                    image="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                                ></v-avatar>
-                            </template>
-                            <v-list-item-title
-                                class="text-blue-darken-3 font-weight-bold"
-                            >
-                                authorName
-                            </v-list-item-title>
-                        </v-list-item>
-                    </v-card-actions>
-
-                    <div style="margin-left: 80px" width="100%">
-                        <div width="100%" class="d-flex text-blue-darken-3">
-                            <div>这是一条评论</div>
-                            <v-spacer></v-spacer>
-                        </div>
-
-                        <v-expand-transition>
-                            <div v-show="showMore">
-                                <v-divider></v-divider>
-                                <v-card-text>
-                                    <div
-                                        v-for="(reply, index) in visibleReplies"
-                                        :key="index"
-                                        class="mb-2 text-darken-3"
-                                    >
-                                        <v-list-item class="w-100">
-                                            <template v-slot:prepend>
-                                                <v-avatar
-                                                    size="25"
-                                                    color="grey-darken-3"
-                                                    image="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                                                ></v-avatar>
-                                            </template>
-                                            <v-list-item-title class="text-h7">
-                                                {{ reply.author }}
-                                            </v-list-item-title>
-                                        </v-list-item>
-                                        <div style="margin-left: 60px">
-                                            {{ reply.content }}
-                                        </div>
-                                    </div>
-                                </v-card-text>
-                            </div>
-                        </v-expand-transition>
-
-                        <v-card-actions>
-                            <v-text class="text-blue tex-h7"
-                                ><strong>展开</strong></v-text
-                            >
-
-                            <v-spacer></v-spacer>
-
-                            <v-btn
-                                :icon="
-                                    showMore
-                                        ? 'mdi-chevron-up'
-                                        : 'mdi-chevron-down'
-                                "
-                                color="blue"
-                                @click="toggleReplies"
                             ></v-btn>
                         </v-card-actions>
                     </div>
@@ -254,42 +131,47 @@
     </v-row>
 </template>
 
-<script>
-import { ref, computed } from "vue";
+<script setup>
+import { ref, onMounted } from "vue";
+import { fetchComments } from "@/stores/newsService";
+import { defineProps } from "vue";
 
-export default {
-    setup() {
-        const replies = ref([
-            { author: "User1", content: "This is the first reply." },
-            { author: "User2", content: "This is the second reply." },
-            { author: "User3", content: "This is the third reply." },
-            { author: "User4", content: "This is the fourth reply." },
-            { author: "User5", content: "This is the fifth reply." },
-            { author: "User6", content: "This is the sixth reply." },
-            { author: "User7", content: "This is the seventh reply." },
-            { author: "User8", content: "This is the eighth reply." },
-            { author: "User9", content: "This is the ninth reply." },
-            { author: "User10", content: "This is the tenth reply." },
-        ]);
+const props = defineProps({
+    passageId: String,
+});
+const comments = ref([]);
+const showMoreMap = ref({}); //控制评论展开状态
+const repliesMap = ref({}); //子评论
 
-        const visibleCount = ref(1);
-        const showMore = ref(false);
+//获取父评论
+const loadComments = async () => {
+    const response = await fetchComments(props.passageId, "", "", "");
+    //console.log(response);
 
-        const visibleReplies = computed(() => {
-            return showMore.value ? replies.value : replies.value.slice(0, 1);
-        });
-
-        const toggleReplies = () => {
-            showMore.value = !showMore.value;
-        };
-
-        return {
-            replies,
-            visibleCount,
-            showMore,
-            visibleReplies,
-            toggleReplies,
-        };
-    },
+    comments.value = response.records.map((comment) => ({
+        ...comment,
+        replies: [],
+    }));
+    //console.log(comments.value);
 };
+
+//切换展开状态并加载子评论
+const toggleReplies = async (comment) => {
+    if (!showMoreMap.value[comment.id]) {
+        showMoreMap.value[comment.id] = true;
+        const response = await fetchComments(
+            props.passageId,
+            comment.id,
+            "",
+            ""
+        );
+        repliesMap.value[comment.id] = response.records || [];
+    }
+};
+const clearSubComment = (comment) => {
+    showMoreMap.value[comment.id] = false;
+    repliesMap.value[comment.id] = [];
+};
+
+onMounted(loadComments);
 </script>

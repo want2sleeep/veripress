@@ -1,10 +1,26 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { getPartitions } from "@/stores/newsService";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+/* 登录 */
 const logined = ref(false);
 
 const login = () => {
     logined.value = true;
 };
+const partitions = ref([]);
+
+/* 获取分区 */
+const fetchPartitions = async () => {
+    partitions.value = await getPartitions();
+};
+const goToPartitionNews = (partitionId) => {
+    router.push({ path: "/partitionNews", query: { partitionId } });
+};
+onMounted(fetchPartitions);
 </script>
 
 <template>
@@ -23,6 +39,7 @@ const login = () => {
             <v-tab
                 text="首页"
                 style="font-size: 20px; font-weight: 600"
+                to="/home"
             ></v-tab>
 
             <v-tab
@@ -32,31 +49,10 @@ const login = () => {
             ></v-tab>
 
             <v-tab
-                text="国际"
-                style="font-size: 20px; font-weight: 600"
-            ></v-tab>
-            <v-tab
-                text="国内"
-                style="font-size: 20px; font-weight: 600"
-            ></v-tab>
-            <v-tab
-                text="社会"
-                style="font-size: 20px; font-weight: 600"
-            ></v-tab>
-            <v-tab
-                text="经济"
-                style="font-size: 20px; font-weight: 600"
-            ></v-tab>
-            <v-tab
-                text="文娱"
-                style="font-size: 20px; font-weight: 600"
-            ></v-tab>
-            <v-tab
-                text="科技"
-                style="font-size: 20px; font-weight: 600"
-            ></v-tab>
-            <v-tab
-                text="法治"
+                @click="goToPartitionNews(partition.partitionId)"
+                v-for="partition in partitions"
+                :key="partition.partitionId"
+                :text="partition.partitionName"
                 style="font-size: 20px; font-weight: 600"
             ></v-tab>
         </v-tabs>
