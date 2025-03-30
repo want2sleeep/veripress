@@ -43,17 +43,6 @@
                         <div width="100%" class="d-flex text-blue-darken-3">
                             <div>这是一条评论</div>
                             <v-spacer></v-spacer>
-                            <v-btn
-                                class="ms-2"
-                                size="small"
-                                variant="text"
-                                color="blue"
-                                value="favorites"
-                                style="margin-right: 20px"
-                            >
-                                <v-icon>mdi-heart</v-icon>
-                                <span>点赞</span>
-                            </v-btn>
                         </div>
 
                         <v-expand-transition>
@@ -132,17 +121,6 @@
                         <div width="100%" class="d-flex text-blue-darken-3">
                             <div>这是一条评论</div>
                             <v-spacer></v-spacer>
-                            <v-btn
-                                class="ms-2"
-                                size="small"
-                                variant="text"
-                                color="blue"
-                                value="favorites"
-                                style="margin-right: 20px"
-                            >
-                                <v-icon>mdi-heart</v-icon>
-                                <span>点赞</span>
-                            </v-btn>
                         </div>
 
                         <v-expand-transition>
@@ -221,17 +199,6 @@
                         <div width="100%" class="d-flex text-blue-darken-3">
                             <div>这是一条评论</div>
                             <v-spacer></v-spacer>
-                            <v-btn
-                                class="ms-2"
-                                size="small"
-                                variant="text"
-                                color="blue"
-                                value="favorites"
-                                style="margin-right: 20px"
-                            >
-                                <v-icon>mdi-heart</v-icon>
-                                <span>点赞</span>
-                            </v-btn>
                         </div>
 
                         <v-expand-transition>

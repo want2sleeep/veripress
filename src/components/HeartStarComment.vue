@@ -1,46 +1,5 @@
 <template>
     <v-sheet class="d-flex align-center flex-column" color="transparent">
-        <v-sheet class="d-flex align-center flex-column" color="transparent">
-            <div
-                class="d-flex flex-column align-center"
-                @mouseenter="show = true"
-                @mouseleave="show = false"
-            >
-                <v-btn
-                    value="rate"
-                    icon="mdi-alert"
-                    size="60"
-                    variant="elevated"
-                    color="yellow-lighten-2"
-                    class="text-blue-darken-1 text-h5"
-                >
-                </v-btn>
-
-                <span
-                    class="text-yellow-lighten-2 text-h6"
-                    style="margin-top: 5px"
-                    >99%</span
-                >
-
-                <v-expand-transition>
-                    <v-card
-                        v-if="show"
-                        rounded="xl"
-                        color="yellow-lighten-2"
-                        class="pa-4 mt-2"
-                        style="
-                            width: 10%;
-                            position: absolute;
-                            z-index: 10;
-                            top: 100px;
-                        "
-                    >
-                        <v-card-title>虚假率</v-card-title>
-                        <v-card-text>关于虚假率的详细信息</v-card-text>
-                    </v-card>
-                </v-expand-transition>
-            </div>
-        </v-sheet>
         <v-sheet class="d-flex align-center flex-column" color="transparent"
             ><v-btn
                 value="favorites"
@@ -77,14 +36,29 @@
         </v-sheet>
     </v-sheet>
 </template>
-
-<script>
+<script setup>
 import { ref } from "vue";
+import { likeArticle } from "@/stores/newsService";
+import Passage from "./Passage.vue";
 
-export default {
-    setup() {
-        const show = ref(false);
-        return { show };
-    },
+const props = defineProps({
+    passageId: String,
+    authorId: String,
+});
+
+const isLiked = false;
+
+/* 处理点赞 */
+const handleLike = async () => {
+    if (!props.passageId || !props.authorId) {
+        console.error("passageId 或 authorId 为空，无法点赞");
+        return;
+    }
+    const newType = isLiked.value ? 0 : 1; // 切换点赞状态
+    const success = await likeArticle(props.passageId, props.authorId, newType);
+
+    if (success) {
+        isLiked.value = !isLiked.value; // 成功后更新 UI
+    }
 };
 </script>
