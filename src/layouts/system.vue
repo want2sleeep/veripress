@@ -3,28 +3,44 @@ import AppFooter from '@/components/AppFooter.vue'
 
 const items = [
     {
+        text: '仪表盘',
+        route: '/detail',
+    },
+    {
         text: '上传文章',
-        route: '/uploadArticle'
+        route: '/upload',
+    },
+    {
+        text: '历史记录',
+        route: '/history',
     },
     {
         text: '测试',
-        route: '/test'
-    },
-    {
-        text: '仪表盘',
-        route: 'dashboard'
+        route: '/test',
     },
 ]
 </script>
 
 <template>
     <v-layout ref="app" class="rounded rounded-md border">
-        <v-app-bar color="surface-variant" name="app-bar">
-
+        <v-app-bar
+            class="border-b-sm"
+            name="app-bar"
+            flat
+        >
+            <div class="ml-8">
+                Veripress
+            </div>
+            <v-spacer/>
+            <v-btn
+                class="mr-8"
+                color="primary"
+                variant="elevated"
+                text="登录"
+            />
         </v-app-bar>
 
         <v-navigation-drawer
-            color="surface-light"
             permanent
         >
             <v-list
@@ -45,8 +61,8 @@ const items = [
             </v-list>
         </v-navigation-drawer>
 
-        <v-main>
-            <RouterView/>
+        <v-main class="bg-grey-lighten-3">
+            <RouterView />
         </v-main>
 
         <AppFooter/>
