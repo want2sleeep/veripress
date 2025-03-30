@@ -35,6 +35,7 @@ const spilited = computed(() => a.split(' '))
 
 
             <v-card-item class="text-center">
+                <span class="text-h6 mr-2">文章虚假概率：</span>
                 <v-progress-circular
                     model-value="90"
                     :size="100"
@@ -51,16 +52,18 @@ const spilited = computed(() => a.split(' '))
                     side="end"
                 >
                     <v-timeline-item
-                        class="mb-12"
+                        class="mr-12"
                         dot-color="primary"
                         size="large"
                     >
                         <template v-slot:icon>
                             <span>{{1}}</span>
                         </template>
-                        <span>
-                            虚假信息识别：文章声称格兰维亚秘密实验室成功研发具有时间操控能力的量子计算机系统"时空枢纽-1号"。目前科学界公认时间旅行在理论上存在重大障碍，特别是违背因果律的问题尚未解决。没有任何权威科学期刊或机构证实此类技术突破。
-                        </span>
+                        <v-card variant="outlined">
+                            <v-card-text>
+                                虚假信息识别：文章声称格兰维亚秘密实验室成功研发具有时间操控能力的量子计算机系统"时空枢纽-1号"。目前科学界公认时间旅行在理论上存在重大障碍，特别是违背因果律的问题尚未解决。没有任何权威科学期刊或机构证实此类技术突破。
+                            </v-card-text>
+                        </v-card>
                     </v-timeline-item>
                     <v-timeline-item
                         class="mb-12"
@@ -72,8 +75,13 @@ const spilited = computed(() => a.split(' '))
                             <span>{{2}}</span>
                         </template>
                         <span>
-                            科学依据不足：文中提到的"莫比乌斯-赫伯特方程"和"量子纠缠时间位移原理"并非公认的科学理论。量子纠缠目前仅证实能在空间维度上实现瞬时关联，无法实现时间维度上的信息传递。
+
                         </span>
+                        <v-card variant="outlined">
+                            <v-card-text>
+                                科学依据不足：文中提到的"莫比乌斯-赫伯特方程"和"量子纠缠时间位移原理"并非公认的科学理论。量子纠缠目前仅证实能在空间维度上实现瞬时关联，无法实现时间维度上的信息传递。
+                            </v-card-text>
+                        </v-card>
                     </v-timeline-item>
                     <v-timeline-item
                         class="mb-12"
@@ -83,9 +91,11 @@ const spilited = computed(() => a.split(' '))
                         <template v-slot:icon>
                             <span>{{3}}</span>
                         </template>
-                        <span>
-                            技术可行性存疑：声称使用16层超导材料和极低温环境创造"时间弯曲场"缺乏科学依据。现有量子计算机最高仅实现127量子比特（IBM,2023），远未达到操控时间的理论要求。
-                        </span>
+                        <v-card variant="outlined">
+                            <v-card-text>
+                                技术可行性存疑：声称使用16层超导材料和极低温环境创造"时间弯曲场"缺乏科学依据。现有量子计算机最高仅实现127量子比特（IBM,2023），远未达到操控时间的理论要求。
+                            </v-card-text>
+                        </v-card>
                     </v-timeline-item>
                     <v-timeline-item
                         class="mb-12"
@@ -95,9 +105,11 @@ const spilited = computed(() => a.split(' '))
                         <template v-slot:icon>
                             <span>{{4}}</span>
                         </template>
-                        <span>
-                            技术可行性存疑：声称使用16层超导材料和极低温环境创造"时间弯曲场"缺乏科学依据。现有量子计算机最高仅实现127量子比特（IBM,2023），远未达到操控时间的理论要求。
-                        </span>
+                        <v-card variant="outlined">
+                            <v-card-text>
+                                技术可行性存疑：声称使用16层超导材料和极低温环境创造"时间弯曲场"缺乏科学依据。现有量子计算机最高仅实现127量子比特（IBM,2023），远未达到操控时间的理论要求。
+                            </v-card-text>
+                        </v-card>
                     </v-timeline-item>
                     <v-timeline-item
                         class="mb-12"
@@ -107,9 +119,11 @@ const spilited = computed(() => a.split(' '))
                         <template v-slot:icon>
                             <span>{{5}}</span>
                         </template>
-                        <span>
-                            技术可行性存疑：声称使用16层超导材料和极低温环境创造"时间弯曲场"缺乏科学依据。现有量子计算机最高仅实现127量子比特（IBM,2023），远未达到操控时间的理论要求。
-                        </span>
+                        <v-card variant="outlined">
+                            <v-card-text>
+                                技术可行性存疑：声称使用16层超导材料和极低温环境创造"时间弯曲场"缺乏科学依据。现有量子计算机最高仅实现127量子比特（IBM,2023），远未达到操控时间的理论要求。
+                            </v-card-text>
+                        </v-card>
                     </v-timeline-item>
                     <v-timeline-item
                         class="mb-12"
@@ -119,9 +133,11 @@ const spilited = computed(() => a.split(' '))
                         <template v-slot:icon>
                             <span>{{6}}</span>
                         </template>
-                        <span>
-                            技术可行性存疑：声称使用16层超导材料和极低温环境创造"时间弯曲场"缺乏科学依据。现有量子计算机最高仅实现127量子比特（IBM,2023），远未达到操控时间的理论要求。
-                        </span>
+                        <v-card variant="outlined">
+                            <v-card-text>
+                                技术可行性存疑：声称使用16层超导材料和极低温环境创造"时间弯曲场"缺乏科学依据。现有量子计算机最高仅实现127量子比特（IBM,2023），远未达到操控时间的理论要求。
+                            </v-card-text>
+                        </v-card>
                     </v-timeline-item>
                     <v-timeline-item
                         class="mb-12"
@@ -131,9 +147,11 @@ const spilited = computed(() => a.split(' '))
                         <template v-slot:icon>
                             <span>{{7}}</span>
                         </template>
-                        <span>
-                            技术可行性存疑：声称使用16层超导材料和极低温环境创造"时间弯曲场"缺乏科学依据。现有量子计算机最高仅实现127量子比特（IBM,2023），远未达到操控时间的理论要求。
-                        </span>
+                        <v-card variant="outlined">
+                            <v-card-text>
+                                技术可行性存疑：声称使用16层超导材料和极低温环境创造"时间弯曲场"缺乏科学依据。现有量子计算机最高仅实现127量子比特（IBM,2023），远未达到操控时间的理论要求。
+                            </v-card-text>
+                        </v-card>
                     </v-timeline-item>
 
 
@@ -152,5 +170,5 @@ const spilited = computed(() => a.split(' '))
 
 <route lang="yaml">
 meta:
-  layout: system
+  layout: 'system'
 </route>
