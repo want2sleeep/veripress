@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import dataShow from "./dataShow.vue";
-import UploadArticle from "@/pages/uploadArticle.vue";
+import UploadArticle from '@/pages/upload.vue'
 </script>
 
 <template>

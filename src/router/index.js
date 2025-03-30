@@ -9,6 +9,7 @@ import {createRouter, createWebHistory} from 'vue-router/auto'
 import {setupLayouts} from 'virtual:generated-layouts'
 import {routes} from 'vue-router/auto-routes'
 import NotFound from '../pages/http/404.vue'
+import detail from '@/pages/detail.vue'
 // import {useUserStore} from '../stores/user.js'
 
 const router = createRouter({
@@ -16,26 +17,12 @@ const router = createRouter({
     // history: createWebHistory(),
     routes: [
         ...setupLayouts(routes),
-        // {
-        //     path: '/',
-        //     name: 'a',
-        //     component: lazy(() => import('../pages/index.vue')),
-        // },
-        // {
-        //     path: '/home',
-        //     name: 'home',
-        //     component: lazy(() => import('../pages/home.vue')),
-        // },
-        // {
-        //     path: '/login',
-        //     name: 'login',
-        //     component: lazy(() => import('../pages/login.vue')),
-        // },
-        // {
-        //     path: '/signup',
-        //     name: 'signup',
-        //     component: lazy(() => import('../pages/signup.vue')),
-        // },
+        {
+            path: '/detail/:id',
+            name: 'detail',
+            component: detail,
+            props: true,
+        },
         {
             path: '/:pathMatch(.*)*',
             name: '404',
