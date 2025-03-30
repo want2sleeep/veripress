@@ -1,8 +1,21 @@
 <script setup>
-import RankShow from "@/components/RankShow.vue";
-import HotCarousel from "@/components/HotCarousel.vue";
-import HotNews from "@/components/LatestNews.vue";
+import LatestNews from "@/components/LatestNews.vue";
 import NavBar from "@/components/NavBar.vue";
+
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { getPartitionNews } from "@/stores/newsService";
+
+const route = useRoute();
+const partitionDetail = ref(null);
+const partitionList = ref([]);
+const partitionId = route.query.partitionId;
+onMounted(async () => {
+    if (partitionId) {
+        partitionDetail.value = await getPartitionNews(partitionId);
+        partitionList.value = partitionDetail.value.data.list;
+    }
+});
 </script>
 
 <template>
@@ -21,7 +34,8 @@ import NavBar from "@/components/NavBar.vue";
         <v-main class="d-flex align-center justify-center">
             <v-container>
                 <v-sheet width="100%" style="background-color: #b3e5fc">
-                    <v-col> <HotNews></HotNews> </v-col
+                    <v-col>
+                        <LatestNews :data="partitionList"></LatestNews> </v-col
                 ></v-sheet>
             </v-container>
         </v-main>

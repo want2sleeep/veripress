@@ -1,8 +1,17 @@
 <script setup>
 import RankShow from "@/components/RankShow.vue";
 import HotCarousel from "@/components/HotCarousel.vue";
-import HotNews from "@/components/LatestNews.vue";
+import LatestNews from "@/components/LatestNews.vue";
 import NavBar from "@/components/NavBar.vue";
+import { useHotNewsStore } from "@/stores/newsService";
+const hotNewsStore = useHotNewsStore();
+const HNL = ref([]);
+// 组件加载时获取数据
+onMounted(async () => {
+    await hotNewsStore.fetchHotNews();
+
+    HNL.value = hotNewsStore.hotNewsList;
+});
 </script>
 
 <template>
@@ -33,7 +42,7 @@ import NavBar from "@/components/NavBar.vue";
                     <!--  <v-row>
                         <HotWords></HotWords>
                     </v-row> -->
-                    <v-col> <HotNews></HotNews> </v-col
+                    <v-col> <LatestNews :data="HNL"></LatestNews></v-col
                 ></v-sheet>
             </v-container>
         </v-main>

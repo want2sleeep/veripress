@@ -24,7 +24,7 @@
                     <v-row dense>
                         <v-col
                             cols="12"
-                            v-for="(item, index) in HNL"
+                            v-for="(item, index) in NEWS"
                             :key="index"
                             style="margin: 5px"
                         >
@@ -116,21 +116,31 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { useHotNewsStore } from "@/stores/newsService";
-import { fetchNewsById } from "@/stores/newsService";
-import { useRoute, useRouter } from "vue-router";
-const router = useRouter();
-const hotNewsStore = useHotNewsStore();
-const HNL = ref([]);
-// 组件加载时获取数据
-onMounted(async () => {
-    await hotNewsStore.fetchHotNews();
+import { defineProps } from "vue";
 
-    HNL.value = hotNewsStore.hotNewsList;
-    HNL.value.forEach((item) => {
-        //console.log(item);
-    });
+import { useRouter } from "vue-router";
+const router = useRouter();
+const props = defineProps({
+    data: [Array, Object],
 });
+
+const NEWS = ref([]);
+
+watch(
+    () => props.data,
+    (newData) => {
+        if (Array.isArray(newData)) {
+            NEWS.value = newData;
+        } else if (
+            newData &&
+            newData.data &&
+            Array.isArray(newData.data.list)
+        ) {
+            NEWS.value = newData.data.list;
+        }
+    },
+    { immediate: true }
+);
 
 /* 跳转到新闻详情页 */
 const goToNewsDetail = (passageId) => {

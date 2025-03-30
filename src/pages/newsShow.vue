@@ -16,8 +16,8 @@ const passageId = route.query.passageId;
 onMounted(async () => {
     if (passageId) {
         newsDetail.value = await fetchNewsById(passageId);
+        //console.log(newsDetail.value)
     }
-    console.log(newsDetail.value);
 });
 </script>
 
@@ -34,15 +34,18 @@ onMounted(async () => {
             >
                 <v-col
                     width="40px"
-                    style="top: 390px; left: -600px; position: fixed"
+                    style="top: 390px; left: -610px; position: fixed"
                 >
-                    <HeartStarComment />
+                    <HeartStarComment
+                        :passageId="passageId"
+                        :authorId="authorId"
+                    />
                 </v-col>
             </v-sheet>
             <v-row>
-                <v-sheet width="75%" color="transparent">
-                    <Passage />
-                    <Comment
+                <v-sheet width="72%" color="transparent">
+                    <Passage :newsDetail="newsDetail" />
+                    <Comment :passageId="passageId"
                 /></v-sheet>
                 <v-sheet class="border-none bg-blue-lighten-4" width="25%"
                     ><v-col

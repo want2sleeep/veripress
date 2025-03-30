@@ -39,80 +39,61 @@
                 <v-card-text
                     v-if="i.type === 0"
                     class="text-yellow-lighten-4 bg-blue-darken-2 text-h6"
+                    style="word-break: break-all; overflow-wrap: break-word"
                 >
                     {{ i.value }}
                 </v-card-text>
-                <img :src="i.value" v-if="i.type === 1" max-width="300" />
+                <img v-else :src="i.value" max-width="300" />
             </v-card>
         </v-col>
     </v-sheet>
 </template>
 <script setup>
-const PassageData = {
-    title: "测试文章哈哈哈",
-    content: [
-        {
-            type: 0,
-            value: "这是第一段的纯文本内容",
-            order: 0,
-        },
-        {
-            type: 1,
-            value: "https://fuchuang-images.oss-cn-beijing.aliyuncs.com/fuchuang/user-avatars/64f301fd-3fe9-457e-aea7-ae465e1307a2.png",
-            order: 2,
-        },
-        {
-            type: 0,
-            value: "第二段的纯文本内容",
-            order: 1,
-        },
-        {
-            type: 1,
-            value: "/src/assets/1.jpg",
-            order: 3,
-        },
-        {
-            type: 0,
-            value: "第三段的纯文本内容",
-            order: 4,
-        },
-        {
-            type: 1,
-            value: "/src/assets/1.jpg",
+import { defineProps } from "vue";
 
-            order: 5,
-        },
-        {
-            type: 0,
-            value: "第四段的纯文本内容",
-            order: 6,
-        },
-        {
-            type: 1,
-            value: "/src/assets/1.jpg",
+const props = defineProps({
+    newsDetail: Object,
+});
 
-            order: 7,
-        },
-        {
-            type: 0,
-            value: "第五段的纯文本内容",
-            order: 8,
-        },
-        {
-            type: 1,
-            value: "/src/assets/1.jpg",
+// 定义响应式变量
+const PassageData = ref({});
 
-            order: 9,
-        },
-    ],
-    partition: 1,
-    partionName: "军事",
-    authorName: "ABC",
-    authorId: "123",
-    like: 12,
-    collect: 100,
-    comment: 134,
-    status: 0,
-};
-let content = PassageData.content;
+// 监听 newsDetail 变化
+watch(
+    () => props.newsDetail,
+    (newVal) => {
+        if (newVal && newVal.data) {
+            //console.log("新获取的 newsDetail:", newVal);
+            PassageData.value = newVal.data; // 这里要访问 `data`
+        }
+    },
+    { immediate: true } // 组件加载时立即执行一次
+);
+
+// 让 content 也保持响应式
+const content = ref([]);
+watch(
+    () => PassageData.value.content,
+    (newContent) => {
+        if (newContent) {
+            content.value = newContent.map((item) => {
+                if (item.type === 0) {
+                    let value = item.value.replace(/^YELLOW:/, ""); //匹配出现在开头的yellow
+                    let match = value.match(/^#+/);
+                    if (match) {
+                        let level = Math.min(match[0].length, 6); //最大h6
+                        value = value.replace(
+                            /^#+\s/,
+                            `<h${level}></h${level}>`
+                        ); //\s空白字符
+                    }
+                    return { ...item, value };
+                } else {
+                    return item;
+                }
+            });
+        }
+    },
+    { immediate: true }
+);
 </script>
