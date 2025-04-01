@@ -8,17 +8,20 @@
 import {createRouter, createWebHistory} from 'vue-router/auto'
 import {setupLayouts} from 'virtual:generated-layouts'
 import {routes} from 'vue-router/auto-routes'
-import NotFound from '../pages/http/404.vue'
+import NotFound from '../pages/http/NotFound.vue'
 // import {useUserStore} from '../stores/user.js'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
-    // history: createWebHistory(),
     routes: [
+        {
+            path: '/',
+            redirect: '/home',
+        },
         ...setupLayouts(routes),
         {
             path: '/:pathMatch(.*)*',
-            name: '404',
+            name: 'NotFound',
             component: NotFound,
         },
     ],
