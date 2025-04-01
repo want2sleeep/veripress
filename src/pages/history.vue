@@ -175,7 +175,7 @@ onMounted(() => {
                                 查看
                             </v-btn>
 
-                            <router-link :to="`/system/${item.passageId}`">
+                            <router-link :to="`/detail/${item.passageId}`">
                                 <v-btn
                                     color="primary"
                                     size="small"
