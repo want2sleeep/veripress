@@ -4,7 +4,7 @@ import AppFooter from '@/components/AppFooter.vue'
 const items = [
     {
         text: '仪表盘',
-        route: '/detail',
+        route: '/',
     },
     {
         text: '上传文章',
