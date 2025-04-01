@@ -170,5 +170,5 @@ const spilited = computed(() => a.split(' '))
 
 <route lang="yaml">
 meta:
-  layout: 'system'
+  layout: system
 </route>
