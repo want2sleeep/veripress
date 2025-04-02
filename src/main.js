@@ -13,6 +13,7 @@ import App from './App.vue'
 // Composables
 import {createApp} from 'vue'
 import '../mock/index.js'
+import './assets/fonts/index.css'
 
 const app = createApp(App)
 
