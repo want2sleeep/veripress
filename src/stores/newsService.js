@@ -157,3 +157,19 @@ export const fetchComments =async(passageId,parentId,pageToken,pageSize)=>{
     }
 }
 
+/* 获取文章虚假率 */
+export const fetchFackRate=async(passageId)=>{
+    try{
+        const response=await service.get(`/passage-service/v1/fake_reason/${passageId}`,{
+            headers:{
+                userId:4,
+            }
+        })
+    {
+        console.log("fackrate:",response.data)
+            return response.data
+    }
+    }catch(error){
+console.log("请求出错")
+    }
+}

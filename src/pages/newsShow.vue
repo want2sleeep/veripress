@@ -72,7 +72,8 @@ onMounted(async () => {
 
                         <FackRate
                             width="100%"
-                            style="margin-top: 5px"
+                            style="margin-top: 35px"
+                            :passageId="passageId"
                         /> </v-col></v-sheet
             ></v-row>
         </v-main>
