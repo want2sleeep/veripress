@@ -2,7 +2,7 @@
     <v-sheet
         rounded="xl"
         color="blue-darken-2"
-        style="margin: 30px 0px 40px 90px; padding: 40px"
+        style="margin: 30px 30px 40px 0px; padding: 40px"
     >
         <v-col>
             <div
@@ -81,11 +81,7 @@ watch(
                     let value = item.value.replace(/^YELLOW:/, ""); //匹配出现在开头的yellow
                     let match = value.match(/^#+/);
                     if (match) {
-                        let level = Math.min(match[0].length, 6); //最大h6
-                        value = value.replace(
-                            /^#+\s/,
-                            `<h${level}></h${level}>`
-                        ); //\s空白字符
+                        value = value.replace(/^#+\s/, ""); //\s空白字符
                     }
                     return { ...item, value };
                 } else {

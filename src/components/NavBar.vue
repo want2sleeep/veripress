@@ -35,7 +35,10 @@ onMounted(fetchPartitions);
 
         <v-spacer />
 
-        <v-tabs class="text-yellow-lighten-3">
+        <v-tabs
+            class="text-yellow-lighten-3"
+            style="font-family: 'Courier New', Courier, monospace"
+        >
             <v-tab
                 text="首页"
                 style="font-size: 20px; font-weight: 600"

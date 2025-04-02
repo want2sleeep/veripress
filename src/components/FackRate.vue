@@ -1,13 +1,14 @@
 <template>
-    <v-card class="mx-auto" max-width="368" rounded="xl" color="blue">
+    <v-card class="mx-auto" rounded="xl" color="blue">
         <v-card-text class="text-blue-darken-4 text-h6 font-weight-bold"
             >FackRate
         </v-card-text>
 
         <v-card-text class="py-0">
-            <v-row align="center" no-gutters>
-                <v-col class="text-h3 text-yellow-lighten-2" cols="6">
-                    64%
+            <v-row align="center" no-gutters
+                ><FackRateCircle></FackRateCircle>
+                <!--   <v-col class="text-h3 text-yellow-lighten-2" cols="6">
+
                 </v-col>
 
                 <v-col class="text-right" cols="6">
@@ -16,7 +17,7 @@
                         icon="mdi-alert-circle"
                         size="60"
                     ></v-icon>
-                </v-col>
+                </v-col> -->
             </v-row>
         </v-card-text>
 
@@ -73,6 +74,7 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import FackRateCircle from "./FackRateCircle.vue";
 
 const labels = {
     0: "SU",
