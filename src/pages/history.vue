@@ -1,16 +1,16 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useDate } from 'vuetify';
+import {ref, onMounted} from 'vue'
+import {useDate} from 'vuetify'
 import service from '@/utils/request.js'
 
-const adapter = useDate();
-const search = ref('');
+const adapter = useDate()
+const search = ref('')
 
 const pagination = ref({
     current: 1,
     size: 10,
     total: 0,
-});
+})
 
 const DEFAULT_RECORD = {
     title: '',
@@ -18,59 +18,59 @@ const DEFAULT_RECORD = {
     genre: '',
     year: adapter.getYear(adapter.date()),
     pages: 1,
-};
+}
 
-const articles = ref([]);
-const record = ref({ ...DEFAULT_RECORD });
-const dialog = ref(false);
-const isEditing = ref(false);
+const articles = ref([])
+const record = ref({...DEFAULT_RECORD})
+const dialog = ref(false)
+const isEditing = ref(false)
 
 const headers = [
-    { title: '文章标题', key: 'title', align: 'start' },
-    { title: '作者', key: 'author' },
-    { title: '上传时间', key: 'genre' },
-    { title: '字数', key: 'wordCount', align: 'end' },
-    { title: '检测状态', key: 'status', align: 'end' },
-    { title: '操作', key: 'actions', align: 'center', sortable: false },
-];
+    {title: '文章标题', key: 'title', align: 'start'},
+    {title: '作者', key: 'author'},
+    {title: '上传时间', key: 'genre'},
+    {title: '字数', key: 'wordCount', align: 'end'},
+    {title: '检测状态', key: 'status', align: 'end'},
+    {title: '操作', key: 'actions', align: 'center', sortable: false},
+]
 
 const add = () => {
-    isEditing.value = false;
-    record.value = { ...DEFAULT_RECORD };
-    dialog.value = true;
-};
+    isEditing.value = false
+    record.value = {...DEFAULT_RECORD}
+    dialog.value = true
+}
 
 const edit = (id) => {
-    isEditing.value = true;
-    const found = articles.value.find((book) => book.id === id);
+    isEditing.value = true
+    const found = articles.value.find((book) => book.id === id)
     if (found) {
-        record.value = { ...found };
-        dialog.value = true;
+        record.value = {...found}
+        dialog.value = true
     }
-};
+}
 
 const remove = (id) => {
-    articles.value = articles.value.filter((book) => book.id !== id);
-};
+    articles.value = articles.value.filter((book) => book.id !== id)
+}
 
 const save = () => {
     if (isEditing.value) {
-        const index = articles.value.findIndex((book) => book.id === record.value.id);
+        const index = articles.value.findIndex((book) => book.id === record.value.id)
         if (index !== -1) {
-            articles.value[index] = { ...record.value };
+            articles.value[index] = {...record.value}
         }
     } else {
-        record.value.id = articles.value.length + 1;
-        articles.value.push({ ...record.value });
+        record.value.id = articles.value.length + 1
+        articles.value.push({...record.value})
     }
-    dialog.value = false;
-};
+    dialog.value = false
+}
 
-const loading = ref(false); // 加载状态
+const loading = ref(false) // 加载状态
 const getTableData = async () => {
-    loading.value = true;
-    dialog.value = false;
-    record.value = { ...DEFAULT_RECORD };
+    loading.value = true
+    dialog.value = false
+    record.value = {...DEFAULT_RECORD}
     try {
         const list = await service.get('/passage-service/v1/fake_check_records', {
             params: {
@@ -78,43 +78,40 @@ const getTableData = async () => {
                 size: pagination.value.size,
             },
             headers: {
-                userId: 1
-            }
-        });
+                userId: 1,
+            },
+        })
         articles.value = list.data.data.records
         pagination.value.total = list.data.data.total
         console.log(list.data.data.total)
     } catch (error) {
-        console.error("数据获取失败", error);
+        console.error('数据获取失败', error)
     } finally {
-        loading.value = false;
+        loading.value = false
     }
-};
+}
 const handlePageChange = (newPage) => {
-    pagination.value.current = newPage;
-    getTableData();
-};
+    pagination.value.current = newPage
+    getTableData()
+}
 const handleItemsPerPageChange = (newSize) => {
-    pagination.value.size = newSize;
-    pagination.value.current = 1; // 重置为第一页
-    getTableData();
-};
+    pagination.value.size = newSize
+    pagination.value.current = 1 // 重置为第一页
+    getTableData()
+}
 
 watch(pagination, () => {
-    getTableData();
-});
+    getTableData()
+})
 onMounted(() => {
-    getTableData();
-});
+    getTableData()
+})
 </script>
 
 
 <template>
     <v-container class="pa-2">
-        <v-card
-            class="bg-white"
-            flat
-        >
+        <v-card flat>
             <v-card-item>
                 <v-data-table
                     :headers="headers"

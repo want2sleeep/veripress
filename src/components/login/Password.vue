@@ -1,6 +1,7 @@
 <script setup>
 import {ref, defineEmits, inject} from 'vue'
 import useUserStore from '@/stores/user.js'
+import {useRouter} from 'vue-router'
 
 const email = inject('email')
 const password = ref('')
@@ -18,6 +19,7 @@ const rules = {
     ],
 }
 const userStore = useUserStore()
+const router = useRouter()
 
 const login = async () => {
     loading.value = true
@@ -27,6 +29,7 @@ const login = async () => {
             password: password.value,
             loginType: 0,
         })
+        await router.push('/dashboard')
     } catch (err) {
         console.error('Login failed:', err)
     } finally {
