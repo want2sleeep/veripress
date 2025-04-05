@@ -1,10 +1,10 @@
 <script setup>
-import AppFooter from '@/components/AppFooter.vue'
+import AppFooter from '@/components/layout/AppFooter.vue'
 
 const items = [
     {
         text: '仪表盘',
-        route: '/detail',
+        route: '/dashboard',
     },
     {
         text: '上传文章',
@@ -32,12 +32,14 @@ const items = [
                 Veripress
             </div>
             <v-spacer/>
-            <v-btn
-                class="mr-8"
-                color="primary"
-                variant="elevated"
-                text="登录"
-            />
+            <RouterLink to="/login">
+                <v-btn
+                    class="mr-8"
+                    color="primary"
+                    variant="elevated"
+                    text="登录"
+                />
+            </RouterLink>
         </v-app-bar>
 
         <v-navigation-drawer
@@ -62,7 +64,7 @@ const items = [
         </v-navigation-drawer>
 
         <v-main class="bg-grey-lighten-3">
-            <RouterView />
+            <RouterView/>
         </v-main>
 
         <AppFooter/>

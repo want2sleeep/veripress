@@ -1,17 +1,18 @@
 <script setup>
-import RankShow from "@/components/RankShow.vue";
-import HotCarousel from "@/components/HotCarousel.vue";
-import LatestNews from "@/components/LatestNews.vue";
-import NavBar from "@/components/NavBar.vue";
-import { useHotNewsStore } from "@/stores/newsService";
-const hotNewsStore = useHotNewsStore();
-const HNL = ref([]);
+import RankShow from '@/components/RankShow.vue'
+import HotCarousel from '@/components/HotCarousel.vue'
+import LatestNews from '@/components/LatestNews.vue'
+import NavBar from '@/components/NavBar.vue'
+import {useHotNewsStore} from '@/stores/newsService'
+
+const hotNewsStore = useHotNewsStore()
+const HNL = ref([])
 // 组件加载时获取数据
 onMounted(async () => {
-    await hotNewsStore.fetchHotNews();
+    await hotNewsStore.fetchHotNews()
 
-    HNL.value = hotNewsStore.hotNewsList;
-});
+    HNL.value = hotNewsStore.hotNewsList
+})
 </script>
 
 <template>
@@ -35,15 +36,19 @@ onMounted(async () => {
                             class="d-flex align-start justify-center"
                             width="100%"
                             style="padding: 10px; background-color: #b3e5fc"
-                            ><HotCarousel width="65%" />
-                            <RankShow style="margin-top: 40px" width="30%" />
+                        >
+                            <HotCarousel width="65%"/>
+                            <RankShow style="margin-top: 40px" width="30%"/>
                         </v-sheet>
                     </v-layout>
                     <!--  <v-row>
                         <HotWords></HotWords>
                     </v-row> -->
-                    <v-col> <LatestNews :data="HNL"></LatestNews></v-col
-                ></v-sheet>
+                    <v-col>
+                        <LatestNews :data="HNL"></LatestNews>
+                    </v-col
+                    >
+                </v-sheet>
             </v-container>
         </v-main>
     </v-layout>

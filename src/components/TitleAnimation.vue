@@ -1,72 +1,106 @@
 <script setup>
-import { onMounted, nextTick } from "vue";
-import SplitType from "split-type";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {onMounted, nextTick} from 'vue'
+import SplitType from 'split-type'
+import {gsap} from 'gsap'
+import {ScrollTrigger} from 'gsap/ScrollTrigger'
+import useUserStore from '@/stores/user.js'
+import service from '@/utils/request.js'
 
 // 注册 GSAP 插件
-gsap.registerPlugin(ScrollTrigger);
-const isButtonVisible = ref(false); // 控制固定按钮的显示状态
+gsap.registerPlugin(ScrollTrigger)
+const isButtonVisible = ref(false) // 控制固定按钮的显示状态
 onMounted(() => {
     nextTick(() => {
         // 平滑滚动插件
         import(
-            "https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"
-        ).then(() => {
-            const lenis = new Lenis();
+            'https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js'
+            ).then(() => {
+            const lenis = new Lenis()
+
             function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
+                lenis.raf(time)
+                requestAnimationFrame(raf)
             }
-            requestAnimationFrame(raf);
-        });
+
+            requestAnimationFrame(raf)
+        })
 
         // 获取文本元素
-        const textElement = document.querySelector(".reveal-type");
+        const textElement = document.querySelector('.reveal-type')
         if (textElement) {
-            const text = new SplitType(textElement, { types: "chars" });
+            const text = new SplitType(textElement, {types: 'chars'})
 
             // GSAP 滚动动画
             gsap.fromTo(
                 text.chars,
-                { opacity: 0, y: 300, scale: 0.3 }, // 更大的起始偏移，增强弹动感
+                {opacity: 0, y: 300, scale: 0.3}, // 更大的起始偏移，增强弹动感
                 {
                     opacity: 1,
                     y: 0,
                     scale: 1.2, // 稍微放大，增加弹性感
                     duration: 1.2, // 更快的动画
-                    ease: "elastic.out(1, 0.5)", // 强弹性
+                    ease: 'elastic.out(1, 0.5)', // 强弹性
                     stagger: 0.08, // 逐个字符出现
                     scrollTrigger: {
                         trigger: textElement,
-                        start: "top 90%", // 90% 处才开始触发
-                        end: "top 80%",
+                        start: 'top 90%', // 90% 处才开始触发
+                        end: 'top 80%',
                         scrub: false, // 不平滑滚动，触发后直接播放
-                        toggleActions: "play none none none", // 只有下滑到才触发
+                        toggleActions: 'play none none none', // 只有下滑到才触发
                         markers: false, // 关闭调试标记
                     },
-                }
-            );
+                },
+            )
         }
         // 监听“开始检测”按钮的滚动
-        const startButton = document.querySelector(".start-button");
+        const startButton = document.querySelector('.start-button')
         ScrollTrigger.create({
             trigger: startButton,
-            start: "bottom bottom", // **确保按钮完全滚出视口再触发**
-            end: "bottom top",
+            start: 'bottom bottom', // **确保按钮完全滚出视口再触发**
+            end: 'bottom top',
             onEnterBack: () => {
-                isButtonVisible.value = false; // 回到视口内，隐藏固定按钮
+                isButtonVisible.value = false // 回到视口内，隐藏固定按钮
             },
             onLeave: () => {
-                isButtonVisible.value = true; // 滑出视口，显示固定按钮
+                isButtonVisible.value = true // 滑出视口，显示固定按钮
             },
-        });
-    });
-});
+        })
+    })
+})
 // 回到顶部的方法
 const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" }); // 平滑滚动到顶部
-};
+    window.scrollTo({top: 0, behavior: 'smooth'}) // 平滑滚动到顶部
+}
+
+
+const userStore = useUserStore()
+
+
+const b = async () => {
+    const res = await service.get("/passage-service/v1/fake_reason/1", {
+        header: {
+            userId: 4
+        }
+    })
+    return res
+}
+
+// const onClick = async () => {
+//     const c = await b()
+//     const res = await service.get("/user-service/v1/user", {
+//         params: {
+//             userId: 1
+//         },
+//         headers: {
+//             Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDM4NDI2OTIsImlzcyI6ImZ1Y2h1YW5nIiwic3ViIjoie1widXNlcklkXCI6XCI0XCIsXCJ1c2VybmFtZVwiOlwidXNlcjE3OTcxODkzXCJ9IiwiZXhwIjoxNzQzOTI5MDkzfQ.vHcP1R2Uso61B8C_qJGi9_BawPp859pXYuvO_nt-hTa76gXWnNHsMEMXU13t_gLXTNnXXf2VbTzXsqvURUZLkA"
+//         }
+//     })
+//     console.log(res.data.data)
+//     a.user.name = res.data.data.username
+//     a.hello()
+// }
+
+
 </script>
 
 <template>
@@ -86,6 +120,7 @@ const scrollToTop = () => {
             size="x-large"
             variant="outlined"
             rounded
+            @click="b"
         >
             开始检测
         </v-btn>
@@ -119,6 +154,7 @@ const scrollToTop = () => {
     letter-spacing: 20px;
     white-space: nowrap;
 }
+
 .fixed-button {
     position: fixed;
     right: 20px; /* 贴近左侧 */

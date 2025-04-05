@@ -1,5 +1,6 @@
 <script setup>
 import {ref, defineEmits, inject} from 'vue'
+import {useRouter} from 'vue-router'
 
 const email = inject('email')
 const rules = {
@@ -8,11 +9,15 @@ const rules = {
     ],
 }
 const emit = defineEmits(['navigate', 'submit'])
+const router = useRouter()
 
 const handleSubmit = () => {
     if (!email.value) return
     emit('submit', { email: email.value })
     emit('navigate', 'ChooseWay')
+}
+const goBack = () => {
+    router.back()
 }
 
 </script>
@@ -30,15 +35,14 @@ const handleSubmit = () => {
                         icon="mdi-login"
                     />
                 </div>
-                <RouterLink to="/">
                     <v-btn
                         variant="flat"
                         size="small"
                         flat
                         density="comfortable"
                         icon="mdi-close"
+                        @click="goBack"
                     />
-                </RouterLink>
             </div>
             <div class="text-h4 mt-1">欢迎登录</div>
         </v-card-title>
