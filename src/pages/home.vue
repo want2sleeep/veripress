@@ -26,14 +26,6 @@ import NavBar from '@/components/NavBar.vue'
             <ScrollAnimation></ScrollAnimation>
         </v-main>
     </v-layout>
-    <v-overlay
-        class="align-center justify-center"
-        :model-value="overlay"
-        height="30%"
-        width="30%"
-    >
-        <WelcomeLogin/>
-    </v-overlay>
 </template>
 <style scoped>
 .bg-animation {

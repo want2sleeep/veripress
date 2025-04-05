@@ -1,5 +1,6 @@
 <script setup>
 import {ref, defineEmits, inject} from 'vue'
+import useUserStore from '@/stores/user.js'
 
 const email = inject('email')
 const password = ref('')
@@ -16,7 +17,22 @@ const rules = {
         v => v.length >= 6 || '密码至少6位',
     ],
 }
+const userStore = useUserStore()
 
+const login = async () => {
+    loading.value = true
+    try {
+        await userStore.login({
+            email: email.value,
+            password: password.value,
+            loginType: 0,
+        })
+    } catch (err) {
+        console.error('Login failed:', err)
+    } finally {
+        loading.value = false
+    }
+}
 
 </script>
 
@@ -70,6 +86,7 @@ const rules = {
                     color="primary"
                     :loading="loading"
                     text="立即登录"
+                    @click="login"
                 />
             </div>
         </v-card-text>

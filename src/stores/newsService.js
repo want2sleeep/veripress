@@ -1,4 +1,3 @@
-
 import service from "@/utils/request";
 import { defineStore } from "pinia";
 /* 获取新闻分区 */

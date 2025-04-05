@@ -3,7 +3,7 @@ import {onMounted, nextTick} from 'vue'
 import SplitType from 'split-type'
 import {gsap} from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
-import {useAStore} from '@/stores/a.js'
+import useUserStore from '@/stores/user.js'
 import service from '@/utils/request.js'
 
 // 注册 GSAP 插件
@@ -73,7 +73,8 @@ const scrollToTop = () => {
 }
 
 
-const a = useAStore()
+const userStore = useUserStore()
+
 
 const b = async () => {
     const res = await service.get("/passage-service/v1/fake_reason/1", {
@@ -81,24 +82,25 @@ const b = async () => {
             userId: 4
         }
     })
-    console.log(res.data.data)
     return res
 }
 
-const onClick = async () => {
-    const c = await b()
-    const res = await service.get("/user-service/v1/user", {
-        params: {
-            userId: 1
-        },
-        header: {
-            userId: 4
-        }
-    })
-    console.log(res.data.data)
-    a.user.name = res.data.data.username
-    a.hello()
-}
+// const onClick = async () => {
+//     const c = await b()
+//     const res = await service.get("/user-service/v1/user", {
+//         params: {
+//             userId: 1
+//         },
+//         headers: {
+//             Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDM4NDI2OTIsImlzcyI6ImZ1Y2h1YW5nIiwic3ViIjoie1widXNlcklkXCI6XCI0XCIsXCJ1c2VybmFtZVwiOlwidXNlcjE3OTcxODkzXCJ9IiwiZXhwIjoxNzQzOTI5MDkzfQ.vHcP1R2Uso61B8C_qJGi9_BawPp859pXYuvO_nt-hTa76gXWnNHsMEMXU13t_gLXTNnXXf2VbTzXsqvURUZLkA"
+//         }
+//     })
+//     console.log(res.data.data)
+//     a.user.name = res.data.data.username
+//     a.hello()
+// }
+
+
 </script>
 
 <template>
@@ -118,7 +120,7 @@ const onClick = async () => {
             size="x-large"
             variant="outlined"
             rounded
-            @click="onClick"
+            @click="b"
         >
             开始检测
         </v-btn>

@@ -9,7 +9,7 @@ import {createRouter, createWebHistory} from 'vue-router/auto'
 import {setupLayouts} from 'virtual:generated-layouts'
 import {routes} from 'vue-router/auto-routes'
 import NotFound from '../pages/http/NotFound.vue'
-// import {useUserStore} from '../stores/user.js'
+import {useUserStore} from '@/stores/user.js'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,18 +27,33 @@ const router = createRouter({
     ],
 })
 
-// router.beforeEach((to, from, next) => {
+// router.beforeEach(async (to, from, next) => {
 //     const store = useUserStore()
-//     let isAuthenticated = store.isAuthenticated
-//     if (to.name !== "login" && to.name !== "signup" && !isAuthenticated) {
-//         next({name: 'login'})
+
+    // 1. 如果有 token 但还没取到用户详情，先拉一次
+    // if (store.user.token && !store.user.id) {
+    //     try {
+    //         await store.getInfo()
+    //     } catch {
+    //         await store.logout()
+    //         return next({ name: 'login' })
+    //     }
+    // }
+
+    // 2. 鉴权拦截
+//     const publicPages = ['login', 'signup']
+//     const authRequired = !publicPages.includes(to.name)
+//     if (authRequired && !store.isLogin) {
+//         return next({ name: 'login' })
 //     }
-//     else if (to.name === "login" && isAuthenticated) {
-//         next({name: 'home'})
+//
+//     // 3. 已登录用户访问登录/注册页，跳首页
+//     if (publicPages.includes(to.name) && store.isLogin) {
+//         return next({ name: 'home' })
 //     }
-//     else {
-//         next()
-//     }
+//
+//     // 4. 其它情况放行
+//     next()
 // })
 
 // Workaround for https://github.com/vitejs/vite/issues/11804
