@@ -2,7 +2,7 @@
     <v-row
         height="90"
         rounded="xl"
-        style="margin: 60px 0px 40px 90px; padding: 0px"
+        style="margin: 30px 30px 40px 0px; padding: 0px"
     >
         <v-sheet
             style="padding: 40px"

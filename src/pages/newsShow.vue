@@ -16,7 +16,7 @@ const passageId = route.query.passageId;
 onMounted(async () => {
     if (passageId) {
         newsDetail.value = await fetchNewsById(passageId);
-        //console.log(newsDetail.value)
+        //onsole.log(newsDetail.value);
     }
 });
 </script>
@@ -25,41 +25,55 @@ onMounted(async () => {
     <v-layout class="rounded rounded-md bg-blue-lighten-4">
         <NavBar></NavBar>
         <v-main
-            class="d-flex flex-column align-center justify-center"
-            style="min-height: 300px; margin: 0 40px"
+            class="d-flex flex-column align-center justify-center bg-blue-lighten-4"
+            style="min-height: 100vh; margin: 0 40px"
         >
-            <v-sheet
-                class="border-none bg-blue-lighten-4"
-                style="position: relative"
-            >
-                <v-col
-                    width="40px"
-                    style="top: 390px; left: -610px; position: fixed"
+            <v-row
+                ><v-sheet
+                    class="border-none bg-blue-lighten-4"
+                    width="5vw"
+                    style="
+                        position: fixed;
+                        left: 140px;
+                        top: 0px;
+                        height: 100vh;
+                    "
+                    ><v-col
+                        class="d-flex align-center flex-column"
+                        style="padding: 20px; margin-top: 405px"
+                        ><HeartStarComment :newsDetail="newsDetail"
+                    /></v-col>
+                </v-sheet>
+                <v-sheet
+                    width="60vw"
+                    color="transparent"
+                    style="margin-right: 80px"
                 >
-                    <HeartStarComment
-                        :passageId="passageId"
-                        :authorId="authorId"
-                    />
-                </v-col>
-            </v-sheet>
-            <v-row>
-                <v-sheet width="72%" color="transparent">
                     <Passage :newsDetail="newsDetail" />
                     <Comment :passageId="passageId"
                 /></v-sheet>
-                <v-sheet class="border-none bg-blue-lighten-4" width="25%"
+                <v-sheet
+                    class="border-none bg-blue-lighten-4"
+                    width="20vw"
+                    style="
+                        position: fixed;
+                        right: 10px;
+                        top: 0px;
+                        height: 100vh;
+                    "
                     ><v-col
                         class="d-flex align-center flex-column"
                         style="padding: 20px; margin-top: 5px"
                     >
                         <RankShowInPassage
-                            style="position: fixed; margin-top: 280px"
-                            width="20%"
+                            width="100%"
+                            style="margin-top: 80px"
                         />
 
                         <FackRate
-                            style="position: fixed; margin-top: 5px"
-                            width="20%"
+                            width="100%"
+                            style="margin-top: 35px"
+                            :passageId="passageId"
                         /> </v-col></v-sheet
             ></v-row>
         </v-main>

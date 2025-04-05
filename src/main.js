@@ -7,6 +7,7 @@
 // Plugins
 import {registerPlugins} from '@/plugins'
 
+
 // Components
 import App from './App.vue'
 
@@ -15,6 +16,10 @@ import {createApp} from 'vue'
 import '../mock/index.js'
 import './assets/fonts/index.css'
 
+
+
+
+//import '@/assets/fonts/font.css'
 const app = createApp(App)
 
 registerPlugins(app)

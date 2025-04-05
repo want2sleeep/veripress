@@ -98,6 +98,10 @@ export const likeArticle =async(passageId,authorId,type)=>{
             passageId,
             authorId,
             type
+        },{
+            headers:{
+                userId:4
+            }
         })
         if(response.data.success){
             return true
@@ -110,7 +114,29 @@ export const likeArticle =async(passageId,authorId,type)=>{
         return false
     }
 }
-
+/* 收藏文章 */
+export const collectArticle =async(passageId,authorId,type)=>{
+    try{
+        const response = await service.post("/passage-service/v1/doCollect",{
+            passageId,
+            authorId,
+            type
+        },{
+            headers:{
+                userId:4
+            }
+        })
+        if(response.data.success){
+            return true
+        }else{
+            console.log("收藏失败：",response.data.message)
+            return false
+        }
+    }catch(error){
+        console.error("收藏请求出错：",error)
+        return false
+    }
+}
 
 /* 获取文章评论 */
 export const fetchComments =async(passageId,parentId,pageToken,pageSize)=>{
@@ -130,3 +156,19 @@ export const fetchComments =async(passageId,parentId,pageToken,pageSize)=>{
     }
 }
 
+/* 获取文章虚假率 */
+export const fetchFackRate=async(passageId)=>{
+    try{
+        const response=await service.get(`/passage-service/v1/fake_reason/${passageId}`,{
+            headers:{
+                userId:4,
+            }
+        })
+    {
+        console.log("fackrate:",response.data)
+            return response.data
+    }
+    }catch(error){
+console.log("请求出错")
+    }
+}
