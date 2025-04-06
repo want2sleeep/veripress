@@ -1,10 +1,10 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useDate } from 'vuetify';
-import service from '@/utils/request.js'
+import { ref, onMounted } from "vue";
+import { useDate } from "vuetify";
+import service from "@/utils/request.js";
 
 const adapter = useDate();
-const search = ref('');
+const search = ref("");
 
 const pagination = ref({
     current: 1,
@@ -13,9 +13,9 @@ const pagination = ref({
 });
 
 const DEFAULT_RECORD = {
-    title: '',
-    author: '',
-    genre: '',
+    title: "",
+    author: "",
+    genre: "",
     year: adapter.getYear(adapter.date()),
     pages: 1,
 };
@@ -26,12 +26,12 @@ const dialog = ref(false);
 const isEditing = ref(false);
 
 const headers = [
-    { title: '文章标题', key: 'title', align: 'start' },
-    { title: '作者', key: 'author' },
-    { title: '上传时间', key: 'genre' },
-    { title: '字数', key: 'wordCount', align: 'end' },
-    { title: '检测状态', key: 'status', align: 'end' },
-    { title: '操作', key: 'actions', align: 'center', sortable: false },
+    { title: "文章标题", key: "title", align: "start" },
+    { title: "作者", key: "author" },
+    { title: "上传时间", key: "genre" },
+    { title: "字数", key: "wordCount", align: "end" },
+    { title: "检测状态", key: "status", align: "end" },
+    { title: "操作", key: "actions", align: "center", sortable: false },
 ];
 
 const add = () => {
@@ -55,7 +55,9 @@ const remove = (id) => {
 
 const save = () => {
     if (isEditing.value) {
-        const index = articles.value.findIndex((book) => book.id === record.value.id);
+        const index = articles.value.findIndex(
+            (book) => book.id === record.value.id
+        );
         if (index !== -1) {
             articles.value[index] = { ...record.value };
         }
@@ -72,18 +74,21 @@ const getTableData = async () => {
     dialog.value = false;
     record.value = { ...DEFAULT_RECORD };
     try {
-        const list = await service.get('/passage-service/v1/fake_check_records', {
-            params: {
-                current: pagination.value.current,
-                size: pagination.value.size,
-            },
-            headers: {
-                userId: 1
+        const list = await service.get(
+            "/passage-service/v1/fake_check_records",
+            {
+                params: {
+                    current: pagination.value.current,
+                    size: pagination.value.size,
+                },
+                headers: {
+                    userId: 1,
+                },
             }
-        });
-        articles.value = list.data.data.records
-        pagination.value.total = list.data.data.total
-        console.log(list.data.data.total)
+        );
+        articles.value = list.data.data.records;
+        pagination.value.total = list.data.data.total;
+        console.log(list.data.data.total);
     } catch (error) {
         console.error("数据获取失败", error);
     } finally {
@@ -108,13 +113,9 @@ onMounted(() => {
 });
 </script>
 
-
 <template>
     <v-container class="pa-2">
-        <v-card
-            class="bg-white"
-            flat
-        >
+        <v-card class="bg-white" flat>
             <v-card-item>
                 <v-data-table
                     :headers="headers"
@@ -131,8 +132,12 @@ onMounted(() => {
                     <template v-slot:top>
                         <v-toolbar flat>
                             <v-toolbar-title>
-                                <v-icon color="medium-emphasis" icon="mdi-book-multiple" size="x-small"
-                                        start></v-icon>
+                                <v-icon
+                                    color="medium-emphasis"
+                                    icon="mdi-book-multiple"
+                                    size="x-small"
+                                    start
+                                ></v-icon>
 
                                 Popular articles
                             </v-toolbar-title>
@@ -158,7 +163,12 @@ onMounted(() => {
                     </template>
 
                     <template v-slot:item.title="{ value }">
-                        <v-chip :text="value" border="thin opacity-25" prepend-icon="mdi-book" label>
+                        <v-chip
+                            :text="value"
+                            border="thin opacity-25"
+                            prepend-icon="mdi-book"
+                            label
+                        >
                             <template v-slot:prepend>
                                 <v-icon color="medium-emphasis"></v-icon>
                             </template>
@@ -175,11 +185,13 @@ onMounted(() => {
                                 查看
                             </v-btn>
 
-                            <router-link :to="{name: 'detail', params: {id: item.passageId}}">
-                                <v-btn
-                                    color="primary"
-                                    size="small"
-                                >
+                            <router-link
+                                :to="{
+                                    name: 'detail',
+                                    params: { id: item.passageId },
+                                }"
+                            >
+                                <v-btn color="primary" size="small">
                                     详情
                                 </v-btn>
                             </router-link>
@@ -210,32 +222,55 @@ onMounted(() => {
 
             <v-dialog v-model="dialog" max-width="500">
                 <v-card
-                    :subtitle="`${isEditing ? 'Update' : 'Create'} your favorite book`"
+                    :subtitle="`${
+                        isEditing ? 'Update' : 'Create'
+                    } your favorite book`"
                     :title="`${isEditing ? 'Edit' : 'Add'} a Book`"
                 >
                     <template v-slot:text>
                         <v-row>
                             <v-col cols="12">
-                                <v-text-field v-model="record.title" label="Title"></v-text-field>
+                                <v-text-field
+                                    v-model="record.title"
+                                    label="Title"
+                                ></v-text-field>
                             </v-col>
 
                             <v-col cols="12" md="6">
-                                <v-text-field v-model="record.author" label="Author"></v-text-field>
+                                <v-text-field
+                                    v-model="record.author"
+                                    label="Author"
+                                ></v-text-field>
                             </v-col>
 
                             <v-col cols="12" md="6">
-                                <v-select v-model="record.genre"
-                                          :items="['Fiction', 'Dystopian', 'Non-Fiction', 'Sci-Fi']"
-                                          label="Genre"></v-select>
+                                <v-select
+                                    v-model="record.genre"
+                                    :items="[
+                                        'Fiction',
+                                        'Dystopian',
+                                        'Non-Fiction',
+                                        'Sci-Fi',
+                                    ]"
+                                    label="Genre"
+                                ></v-select>
                             </v-col>
 
                             <v-col cols="12" md="6">
-                                <v-number-input v-model="record.year" :max="adapter.getYear(adapter.date())" :min="1"
-                                                label="Year"></v-number-input>
+                                <v-number-input
+                                    v-model="record.year"
+                                    :max="adapter.getYear(adapter.date())"
+                                    :min="1"
+                                    label="Year"
+                                ></v-number-input>
                             </v-col>
 
                             <v-col cols="12" md="6">
-                                <v-number-input v-model="record.pages" :min="1" label="Pages"></v-number-input>
+                                <v-number-input
+                                    v-model="record.pages"
+                                    :min="1"
+                                    label="Pages"
+                                ></v-number-input>
                             </v-col>
                         </v-row>
                     </template>
@@ -243,7 +278,11 @@ onMounted(() => {
                     <v-divider></v-divider>
 
                     <v-card-actions class="bg-surface-light">
-                        <v-btn text="Cancel" variant="plain" @click="dialog = false"></v-btn>
+                        <v-btn
+                            text="Cancel"
+                            variant="plain"
+                            @click="dialog = false"
+                        ></v-btn>
 
                         <v-spacer></v-spacer>
 
@@ -251,16 +290,13 @@ onMounted(() => {
                     </v-card-actions>
                 </v-card>
             </v-dialog>
-
         </v-card>
     </v-container>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <route lang="yaml">
 meta:
-  layout: system
+    layout: system
 </route>
