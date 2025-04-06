@@ -8,9 +8,6 @@ const router = useRouter()
 /* 登录 */
 const logined = ref(false)
 
-const login = () => {
-    logined.value = true
-}
 const partitions = ref([])
 
 /* 获取分区 */
@@ -65,7 +62,6 @@ onMounted(fetchPartitions)
             <v-btn
                 class="mr-5"
                 variant="flat"
-                @click="login"
                 v-if="!logined"
                 style="background: linear-gradient(to right, #ffee58, #fff59d)"
             >

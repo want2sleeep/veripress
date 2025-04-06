@@ -3,8 +3,6 @@ import {onMounted, nextTick} from 'vue'
 import SplitType from 'split-type'
 import {gsap} from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
-import useUserStore from '@/stores/user.js'
-import service from '@/utils/request.js'
 
 // 注册 GSAP 插件
 gsap.registerPlugin(ScrollTrigger)
@@ -72,35 +70,6 @@ const scrollToTop = () => {
     window.scrollTo({top: 0, behavior: 'smooth'}) // 平滑滚动到顶部
 }
 
-
-const userStore = useUserStore()
-
-
-const b = async () => {
-    const res = await service.get("/passage-service/v1/fake_reason/1", {
-        header: {
-            userId: 4
-        }
-    })
-    return res
-}
-
-// const onClick = async () => {
-//     const c = await b()
-//     const res = await service.get("/user-service/v1/user", {
-//         params: {
-//             userId: 1
-//         },
-//         headers: {
-//             Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDM4NDI2OTIsImlzcyI6ImZ1Y2h1YW5nIiwic3ViIjoie1widXNlcklkXCI6XCI0XCIsXCJ1c2VybmFtZVwiOlwidXNlcjE3OTcxODkzXCJ9IiwiZXhwIjoxNzQzOTI5MDkzfQ.vHcP1R2Uso61B8C_qJGi9_BawPp859pXYuvO_nt-hTa76gXWnNHsMEMXU13t_gLXTNnXXf2VbTzXsqvURUZLkA"
-//         }
-//     })
-//     console.log(res.data.data)
-//     a.user.name = res.data.data.username
-//     a.hello()
-// }
-
-
 </script>
 
 <template>
@@ -113,17 +82,18 @@ const b = async () => {
         <p class="text-h6 mb-4 text-blue">
             在信息爆炸时代，慧析新闻通过智能技术赋能，帮助用户快速识别虚假新闻，构建清朗的网络空间，提升全民媒介素养，让真相触手可及。
         </p>
-        <v-btn
-            v-if="!isButtonVisible"
-            class="start-button text-h5"
-            color="yellow-lighten-2"
-            size="x-large"
-            variant="outlined"
-            rounded
-            @click="b"
-        >
-            开始检测
-        </v-btn>
+        <RouterLink to="/dashboard">
+            <v-btn
+                v-if="!isButtonVisible"
+                class="start-button text-h5"
+                color="yellow-lighten-2"
+                size="x-large"
+                variant="outlined"
+                rounded
+            >
+                开始检测
+            </v-btn>
+        </RouterLink>
         <v-btn
             v-if="isButtonVisible"
             class="fixed-button text-blue-darken-2"
