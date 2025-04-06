@@ -9,6 +9,22 @@ const Article = {
         }
     },
 
+    getPartitionsArticles: async function (id) {
+        try {
+            return await service.get(`/passage-service/v1/partition/${id}/passages`)
+        } catch (error) {
+            console.error('获取分区失败', error)
+        }
+    },
+
+    getHotArticles: async function () {
+        try {
+            return await service.get('/passage-service/v1/first-passage-info')
+        } catch (error) {
+            console.error('获取热点文章失败', error)
+        }
+    },
+
     getArticle: async function (id) {
         try {
             return await service.get('/passage-service/v1/detail', {
@@ -29,11 +45,15 @@ const Article = {
         }
     },
 
-    getPartitionsArticles: async function (id) {
+    getArticleFakeRate: async function (id) {
         try {
-            return await service.get(`/passage-service/v1/partition/${id}/passages`)
+            return await service.get('/passage-service/v1/fakeRate', {
+                params: {
+                    passageId: id,
+                },
+            })
         } catch (error) {
-            console.error('获取分区失败', error)
+            console.error('获取文章虚假率失败', error)
         }
     },
 }
