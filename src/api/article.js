@@ -9,10 +9,29 @@ const Article = {
         }
     },
 
+    getArticle: async function (id) {
+        try {
+            return await service.get('/passage-service/v1/detail', {
+                params: {
+                    passageId: id,
+                },
+            })
+        } catch (error) {
+            console.error('获取文章详情失败', error)
+        }
+    },
+
+    createArticle: async function (req) {
+        try {
+            return await service.post('/passage-service/v1/upload', req)
+        } catch (error) {
+            console.error('创建文章失败', error)
+        }
+    },
 
     getPartitionsArticles: async function (id) {
         try {
-            return await service.get(`/api/passage-service/v1/partition/${id}/passages`)
+            return await service.get(`/passage-service/v1/partition/${id}/passages`)
         } catch (error) {
             console.error('获取分区失败', error)
         }
