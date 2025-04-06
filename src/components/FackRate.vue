@@ -1,8 +1,8 @@
 <template>
     <v-card
         class="mx-auto"
-        rounded="xl"
-        color="yellow-lighten-2"
+        color="transparent"
+        elevation="0"
         style="padding: 5px"
     >
         <v-card class="py-0" color="transparent" elevation="0">
