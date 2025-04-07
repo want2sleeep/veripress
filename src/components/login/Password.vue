@@ -1,21 +1,21 @@
 <script setup>
-import {ref, defineEmits, inject} from 'vue'
+import { ref, defineEmits, inject } from "vue";
 import useUserStore from '@/stores/user.js'
 import {useRouter} from 'vue-router'
 
-const email = inject('email')
-const password = ref('')
-const visible = ref(false)
-const loading = ref(false)
-const emit = defineEmits(['navigate'])
+const email = inject("email");
+const password = ref("");
+const visible = ref(false);
+const loading = ref(false);
+const emit = defineEmits(["navigate"]);
 const rules = {
     email: [
-        v => !!v || '邮箱不能为空',
-        v => /.+@.+\..+/.test(v) || '请输入有效的邮箱地址',
+        (v) => !!v || "邮箱不能为空",
+        (v) => /.+@.+\..+/.test(v) || "请输入有效的邮箱地址",
     ],
     password: [
-        v => !!v || '密码不能为空',
-        v => v.length >= 6 || '密码至少6位',
+        (v) => !!v || "密码不能为空",
+        (v) => v.length >= 6 || "密码至少6位",
     ],
 }
 const userStore = useUserStore()
@@ -40,24 +40,27 @@ const login = async () => {
 </script>
 
 <template>
-    <v-card
-        flat
-        class="px-2 pt-2 pb-1"
-    >
+    <v-card flat style="padding: 20px">
         <v-card-title class="mb-2">
-            <div class="d-flex justify-space-between">
+            <div class="d-flex justify-space-between align-center">
                 <div class="d-flex align-center">
-                    <v-icon size="large" icon="mdi-lock-outline"/>
+                    <v-icon size="x-large" icon="mdi-lock-outline" />
+                    <div
+                        class="text-h4 mt-1 font-weight-bold"
+                        style="margin-left: 10px"
+                    >
+                        请输入密码
+                    </div>
                 </div>
                 <v-btn
+                    class="text-blue"
                     variant="flat"
-                    size="small"
+                    size="x-small"
                     flat
                     icon="mdi-arrow-left"
                     @click="emit('navigate', 'ChooseWay')"
                 />
             </div>
-            <div class="text-h4 mt-1">请输入密码</div>
         </v-card-title>
 
         <v-card-text>
@@ -79,24 +82,29 @@ const login = async () => {
             />
             <div class="mb-1 d-flex justify-space-between">
                 <v-btn
+                    rounded="xl"
+                    height="40"
                     variant="text"
+                    color="yellow-lighten-2"
+                    density="comfortable"
+                    class="text-h6 font-weight-bold"
                     text="忘记密码"
                     @click="emit('navigate', 'ForgetPassword')"
                 />
                 <v-btn
-                    variant="outlined"
-                    size="default"
-                    color="primary"
+                    rounded="xl"
+                    height="40"
+                    variant="flat"
+                    color="yellow-lighten-2"
+                    density="comfortable"
+                    class="text-blue text-h6 font-weight-bold"
                     :loading="loading"
                     text="立即登录"
                     @click="login"
                 />
             </div>
         </v-card-text>
-
     </v-card>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

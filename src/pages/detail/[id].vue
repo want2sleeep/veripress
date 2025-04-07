@@ -16,64 +16,68 @@ onMounted
 </script>
 
 <template>
-    <v-container class="pa-2 d-flex">
+    <v-container class="pa-10 d-flex bg-blue-lighten-4">
         <v-card
             width="49.5%"
             flat
-            color="primary"
+            color="blue-darken-2"
+            rounded="xl"
+            class="pa-6"
         >
             <v-card-title
-                class="text-h4"
+                class="text-h4 text-yellow-lighten-2 font-weight-bold"
+                style="margin-bottom: 20px"
             >
                 原始文章
                 id: {{ id }}
             </v-card-title>
 
             <v-card-text>
-                <div v-for="(segment, index) in spilited" :key="index">
+                <div
+                    class="text-h6"
+                    v-for="(segment, index) in spilited"
+                    :key="index"
+                >
                     {{ segment }}
                 </div>
             </v-card-text>
         </v-card>
 
-        <div style="width: 1%"></div>
+        <div style="width: 3%"></div>
 
         <v-card
             width="49.5%"
             flat
+            rounded="xl"
+            class="pa-6"
+            color="yellow-lighten-4"
         >
-            <v-card-title class="pa-4 text-h4">
+            <v-card-title class="text-h4 text-blue-darken-2 font-weight-bold">
                 分析报告
             </v-card-title>
 
-
             <v-card-item class="text-center">
-                <span class="text-h6 mr-2">文章虚假概率：</span>
-                <v-progress-circular
-                    model-value="90"
-                    :size="100"
-                    :width="15"
-                    color="primary"
-                >
-                    90
-                </v-progress-circular>
+                <v-card class="bg-transparent"
+                    ><FackRate :passageId="passageId"></FackRate
+                ></v-card>
             </v-card-item>
 
             <v-card-item>
-                <v-timeline
-                    density="compact"
-                    side="end"
-                >
+                <v-timeline density="compact" side="end">
                     <v-timeline-item
                         class="mr-12"
-                        dot-color="primary"
+                        dot-color="blue-lighten-1"
                         size="large"
                     >
                         <template v-slot:icon>
-                            <span>{{1}}</span>
+                            <span class="text-yellow-lighten-2">{{ 1 }}</span>
                         </template>
-                        <v-card variant="outlined">
-                            <v-card-text>
+                        <v-card
+                            variant="flat"
+                            rounded="xl"
+                            color="blue-lighten-1"
+                        >
+                            <v-card-text class="text-h6">
                                 虚假信息识别：文章声称格兰维亚秘密实验室成功研发具有时间操控能力的量子计算机系统"时空枢纽-1号"。目前科学界公认时间旅行在理论上存在重大障碍，特别是违背因果律的问题尚未解决。没有任何权威科学期刊或机构证实此类技术突破。
                             </v-card-text>
                         </v-card>
@@ -81,15 +85,12 @@ onMounted
                     <v-timeline-item
                         class="mb-12"
                         dot-color="white"
-
                         size="large"
                     >
                         <template v-slot:icon>
-                            <span>{{2}}</span>
+                            <span>{{ 2 }}</span>
                         </template>
-                        <span>
-
-                        </span>
+                        <span> </span>
                         <v-card variant="outlined">
                             <v-card-text>
                                 科学依据不足：文中提到的"莫比乌斯-赫伯特方程"和"量子纠缠时间位移原理"并非公认的科学理论。量子纠缠目前仅证实能在空间维度上实现瞬时关联，无法实现时间维度上的信息传递。
@@ -102,7 +103,7 @@ onMounted
                         size="large"
                     >
                         <template v-slot:icon>
-                            <span>{{3}}</span>
+                            <span>{{ 3 }}</span>
                         </template>
                         <v-card variant="outlined">
                             <v-card-text>
@@ -116,7 +117,7 @@ onMounted
                         size="large"
                     >
                         <template v-slot:icon>
-                            <span>{{4}}</span>
+                            <span>{{ 4 }}</span>
                         </template>
                         <v-card variant="outlined">
                             <v-card-text>
@@ -130,7 +131,7 @@ onMounted
                         size="large"
                     >
                         <template v-slot:icon>
-                            <span>{{5}}</span>
+                            <span>{{ 5 }}</span>
                         </template>
                         <v-card variant="outlined">
                             <v-card-text>
@@ -144,7 +145,7 @@ onMounted
                         size="large"
                     >
                         <template v-slot:icon>
-                            <span>{{6}}</span>
+                            <span>{{ 6 }}</span>
                         </template>
                         <v-card variant="outlined">
                             <v-card-text>
@@ -158,7 +159,7 @@ onMounted
                         size="large"
                     >
                         <template v-slot:icon>
-                            <span>{{7}}</span>
+                            <span>{{ 7 }}</span>
                         </template>
                         <v-card variant="outlined">
                             <v-card-text>
@@ -166,20 +167,13 @@ onMounted
                             </v-card-text>
                         </v-card>
                     </v-timeline-item>
-
-
                 </v-timeline>
-
-
             </v-card-item>
-
         </v-card>
     </v-container>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <route lang="yaml">
 meta:
