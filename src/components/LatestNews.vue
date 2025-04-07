@@ -14,8 +14,9 @@
                 <v-card-title
                     class="text-h4 font-weight-black"
                     style="color: #fff59d"
-                    >最新新闻</v-card-title
                 >
+                    最新新闻
+                </v-card-title>
             </v-card>
         </div>
         <v-layout>
@@ -29,9 +30,7 @@
                             style="margin: 5px"
                         >
                             <v-card
-                                :color="
-                                    index % 2 === 1 ? 'blue-lighten-2' : 'blue'
-                                "
+                                :color="index % 2 === 1 ? 'blue-lighten-2' : 'blue'"
                                 rounded="xl"
                                 style="padding: 10px"
                                 @click="goToNewsDetail(item.passageId)"
@@ -52,7 +51,8 @@
                                                 color: rgba(255, 255, 255, 0.7);
                                             "
                                         >
-                                            {{ item.createTime }}</v-card-text
+                                            {{ item.createTime }}
+                                        </v-card-text
                                         >
 
                                         <v-card-actions>
@@ -77,9 +77,9 @@
                                             >
                                                 <v-icon>mdi-star</v-icon>
 
-                                                <span>{{
-                                                    item.collection
-                                                }}</span>
+                                                <span>
+                                                    {{ item.collection }}
+                                                </span>
                                             </v-btn>
 
                                             <v-btn
@@ -91,9 +91,9 @@
                                             >
                                                 <v-icon>mdi-comment</v-icon>
 
-                                                <span>{{
-                                                    item.commentCounts
-                                                }}</span>
+                                                <span>
+                                                    {{ item.commentCounts }}
+                                                </span>
                                             </v-btn>
                                         </v-card-actions>
                                     </div>
@@ -115,35 +115,36 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { defineProps } from "vue";
+import {onMounted, ref} from 'vue'
+import {defineProps} from 'vue'
 
-import { useRouter } from "vue-router";
-const router = useRouter();
+import {useRouter} from 'vue-router'
+
+const router = useRouter()
 const props = defineProps({
     data: [Array, Object],
-});
+})
 
-const NEWS = ref([]);
+const NEWS = ref([])
 
 watch(
     () => props.data,
     (newData) => {
         if (Array.isArray(newData)) {
-            NEWS.value = newData;
+            NEWS.value = newData
         } else if (
             newData &&
             newData.data &&
             Array.isArray(newData.data.list)
         ) {
-            NEWS.value = newData.data.list;
+            NEWS.value = newData.data.list
         }
     },
-    { immediate: true }
-);
+    {immediate: true},
+)
 
 /* 跳转到新闻详情页 */
 const goToNewsDetail = (passageId) => {
-    router.push({ path: "/newsShow", query: { passageId } });
-};
+    router.push({path: '/newsShow', query: {passageId}})
+}
 </script>

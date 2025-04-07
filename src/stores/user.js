@@ -1,73 +1,57 @@
 import {defineStore} from 'pinia'
-import service from '@/utils/request.js'
+import {reactive, computed} from 'vue'
+import User from '@/api/user.js'
 
-const useUserStore = defineStore('user', {
-    state: () => ({
-        email: '',
-        username: '',
-        password: '',
-        token: '',
-    }),
+export const useUserStore = defineStore('user', () => {
+    // state
+    const user = reactive({
+        id: '',
+        name: '',
+        image: '',
+        signature: '',
+        token: localStorage.getItem('token') || '',
+    })
 
-    getters: {
-        hello: (state) => 'Hello!' + state.username,
-    },
+    // getter
+    const isLogin = computed(() => !!user.token)
 
-    actions: {
-        async login(userData) {
-            try {
-                console.log('Attempting to log in with:', userData)
-                const result = await service.post('/api/user/login', userData)
-                console.log('Login response:', result.data)
-                const {data, code} = result.data
-                if (code === 0 && data) {
-                    this.username = data.username
-                    this.token = data.token
-                    console.log('Login successful, setting username and token:', this.username, this.token)
-                } else {
-                    console.error('Invalid response data:', result.data)
-                }
-            } catch (error) {
-                console.error('Login failed:', error)
-            }
-        },
+    // actions
+    const login = async (req) => {
+        const res = await User.onLogin(req)
+        const {userId, username, accessToken} = res.data.data
 
-        async getInfo() {
-            const result = await service.get('/user-service/v1/user', {params: {userId: 1}})
-            return result
-        },
+        user.id = userId
+        user.name = username
+        user.token = accessToken
 
-        async sendCode(data) {
-            const result = await service.post('/user-service/v1/send-verify-code', data)
-            const {code} = result.data
-            if (code === '200') {
-                console.log('验证码发送成功')
-            }
-        },
-        logout() {
-            this.token = ''
-            this.username = ''
-        },
+        localStorage.setItem('token', accessToken)
 
-        async signup(userData) {
-            try {
-                console.log('Attempting to sign up with:', userData)
-                const result = await service.post('/api/user/signup', userData)
-                console.log('Signup response:', result.data)
-                const {data, code} = result.data
-                if (code === 0 && data) {
-                    this.username = data.username
-                    this.token = data.token
-                    console.log('Signup successful, setting username and token:', this.username, this.token)
-                } else {
-                    console.error('Invalid response data:', result.data)
-                }
-            } catch (error) {
-                console.error('Signup failed:', error)
-            }
-        },
+        await getInfo(userId)
+        return res.data.data
+    }
+    const logout = async function () {
 
-    },
+    }
+    const sendCode = () => {
+        return 'sendCode'
+    }
+    const getInfo = async (id) => {
+        const res = await User.onGetInfo(id)
+        const {image, signature} = res.data.data
+
+        user.image = image
+        user.signature = signature
+
+        return res.data.data
+    }
+
+    return {
+        user,
+        isLogin,
+        login,
+        logout,
+        getInfo,
+    }
 })
 
 export default useUserStore

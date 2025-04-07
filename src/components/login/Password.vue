@@ -1,5 +1,7 @@
 <script setup>
 import { ref, defineEmits, inject } from "vue";
+import useUserStore from '@/stores/user.js'
+import {useRouter} from 'vue-router'
 
 const email = inject("email");
 const password = ref("");
@@ -15,7 +17,26 @@ const rules = {
         (v) => !!v || "密码不能为空",
         (v) => v.length >= 6 || "密码至少6位",
     ],
-};
+}
+const userStore = useUserStore()
+const router = useRouter()
+
+const login = async () => {
+    loading.value = true
+    try {
+        await userStore.login({
+            email: email.value,
+            password: password.value,
+            loginType: 0,
+        })
+        await router.push('/dashboard')
+    } catch (err) {
+        console.error('Login failed:', err)
+    } finally {
+        loading.value = false
+    }
+}
+
 </script>
 
 <template>
@@ -79,6 +100,7 @@ const rules = {
                     class="text-blue text-h6 font-weight-bold"
                     :loading="loading"
                     text="立即登录"
+                    @click="login"
                 />
             </div>
         </v-card-text>
