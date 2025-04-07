@@ -7,6 +7,7 @@ export const useUserStore = defineStore('user', () => {
     const user = reactive({
         id: '',
         name: '',
+        email: '',
         image: '',
         signature: '',
         token: localStorage.getItem('token') || '',
@@ -20,6 +21,7 @@ export const useUserStore = defineStore('user', () => {
         const res = await User.onLogin(req)
         const {userId, username, accessToken} = res.data.data
 
+        user.email = req.email
         user.id = userId
         user.name = username
         user.token = accessToken
@@ -27,10 +29,11 @@ export const useUserStore = defineStore('user', () => {
         localStorage.setItem('token', accessToken)
 
         await getInfo(userId)
-        return res.data.data
+        return res.data
     }
     const logout = async function () {
-
+        const res = await User.onLogout()
+        return res.data
     }
     const sendCode = () => {
         return 'sendCode'

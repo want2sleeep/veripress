@@ -31,12 +31,11 @@ const User = {
 
     onUploadAvatar: async function (formData) {
         try {
-            const res = await service.post('/user-service/v1/upload-avatar', formData, {
+            return await service.post('/user-service/v1/upload-avatar', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             })
-            return res
         } catch (err) {
             console.error('上传头像失败：', err)
         }

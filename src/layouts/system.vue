@@ -1,5 +1,6 @@
 <script setup>
 import AppFooter from '@/components/layout/AppFooter.vue'
+import AppBar from '@/components/layout/AppBar.vue'
 
 const items = [
     {
@@ -28,23 +29,10 @@ const items = [
             name="app-bar"
             flat
         >
-            <div class="ml-8">
-                Veripress
-            </div>
-            <v-spacer/>
-            <RouterLink to="/login">
-                <v-btn
-                    class="mr-8"
-                    color="primary"
-                    variant="elevated"
-                    text="登录"
-                />
-            </RouterLink>
+            <AppBar/>
         </v-app-bar>
 
-        <v-navigation-drawer
-            permanent
-        >
+        <v-navigation-drawer permanent>
             <v-list
                 density="comfortable"
                 nav
@@ -52,9 +40,10 @@ const items = [
                 <v-list-item
                     v-for="(item, i) in items"
                     :key="i"
-                    :value="item"
-                    color="primary"
                     :to="item.route"
+                    active-color="primary"
+                    exact
+                    link
                 >
                     <v-list-item-title
                         v-text="item.text"

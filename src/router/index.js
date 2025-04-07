@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
         next({path: '/login'})
     }
     if (!authRequired && userStore.isLogin) {  // 已登录用户访问登录/注册页，跳首页
-        return next({path: '/dashboard'})
+        next({path: '/dashboard'})
     }
     next()
 })
