@@ -74,15 +74,14 @@ onMounted(async () => {
                             width="100%"
                             style="margin-top: 80px"
                         />
-
-                        <FackRate
+                        <v-card
                             width="100%"
                             style="margin-top: 35px"
-                            :passageId="passageId"
-                        />
-                    </v-col>
-                </v-sheet>
-            </v-row>
+                            class="bg-yellow-lighten-2"
+                            rounded="xl"
+                            ><FackRate :passageId="passageId"
+                        /></v-card> </v-col></v-sheet
+            ></v-row>
         </v-main>
     </v-layout>
 

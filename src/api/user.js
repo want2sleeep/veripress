@@ -29,6 +29,18 @@ const User = {
         }
     },
 
+    onGetSelfInfo: async function () {
+        try {
+            return await service.get('/user-service/v1/parse_token', {
+                params: {
+                    token: localStorage.getItem('token'),
+                },
+            })
+        } catch (err) {
+            console.error('获取用户信息失败：', err)
+        }
+    },
+
     onUploadAvatar: async function (formData) {
         try {
             return await service.post('/user-service/v1/upload-avatar', formData, {
@@ -43,9 +55,7 @@ const User = {
 
     onLogout: async function () {
         try {
-            const res = await service.get('/user-service/logout')
-            localStorage.removeItem('token')
-            return res
+            return await service.get('/user-service/logout')
         } catch (err) {
             console.error('退出登录失败：', err)
         }

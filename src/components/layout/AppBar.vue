@@ -34,14 +34,14 @@ const logout = async () => {
                         </div>
                         <v-avatar
                             v-bind="props"
-                            image="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
+                            :image="userStore.user.image"
                         />
                     </v-card>
                 </template>
                 <v-card>
                     <v-card-text>
                         <div class="mx-auto text-center">
-                            <v-avatar image="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"/>
+                            <v-avatar :image="userStore.user.image"/>
                             <p class="text-h6 mt-1">
                                 {{ userStore.user.name }}
                             </p>
@@ -49,17 +49,12 @@ const logout = async () => {
                                 {{ userStore.user.email }}
                             </p>
                             <v-divider class="my-2"></v-divider>
-                            <RouterLink style="color: black" to="/history">
+                            <RouterLink style="color: black" to="/user">
                                 <v-btn
                                     variant="text"
                                     text="个人中心"
                                 />
                             </RouterLink>
-                            <v-divider class="my-2"></v-divider>
-                            <v-btn
-                                variant="text"
-                                text="用户设置"
-                            />
                             <v-divider class="my-2"></v-divider>
                             <v-btn
                                 variant="text"

@@ -73,7 +73,7 @@ onMounted(async () => {
 
     HNL.value = hotNewsStore.hotNewsList;
 
-    console.log(displayNews.value);
+    //console.log(displayNews.value);
 });
 
 /* 跳转到新闻详情页 */

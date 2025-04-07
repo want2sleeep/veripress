@@ -1,25 +1,8 @@
 <script setup>
 import AppFooter from '@/components/layout/AppFooter.vue'
 import AppBar from '@/components/layout/AppBar.vue'
+import SideBar from '@/components/layout/SideBar.vue'
 
-const items = [
-    {
-        text: '仪表盘',
-        route: '/dashboard',
-    },
-    {
-        text: '上传文章',
-        route: '/upload',
-    },
-    {
-        text: '历史记录',
-        route: '/history',
-    },
-    {
-        text: '测试',
-        route: '/test',
-    },
-]
 </script>
 
 <template>
@@ -32,27 +15,11 @@ const items = [
             <AppBar/>
         </v-app-bar>
 
-        <v-navigation-drawer permanent>
-            <v-list
-                density="comfortable"
-                nav
-            >
-                <v-list-item
-                    v-for="(item, i) in items"
-                    :key="i"
-                    :to="item.route"
-                    active-color="primary"
-                    exact
-                    link
-                >
-                    <v-list-item-title
-                        v-text="item.text"
-                    />
-                </v-list-item>
-            </v-list>
+        <v-navigation-drawer permanent class="bg-yellow-lighten-4">
+            <SideBar />
         </v-navigation-drawer>
 
-        <v-main class="bg-grey-lighten-3">
+        <v-main class="bg-blue-lighten-4">
             <RouterView/>
         </v-main>
 

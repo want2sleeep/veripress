@@ -1,8 +1,8 @@
 <template>
     <v-card
         class="mx-auto"
-        rounded="xl"
-        color="yellow-lighten-2"
+        color="transparent"
+        elevation="0"
         style="padding: 5px"
     >
         <v-card class="py-0" color="transparent" elevation="0">
@@ -28,7 +28,7 @@
 <script setup>
 import { fetchFackRate } from "@/stores/newsService";
 import { onBeforeUnmount, onMounted, ref } from "vue";
-
+import service from "@/utils/request.js";
 const props = defineProps({
     passageId: String,
 });
@@ -37,17 +37,31 @@ const value = ref(0);
 const fackDetail = ref({});
 
 let interval = -1;
+
+const b = async () => {
+    const res = await service.get("/passage-service/v1/fake_reason/1", {
+        header: {
+            userId: 4,
+        },
+    });
+    console.log(res.data.data);
+    return res;
+};
+
 onMounted(async () => {
+    console.log("bbbbbbbbbbbbbbb");
+    await b();
+    console.log("cccccccccccccccccccc");
     if (props.passageId) {
         fackDetail.value = await fetchFackRate(props.passageId);
-        console.log(fackDetail.value);
+        //console.log(fackDetail.value);
     }
     interval = setInterval(() => {
-        if (value.value === 100) {
+        if (value.value === fackDetail.value.data.fakeRate) {
             clearInterval(interval);
         }
-        value.value += 10;
-    }, 100);
+        value.value += 1;
+    }, 1);
 });
 onBeforeUnmount(() => {
     clearInterval(interval);
