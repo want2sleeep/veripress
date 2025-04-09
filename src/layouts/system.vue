@@ -1,5 +1,5 @@
 <script setup>
-//import AppFooter from "@/components/AppFooter.vue";
+import AppFooter from "@/components/layout/AppFooter.vue";
 import NavBar from "@/components/NavBar.vue";
 const items = [
     {
@@ -57,7 +57,7 @@ const items = [
             <RouterView />
         </v-main>
 
-        <!--     <AppFooter /> -->
+        <AppFooter />
     </v-layout>
 </template>
 

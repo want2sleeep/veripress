@@ -5,7 +5,7 @@ import DataPanel from "@/components/dashboard/data-panel.vue";
 
 <template>
     <v-container class="pa-2">
-        <v-card flat round="xl">
+        <v-card flat rounded="xl" class="bg-blue-darken-2" height="60vh">
             <Banner />
             <DataPanel />
         </v-card>
