@@ -39,7 +39,11 @@
                 <v-card-text
                     v-if="i.type === 0"
                     class="text-yellow-lighten-4 bg-blue-darken-2 text-h6"
-                    style="word-break: break-all; overflow-wrap: break-word"
+                    style="
+                        word-break: break-all;
+                        overflow-wrap: break-word;
+                        font-family: SiYuanSongTi;
+                    "
                 >
                     {{ i.value }}
                 </v-card-text>

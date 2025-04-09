@@ -30,7 +30,9 @@
                             style="margin: 5px"
                         >
                             <v-card
-                                :color="index % 2 === 1 ? 'blue-lighten-2' : 'blue'"
+                                :color="
+                                    index % 2 === 1 ? 'blue-lighten-2' : 'blue'
+                                "
                                 rounded="xl"
                                 style="padding: 10px"
                                 @click="goToNewsDetail(item.passageId)"
@@ -41,7 +43,10 @@
                                     <div>
                                         <v-card-title
                                             class="text-h5"
-                                            style="color: white"
+                                            style="
+                                                color: white;
+                                                font-family: SiYuanSongTi;
+                                            "
                                         >
                                             {{ item.title }}
                                         </v-card-title>
@@ -52,8 +57,7 @@
                                             "
                                         >
                                             {{ item.createTime }}
-                                        </v-card-text
-                                        >
+                                        </v-card-text>
 
                                         <v-card-actions>
                                             <v-btn
@@ -115,36 +119,36 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue'
-import {defineProps} from 'vue'
+import { onMounted, ref } from "vue";
+import { defineProps } from "vue";
 
-import {useRouter} from 'vue-router'
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 const props = defineProps({
     data: [Array, Object],
-})
+});
 
-const NEWS = ref([])
+const NEWS = ref([]);
 
 watch(
     () => props.data,
     (newData) => {
         if (Array.isArray(newData)) {
-            NEWS.value = newData
+            NEWS.value = newData;
         } else if (
             newData &&
             newData.data &&
             Array.isArray(newData.data.list)
         ) {
-            NEWS.value = newData.data.list
+            NEWS.value = newData.data.list;
         }
     },
-    {immediate: true},
-)
+    { immediate: true }
+);
 
 /* 跳转到新闻详情页 */
 const goToNewsDetail = (passageId) => {
-    router.push({path: '/newsShow', query: {passageId}})
-}
+    router.push({ path: "/newsShow", query: { passageId } });
+};
 </script>

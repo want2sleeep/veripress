@@ -1,23 +1,23 @@
 <script setup>
-import {onMounted, ref} from 'vue'
-import {getPartitions} from '@/stores/newsService'
-import {useRouter} from 'vue-router'
+import { onMounted, ref } from "vue";
+import { getPartitions } from "@/stores/newsService";
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
 /* 登录 */
-const logined = ref(false)
+const logined = ref(false);
 
-const partitions = ref([])
+const partitions = ref([]);
 
 /* 获取分区 */
 const fetchPartitions = async () => {
-    partitions.value = await getPartitions()
-}
+    partitions.value = await getPartitions();
+};
 const goToPartitionNews = (partitionId) => {
-    router.push({path: '/partitionNews', query: {partitionId}})
-}
-onMounted(fetchPartitions)
+    router.push({ path: "/partitionNews", query: { partitionId } });
+};
+onMounted(fetchPartitions);
 </script>
 
 <template>
@@ -30,12 +30,9 @@ onMounted(fetchPartitions)
             <v-btn class="ml-2" color="yellow-lighten-3"> back to index</v-btn>
         </RouterLink>
 
-        <v-spacer/>
+        <v-spacer />
 
-        <v-tabs
-            class="text-yellow-lighten-3"
-            style="font-family: 'Courier New', Courier, monospace"
-        >
+        <v-tabs class="text-yellow-lighten-3">
             <v-tab
                 text="首页"
                 style="font-size: 20px; font-weight: 600"
@@ -56,11 +53,11 @@ onMounted(fetchPartitions)
                 style="font-size: 20px; font-weight: 600"
             ></v-tab>
         </v-tabs>
-        <v-spacer/>
+        <v-spacer />
 
         <RouterLink to="/login">
             <v-btn
-                class="mr-5"
+                class="mr-5 font-weight-bold text-blue-darken-3"
                 variant="flat"
                 v-if="!logined"
                 style="background: linear-gradient(to right, #ffee58, #fff59d)"
@@ -71,7 +68,7 @@ onMounted(fetchPartitions)
         <span class="mr-4" v-if="logined">
             <span class="mr-2"> John Doe </span>
             <v-avatar>
-                <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"/>
+                <v-img src="https://cdn.vuetifyjs.com/images/john.jpg" />
             </v-avatar>
         </span>
     </v-app-bar>

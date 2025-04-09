@@ -1,5 +1,5 @@
 <script setup>
-import AppFooter from "@/components/AppFooter.vue";
+//import AppFooter from "@/components/AppFooter.vue";
 import NavBar from "@/components/NavBar.vue";
 const items = [
     {
@@ -25,7 +25,18 @@ const items = [
     <v-layout ref="app" class="rounded rounded-md border">
         <NavBar></NavBar>
 
-        <v-navigation-drawer permanent class="bg-yellow-lighten-4">
+        <v-navigation-drawer
+            permanent
+            style="
+                background: linear-gradient(
+                    to bottom,
+
+                    #fff59d,
+                    #90caf9,
+                    #42a5f5
+                );
+            "
+        >
             <v-list density="comfortable" nav>
                 <v-list-item
                     v-for="(item, i) in items"
@@ -46,7 +57,7 @@ const items = [
             <RouterView />
         </v-main>
 
-        <AppFooter />
+        <!--     <AppFooter /> -->
     </v-layout>
 </template>
 
