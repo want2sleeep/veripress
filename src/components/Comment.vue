@@ -47,7 +47,9 @@
                             width="100%"
                             class="d-flex flex-column text-blue-darken-3"
                         >
-                            <div>{{ comment.content }}</div>
+                            <div style="font-family: SiYuanSongTi">
+                                {{ comment.content }}
+                            </div>
                             <div
                                 style="
                                     font-size: 12px;
@@ -105,7 +107,11 @@
                                 @click="toggleReplies(comment)"
                                 v-if="comment.replyCount > 0"
                                 class="text-blue-lighten-2"
-                                style="font-size: 14px; font-weight: 400"
+                                style="
+                                    font-size: 14px;
+                                    font-weight: 400;
+                                    font-family: SiYuanSongTi;
+                                "
                                 ><strong
                                     >展开剩下{{
                                         comment.replyCount

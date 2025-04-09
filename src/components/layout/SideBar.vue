@@ -26,7 +26,7 @@ const items = [
             v-for="(item, i) in items"
             :key="i"
             :to="item.route"
-            active-color="primary"
+            active-color="blue"
             exact
             link
             :title="item.text"

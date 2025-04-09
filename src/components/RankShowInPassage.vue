@@ -3,7 +3,7 @@
         <v-toolbar color="yellow-lighten-3">
             <template v-slot:prepend>
                 <div
-                    class="font-weight-bold text-h7 text-blue-darken-2"
+                    class="font-weight-bold text-h6 text-blue-darken-2"
                     style="margin: 10px"
                 >
                     今日热点
@@ -34,7 +34,7 @@
                     <div
                         v-if="index % 2 === 1"
                         style="
-                            font-size: 12px;
+                            font-size: 16px;
                             font-weight: 600;
                             height: 10px;
                             color: #fff176;
@@ -47,7 +47,7 @@
                     <div
                         v-if="index % 2 === 0"
                         style="
-                            font-size: 12px;
+                            font-size: 16px;
                             font-weight: 600;
                             color: white;
                             height: 10px;

@@ -15,8 +15,18 @@ import SideBar from '@/components/layout/SideBar.vue'
             <AppBar/>
         </v-app-bar>
 
-        <v-navigation-drawer permanent class="bg-yellow-lighten-4">
-            <SideBar />
+        <v-navigation-drawer
+            permanent
+            style="
+                background: linear-gradient(
+                    to bottom,
+                    #fff59d,
+                    #90caf9,
+                    #42a5f5
+                );
+            "
+        >
+            <SideBar/>
         </v-navigation-drawer>
 
         <v-main class="bg-blue-lighten-4">
