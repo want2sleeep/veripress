@@ -7,6 +7,7 @@ export const useUserStore = defineStore('user', () => {
     const user = reactive({
         id: '',
         name: '',
+        email: '',
         image: '',
         signature: '',
         token: localStorage.getItem('token') || '',
@@ -18,22 +19,43 @@ export const useUserStore = defineStore('user', () => {
     // actions
     const login = async (req) => {
         const res = await User.onLogin(req)
-        const {userId, username, accessToken} = res.data.data
+        const {accessToken} = res.data.data
 
-        user.id = userId
-        user.name = username
         user.token = accessToken
-
         localStorage.setItem('token', accessToken)
 
-        await getInfo(userId)
-        return res.data.data
+        await getSelfInfo()
+        return res.data
     }
     const logout = async function () {
-
+        const res = await User.onLogout()
+        localStorage.removeItem('token')
+        Object.assign(user, {
+            id: '',
+            name: '',
+            email: '',
+            image: '',
+            signature: '',
+            token: '',
+        })
+        return res.data
     }
     const sendCode = () => {
         return 'sendCode'
+    }
+    const getSelfInfo = async () => {
+        const res = await User.onGetSelfInfo()
+        const {userId, username, email, image, signature} = res.data.data
+
+        Object.assign(user, {
+            id: userId,
+            name: username,
+            email: email,
+            image: image,
+            signature: signature,
+        })
+
+        return res.data.data
     }
     const getInfo = async (id) => {
         const res = await User.onGetInfo(id)
@@ -51,6 +73,7 @@ export const useUserStore = defineStore('user', () => {
         login,
         logout,
         getInfo,
+        getSelfInfo,
     }
 })
 

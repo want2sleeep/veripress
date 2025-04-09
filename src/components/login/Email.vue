@@ -1,12 +1,16 @@
 <script setup>
 import { ref, defineEmits, inject } from "vue";
-import {useRouter} from 'vue-router'
+import {useRoute, useRouter} from "vue-router";
 
 const email = inject("email");
 const rules = {
-    email: [(v) => /.+@.+\..+/.test(v) || "请输入有效的邮箱地址"],
-};
-const emit = defineEmits(["navigate", "submit"]);
+    email: [
+        v => /.+@.+\..+/.test(v) || '请输入有效的邮箱地址',
+    ],
+}
+const emit = defineEmits(['navigate', 'submit'])
+const router = useRouter()
+const route = useRoute()
 
 const handleSubmit = () => {
     if (!email.value) return;
@@ -14,7 +18,11 @@ const handleSubmit = () => {
     emit("navigate", "ChooseWay");
 };
 const goBack = () => {
-    router.back()
+    if (route.query.redirect) {
+        router.push(route.query.redirect.toString())
+    } else {
+        router.back()
+    }
 }
 
 </script>
@@ -94,4 +102,6 @@ const goBack = () => {
     </v-card>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

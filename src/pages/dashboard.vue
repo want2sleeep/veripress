@@ -12,10 +12,12 @@ import DataPanel from "@/components/dashboard/data-panel.vue";
     </v-container>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
 
 <route lang="yaml">
 meta:
-    layout: system
-    requiresLogin: true,
+  layout: system
+  requiresLogin: true
 </route>

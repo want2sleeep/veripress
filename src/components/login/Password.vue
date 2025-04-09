@@ -23,18 +23,15 @@ const router = useRouter()
 
 const login = async () => {
     loading.value = true
-    try {
-        await userStore.login({
-            email: email.value,
-            password: password.value,
-            loginType: 0,
-        })
+    const {success} = await userStore.login({
+        email: email.value,
+        password: password.value,
+        loginType: 0,
+    })
+    if (success) {
         await router.push('/dashboard')
-    } catch (err) {
-        console.error('Login failed:', err)
-    } finally {
-        loading.value = false
     }
+    loading.value = false
 }
 
 </script>
