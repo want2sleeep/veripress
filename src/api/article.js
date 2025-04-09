@@ -45,6 +45,14 @@ const Article = {
         }
     },
 
+    uploadImage: async function (url) {
+        try {
+            return await service.post('/passage-service/v1/image/url', {url: url})
+        } catch (error) {
+            console.error('上传图片失败', error)
+        }
+    },
+
     getArticleFakeRate: async function (id) {
         try {
             return await service.get('/passage-service/v1/fakeRate', {
