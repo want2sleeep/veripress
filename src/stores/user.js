@@ -55,7 +55,7 @@ export const useUserStore = defineStore('user', () => {
             signature: signature,
         })
 
-        return res.data.data
+        return res.data
     }
     const getInfo = async (id) => {
         const res = await User.onGetInfo(id)

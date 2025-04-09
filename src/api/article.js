@@ -53,6 +53,18 @@ const Article = {
         }
     },
 
+    getTaskInfo: async function (taskKey) {
+        try {
+            return await service.get('/passage-service/v1/task-info', {
+                params: {
+                    taskKey: taskKey,
+                }
+            })
+        } catch (error) {
+            console.error('获取任务信息失败', error)
+        }
+    },
+
     getArticleFakeRate: async function (id) {
         try {
             return await service.get('/passage-service/v1/fakeRate', {
