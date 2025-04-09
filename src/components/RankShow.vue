@@ -19,7 +19,7 @@
             class="overflow-auto"
             height="438px"
             style="padding: 20px"
-            color=""
+            color="grey-lighten-3"
         >
             <v-timeline align="start" density="compact">
                 <v-timeline-item

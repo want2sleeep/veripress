@@ -1,19 +1,21 @@
 <template>
     <v-container fluid class="pa-0">
         <!-- row-gap 16px -->
-        <v-row class="panel justify-space-between" style="row-gap: 16px;">
+        <v-row class="panel justify-space-between pa-10" style="row-gap: 16px">
             <!-- 每列占据 4 个栅格（1/3 宽度） -->
-            <v-col
-                v-for="(item, index) in items"
-                :key="index"
-                cols="4"
-            >
-                <v-card class="ma-4" flat>
+            <v-col v-for="(item, index) in items" :key="index" cols="4">
+                <v-card
+                    class="ma-4 bg-yellow-lighten-4"
+                    flat
+                    height="30vh"
+                    rounded="xl"
+                >
                     <v-card-item>
                         <template v-slot:prepend>
                             <v-avatar
-                                size="x-large"
+                                size="100"
                                 color="grey-darken-3"
+                                style="margin: auto"
                                 :image="item.avatar"
                             />
                         </template>
@@ -21,7 +23,7 @@
                             {{ displayedValue.toFixed() }} 篇
                         </v-card-title>
                         <v-card-subtitle>
-                            {{item.text}}
+                            {{ item.text }}
                         </v-card-subtitle>
                     </v-card-item>
                 </v-card>
@@ -31,21 +33,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
 // 示例数据
 const items = [
     {
-        text: '检测文章数',
-        avatar: 'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light',
+        text: "检测文章数",
+        avatar: "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
     },
     {
-        text: '检测文章数',
-        avatar: 'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light',
+        text: "检测文章数",
+        avatar: "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
     },
     {
-        text: '检测文章数',
-        avatar: 'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light',
+        text: "检测文章数",
+        avatar: "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
     },
 ];
 
