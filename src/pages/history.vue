@@ -2,6 +2,7 @@
 import {ref, onMounted} from 'vue'
 import {useDate} from 'vuetify'
 import service from '@/utils/request.js'
+import TaskStatus from '@/data/taskInfo.js'
 
 const adapter = useDate()
 const search = ref('')
@@ -26,12 +27,34 @@ const dialog = ref(false)
 const isEditing = ref(false)
 
 const headers = [
-    {title: '文章标题', key: 'title', align: 'start'},
-    {title: '作者', key: 'author'},
-    {title: '上传时间', key: 'genre'},
-    {title: '字数', key: 'wordCount', align: 'end'},
-    {title: '检测状态', key: 'status', align: 'end'},
-    {title: '操作', key: 'actions', align: 'center', sortable: false},
+    {
+        title: '文章标题',
+        key: 'title',
+        align: 'start'
+    },
+    {
+        title: '分区',
+        key: 'partitionName'
+    },
+    {
+        title: '上传时间',
+        key: 'createTime'
+    },
+    {
+        title: '字数',
+        key: 'wordCount', align: 'end'
+    },
+    {
+        title: '检测状态',
+        key: 'status',
+        align: 'end',
+        value: item => TaskStatus[item.status],
+    },
+    {
+        title: '操作',
+        key: 'actions', align: 'end',
+        sortable: false
+    },
 ]
 
 const add = () => {

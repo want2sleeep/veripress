@@ -45,11 +45,23 @@ const Article = {
         }
     },
 
-    uploadImage: async function (url) {
+    uploadImageViaURL: async function (url) {
         try {
             return await service.post('/passage-service/v1/image/url', {url: url})
         } catch (error) {
             console.error('上传图片失败', error)
+        }
+    },
+
+    uploadImageViaFile: async function (file) {
+        try {
+            return await service.post('/passage-service/v1/image', file, {
+                headers: {
+                    'accept': 'application/json',
+                },
+            })
+        } catch (e) {
+            console.error('上传图片失败', e)
         }
     },
 

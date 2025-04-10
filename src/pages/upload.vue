@@ -3,12 +3,17 @@ import service from '@/utils/request.js'
 import {nextTick} from 'vue'
 import Article from '@/api/article.js'
 import {useRouter} from 'vue-router'
+import Partition from '@/data/partition.js'
 
 const editor = ref(null)
 const textContent = ref('')
 const imageUrls = []
 const taskKey = ref('')
 const title = ref('')
+const coverImage = ref(null)
+const payloadCoverImage = ref('')
+const partition = ref(1)
+const router = useRouter()
 
 const handlePaste = async (event) => {
     event.preventDefault()
@@ -38,14 +43,27 @@ const handlePaste = async (event) => {
     }
 }
 
-const uploadImg = async (url) => {
+const uploadImageViaURL = async (url) => {
     const data = await service.post('/passage-service/v1/image/url', {
         url: url,
     })
     return data.data.data
 }
 
-const a = async () => {
+const uploadImageViaFile = async () => {
+    if (!coverImage.value) {
+        console.error('未选择文件')
+        return
+    }
+    const formData = new FormData()
+    formData.append('imageFile', coverImage.value)
+    const {data} = await Article.uploadImageViaFile(formData)
+    if (data.success) {
+        payloadCoverImage.value = data.data
+    }
+}
+
+const contentPaste = async () => {
     setTimeout(async () => {
         if (editor.value) {
             const images = editor.value.querySelectorAll('img') // 获取所有 img
@@ -53,10 +71,8 @@ const a = async () => {
                 img.style.height = `200px` // 设置自定义高度
                 img.style.width = 'auto'
                 const src = img.getAttribute('src')
-                console.log('src: ', src)
-                img.setAttribute('src', src);
-                imageUrls.push(await uploadImg(src))
-                console.log('imageUrls: ', imageUrls)
+                img.setAttribute('src', src)
+                imageUrls.push(await uploadImageViaURL(src))
             }
         }
     }, 100)
@@ -114,20 +130,19 @@ const sendContent = async function () {
     const contentArray = await parseEditorContent()
     const reqInfo = {
         title: title.value,
+        coverImage: payloadCoverImage.value,
         content: contentArray,
-        partition: 0,
-        status: 0,
+        partition: partition.value,
+        status: 1,
     }
-    console.log('待发送数据：', contentArray)
-    console.log('-----------------', imageUrls)
-    const data = await service.post('/passage-service/v1/upload', reqInfo)
+    const data = await Article.createArticle(reqInfo)
     taskKey.value = data.data.data.taskKey
     await getTaskInfo()
-    window.location.assign('/history')
+    router.push('/history')
 }
 
 const getTaskInfo = async () => {
-    console.log(taskKey.value, '=======================')
+    console.log('taskKey：', taskKey.value)
     let status = await Article.getTaskInfo(taskKey.value)
     console.log('获取任务状态：', status)
     while (status <= 0) {
@@ -156,13 +171,13 @@ const getTaskInfo = async () => {
             <v-card-item class="pb-8">
                 <div class="text-h4 font-weight-bold">文章标题</div>
 
-<!--                <div-->
-<!--                    class="text-h7"-->
-<!--                    contenteditable="true"-->
-<!--                    style="margin: 20px 0 0 10px"-->
-<!--                    ref="editor"-->
-<!--                    @paste="a"-->
-<!--                />-->
+                <!--                <div-->
+                <!--                    class="text-h7"-->
+                <!--                    contenteditable="true"-->
+                <!--                    style="margin: 20px 0 0 10px"-->
+                <!--                    ref="editor"-->
+                <!--                    @paste="a"-->
+                <!--                />-->
                 <v-text-field
                     v-model="title"
 
@@ -172,6 +187,8 @@ const getTaskInfo = async () => {
             <v-card-item>
                 <div class="text-h4 font-weight-bold">文章封面</div>
                 <v-file-input
+                    v-model="coverImage"
+                    @change="uploadImageViaFile"
                     class="rounded-input text-h6"
                     style="margin: 20px 0"
                     label="选择图片"
@@ -179,6 +196,19 @@ const getTaskInfo = async () => {
                     accept="image/*"
                     density="compact"
                     show-size
+                    color="white"
+                />
+            </v-card-item>
+
+            <v-card-item>
+                <div class="text-h4 font-weight-bold">文章分区</div>
+                <v-select
+                    v-model="partition"
+                    :items="Partition"
+                    item-title="text"
+                    item-value="value"
+                    density="comfortable"
+                    label="请选择分区"
                 />
             </v-card-item>
 
@@ -186,10 +216,10 @@ const getTaskInfo = async () => {
                 <div class="text-h4 font-weight-bold">文章内容</div>
                 <div
                     style="margin: 20px 0; padding: 1rem"
-                    class="editor bg-yellow-lighten-4 text-blue-darken-4 text-h6"
+                    class="editor bg-white text-blue-darken-4 text-h6"
                     contenteditable="true"
                     ref="editor"
-                    @paste="a"
+                    @paste="contentPaste"
                 />
             </v-card-item>
 
@@ -239,5 +269,5 @@ const getTaskInfo = async () => {
 
 <route lang="yaml">
 meta:
-  layout: system
+layout: system
 </route>

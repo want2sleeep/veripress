@@ -10,7 +10,7 @@ import {setupLayouts} from 'virtual:generated-layouts'
 import {routes} from 'vue-router/auto-routes'
 import NotFound from '../pages/http/NotFound.vue'
 import {useUserStore} from '@/stores/user.js'
-import publicPages from '@/router/publicPages.js'
+import publicPages from '@/data/publicPages.js'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
