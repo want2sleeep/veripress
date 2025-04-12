@@ -1,6 +1,7 @@
 // Utilities
 import { createPinia } from 'pinia'
 import { useUserStore } from './user'
+import {useRouter} from 'vue-router'
 
 const pinia = createPinia()
 
@@ -9,7 +10,11 @@ pinia.use( async ({ store }) => {
     if (store.$id === 'user') {
         const userStore = useUserStore()
         if (userStore.isLogin) {
-            await userStore.getSelfInfo()
+            const success = await userStore.getSelfInfo()
+            if (!success) {
+                const router = useRouter()
+                router.push('/login')
+            }
         }
     }
 })

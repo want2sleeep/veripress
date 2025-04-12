@@ -2,8 +2,8 @@
 import RankShow from '@/components/RankShow.vue'
 import HotCarousel from '@/components/HotCarousel.vue'
 import LatestNews from '@/components/LatestNews.vue'
-import NavBar from '@/components/NavBar.vue'
 import {useHotNewsStore} from '@/stores/newsService'
+import AppBar from '@/components/layout/AppBar.vue'
 
 const hotNewsStore = useHotNewsStore()
 const HNL = ref([])
@@ -20,7 +20,9 @@ onMounted(async () => {
         class="rounded rounded-md border"
         style="background-color: #b3e5fc"
     >
-        <NavBar></NavBar>
+        <v-app-bar style="background: linear-gradient(to left, #1565c0, #308ae3fb, #42a5f5);">
+            <AppBar :system="true"/>
+        </v-app-bar>
 
         <v-navigation-drawer width="10%" class="border-none">
         </v-navigation-drawer>

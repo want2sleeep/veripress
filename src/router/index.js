@@ -10,7 +10,7 @@ import {setupLayouts} from 'virtual:generated-layouts'
 import {routes} from 'vue-router/auto-routes'
 import NotFound from '../pages/http/NotFound.vue'
 import {useUserStore} from '@/stores/user.js'
-import publicPages from '@/router/publicPages.js'
+import publicPages from '@/data/publicPages.js'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,13 +31,12 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const userStore = useUserStore()
     const authRequired = !publicPages.includes(to.name)
-    console.log('导航到 →', to.name, '----------', to.path)
 
     if (authRequired && !userStore.isLogin) {  // 未登录用户访问需要登录的页面
         next({path: '/login'})
     }
     if (!authRequired && userStore.isLogin) {  // 已登录用户访问登录/注册页，跳首页
-        next({path: '/dashboard'})
+        next({path: '/'})
     }
     next()
 })

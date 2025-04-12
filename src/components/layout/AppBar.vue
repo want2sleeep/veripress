@@ -1,8 +1,15 @@
 <script setup>
 import useUserStore from '@/stores/user.js'
+import Home from '@/pages/home.vue'
+import useTabStore from '@/stores/tab.js'
+
+defineProps({
+    system: Boolean,
+})
 
 const userStore = useUserStore()
 const menu = ref(false)
+const tabStore = useTabStore()
 
 const logout = async () => {
     const res = await userStore.logout()
@@ -13,10 +20,35 @@ const logout = async () => {
 </script>
 
 <template>
-    <div class="ml-8">
-        Veripress
-    </div>
+    <RouterLink
+        to="/"
+        class="d-flex align-center text-white"
+        style="text-decoration: none"
+    >
+        <div class="ml-8">
+            Veripress 慧析新闻虚假检测平台
+        </div>
+    </RouterLink>
+
     <v-spacer/>
+
+    <v-tabs
+        class="text-yellow-lighten-3"
+        v-if="system"
+        v-model="tabStore.tab.activeTab"
+    >
+        <v-tab
+            style="font-size: 20px; font-weight: 600"
+            v-for="(item, index) in tabStore.tab.tabList"
+            :key="index"
+            :text="item.text"
+            :value="item.text"
+            :to="(item.value > 0 ? '/partition/' : '/') + item.path"
+        />
+    </v-tabs>
+
+    <v-spacer/>
+
     <div class="mr-8">
         <template v-if="userStore.isLogin">
             <v-menu

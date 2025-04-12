@@ -1,3 +1,65 @@
+<script setup>
+import {defineProps, ref, watch} from 'vue'
+import Article from '@/api/article.js'
+import User from '@/api/user.js'
+
+const props = defineProps({
+    newsDetail: Object,
+})
+
+const PassageData = ref({})
+const content = ref([])
+const authorInfo = ref({})
+
+const getAuthorInfo = async (authorId) => {
+    const {data} = await User.onGetInfo(authorId)
+    authorInfo.value = data.data
+}
+
+// 处理内容格式的watch
+watch(
+    () => PassageData.value.content,
+    (newContent) => {
+        if (newContent) {
+            content.value = newContent.map((item) => {
+                if (item.type === 0) { // 只处理文本类型
+                    // 判断是否以YELLOW:开头
+                    const hasYellowPrefix = item.value.startsWith('YELLOW:')
+
+                    // 去除前缀
+                    const cleanedValue = hasYellowPrefix
+                        ? item.value.replace(/^YELLOW:\s*/, '')
+                        : item.value
+
+                    return {
+                        ...item,
+                        value: cleanedValue,
+                        light: hasYellowPrefix, // 设置高亮标志
+                    }
+                }
+                return item
+            })
+        }
+    },
+    {immediate: true},
+)
+
+// 监听newsDetail变化
+watch(
+    () => props.newsDetail,
+    async (newVal) => {
+        if (newVal?.data) {
+            PassageData.value = newVal.data
+            console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&', newVal.data.authorId)
+            if (newVal.data.authorId) {
+                await getAuthorInfo(newVal.data.authorId)
+            }
+        }
+    },
+    {immediate: true},
+)
+</script>
+
 <template>
     <v-sheet
         rounded="xl"
@@ -21,23 +83,22 @@
                         <template v-slot:prepend>
                             <v-avatar
                                 color="grey-darken-3"
-                                image="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                            ></v-avatar>
+                                :image="authorInfo.image"
+                            />
                         </template>
 
-                        <v-list-item-title>{{
-                            PassageData.authorName
-                        }}</v-list-item-title>
+                        <v-list-item-title>
+                            {{ authorInfo.username }}
+                        </v-list-item-title>
 
-                        <v-list-item-subtitle>{{
-                            PassageData.authorId
-                        }}</v-list-item-subtitle>
+                        <v-list-item-subtitle>
+                            {{ authorInfo.signature }}
+                        </v-list-item-subtitle>
                     </v-list-item>
                 </v-card-actions>
             </v-card>
             <v-card v-for="i in content" :key="i.order" elevation="0">
                 <v-card-text
-                    v-if="i.type === 0"
                     class="text-yellow-lighten-4 bg-blue-darken-2 text-h6"
                     style="
                         word-break: break-all;
@@ -45,55 +106,37 @@
                         font-family: SiYuanSongTi;
                     "
                 >
-                    {{ i.value }}
+                    <div v-if="i.type === 0">
+                        <div class="d-flex align-center" v-if="i.light" style="color: pink">
+                            <span>
+                                {{ i.value }}
+                            </span>
+                            <span>
+                                <v-tooltip
+                                    text="这是本文虚假率最高的段落"
+                                    location="bottom"
+                                >
+                                    <template v-slot:activator="{ props }">
+                                        <v-icon
+                                            v-bind="props"
+                                            size="40"
+                                            color="yellow-lighten-3"
+                                        >
+                                            mdi-lightbulb-on-outline
+                                        </v-icon>
+                                    </template>
+                                </v-tooltip>
+                            </span>
+                        </div>
+                        <div v-else>
+                            {{ i.value }}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-center" v-else>
+                        <v-img :src="i.value" max-width="300"/>
+                    </div>
                 </v-card-text>
-                <img v-else :src="i.value" max-width="300" />
             </v-card>
         </v-col>
     </v-sheet>
 </template>
-<script setup>
-import { defineProps } from "vue";
-
-const props = defineProps({
-    newsDetail: Object,
-});
-
-// 定义响应式变量
-const PassageData = ref({});
-
-// 监听 newsDetail 变化
-watch(
-    () => props.newsDetail,
-    (newVal) => {
-        if (newVal && newVal.data) {
-            //console.log("新获取的 newsDetail:", newVal);
-            PassageData.value = newVal.data; // 这里要访问 `data`
-        }
-    },
-    { immediate: true } // 组件加载时立即执行一次
-);
-
-// 让 content 也保持响应式
-const content = ref([]);
-watch(
-    () => PassageData.value.content,
-    (newContent) => {
-        if (newContent) {
-            content.value = newContent.map((item) => {
-                if (item.type === 0) {
-                    let value = item.value.replace(/^YELLOW:/, ""); //匹配出现在开头的yellow
-                    let match = value.match(/^#+/);
-                    if (match) {
-                        value = value.replace(/^#+\s/, ""); //\s空白字符
-                    }
-                    return { ...item, value };
-                } else {
-                    return item;
-                }
-            });
-        }
-    },
-    { immediate: true }
-);
-</script>

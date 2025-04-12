@@ -27,11 +27,7 @@ const Article = {
 
     getArticle: async function (id) {
         try {
-            return await service.get('/passage-service/v1/detail', {
-                params: {
-                    passageId: id,
-                },
-            })
+            return await service.get(`/passage-service/v1/detail/${id}`)
         } catch (error) {
             console.error('获取文章详情失败', error)
         }
@@ -45,7 +41,7 @@ const Article = {
         }
     },
 
-    uploadImage: async function (url) {
+    uploadImageViaURL: async function (url) {
         try {
             return await service.post('/passage-service/v1/image/url', {url: url})
         } catch (error) {
@@ -53,13 +49,33 @@ const Article = {
         }
     },
 
-    getArticleFakeRate: async function (id) {
+    uploadImageViaFile: async function (file) {
         try {
-            return await service.get('/passage-service/v1/fakeRate', {
-                params: {
-                    passageId: id,
+            return await service.post('/passage-service/v1/image', file, {
+                headers: {
+                    'accept': 'application/json',
                 },
             })
+        } catch (e) {
+            console.error('上传图片失败', e)
+        }
+    },
+
+    getTaskInfo: async function (taskKey) {
+        try {
+            return await service.get('/passage-service/v1/task-info', {
+                params: {
+                    taskKey: taskKey,
+                }
+            })
+        } catch (error) {
+            console.error('获取任务信息失败', error)
+        }
+    },
+
+    getArticleFakeRate: async function (id) {
+        try {
+            return await service.get(`/passage-service/v1/fake_reason/${id}`)
         } catch (error) {
             console.error('获取文章虚假率失败', error)
         }

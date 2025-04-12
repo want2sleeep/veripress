@@ -8,14 +8,15 @@ import SideBar from '@/components/layout/SideBar.vue'
 <template>
     <v-layout ref="app" class="rounded rounded-md border">
         <v-app-bar
-            class="border-b-sm"
+            class="border-b-sm bg-blue"
             name="app-bar"
             flat
         >
-            <AppBar/>
+            <AppBar :system="false"/>
         </v-app-bar>
 
         <v-navigation-drawer
+            width="170"
             permanent
             style="
                 background: linear-gradient(

@@ -1,36 +1,36 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
-import {fetchNewsById} from '@/stores/newsService'
-import NavBar from '@/components/NavBar.vue'
 import HeartStarComment from '@/components/HeartStarComment.vue'
 import RankShowInPassage from '@/components/RankShowInPassage.vue'
 import FackRate from '@/components/FackRate.vue'
 import Passage from '@/components/Passage.vue'
 import Comment from '@/components/Comment.vue'
+import Article from '@/api/article.js'
 
 const route = useRoute()
-const newsDetail = ref(null)
-//获取文章id
+const article = ref(null)
+const fakeRate = ref(0)
 const passageId = route.query.passageId
-//获取文章
+
 onMounted(async () => {
     if (passageId) {
-        newsDetail.value = await fetchNewsById(passageId)
-        //onsole.log(newsDetail.value);
+        article.value = (await Article.getArticle(passageId)).data
+        fakeRate.value = article.value.data.fakeRate
     }
 })
 </script>
 
 <template>
     <v-layout class="rounded rounded-md bg-blue-lighten-4">
-        <NavBar></NavBar>
+        <v-app-bar style="background: linear-gradient(to left, #1565c0, #308ae3fb, #42a5f5);">
+            <AppBar :system="true"/>
+        </v-app-bar>
         <v-main
             class="d-flex flex-column align-center justify-center bg-blue-lighten-4"
             style="min-height: 100vh; margin: 0 40px"
         >
-            <v-row
-            >
+            <v-row>
                 <v-sheet
                     class="border-none bg-blue-lighten-4"
                     width="5vw"
@@ -45,17 +45,19 @@ onMounted(async () => {
                         class="d-flex align-center flex-column"
                         style="padding: 20px; margin-top: 405px"
                     >
-                        <HeartStarComment :newsDetail="newsDetail"/>
+                        <HeartStarComment :article="article"/>
                     </v-col>
                 </v-sheet>
+
                 <v-sheet
                     width="60vw"
                     color="transparent"
                     style="margin-right: 80px"
                 >
-                    <Passage :newsDetail="newsDetail"/>
+                    <Passage :news-detail="article"/>
                     <Comment :passageId="passageId"/>
                 </v-sheet>
+
                 <v-sheet
                     class="border-none bg-blue-lighten-4"
                     width="20vw"
@@ -79,18 +81,22 @@ onMounted(async () => {
                             style="margin-top: 35px"
                             class="bg-yellow-lighten-2"
                             rounded="xl"
-                            ><FackRate :passageId="passageId"
-                        /></v-card> </v-col></v-sheet
-            ></v-row>
+                        >
+                            <FackRate :passageId="passageId" :fakeRate="fakeRate"/>
+
+                            <v-card-actions>
+                                <v-btn
+                                    variant="flat"
+                                    color="blue"
+                                    block
+                                    text="查看详情"
+                                    :to="`/detail/${passageId}`"
+                                />
+                            </v-card-actions>
+                        </v-card>
+                    </v-col>
+                </v-sheet>
+            </v-row>
         </v-main>
     </v-layout>
-
-    <v-overlay
-        class="align-center justify-center"
-        :model-value="overlay"
-        height="30%"
-        width="30%"
-    >
-        <WelcomeLogin/>
-    </v-overlay>
 </template>

@@ -4,8 +4,7 @@
         class="d-flex align-center flex-column"
         color="transparent"
     >
-        <v-sheet class="d-flex align-center flex-column" color="transparent"
-        >
+        <v-sheet class="d-flex align-center flex-column" color="transparent">
             <v-btn
                 value="favorites"
                 icon="mdi-heart"
@@ -18,8 +17,7 @@
             <span class="text-blue-darken-2">{{ detail.likes || 0 }}</span>
         </v-sheet>
 
-        <v-sheet class="d-flex align-center flex-column" color="transparent"
-        >
+        <v-sheet class="d-flex align-center flex-column" color="transparent">
             <v-btn
                 icon="mdi-star"
                 value="collection"
@@ -30,10 +28,10 @@
                 @click="handleCollect"
             ></v-btn>
             <span class="text-blue-darken-2">
-                {{ detail.collection || 0 }}</span>
+                {{ detail.collection || 0 }}
+            </span>
         </v-sheet>
-        <v-sheet class="d-flex align-center flex-column" color="transparent"
-        >
+        <v-sheet class="d-flex align-center flex-column" color="transparent">
             <v-btn
                 value="comments"
                 icon="mdi-comment"
