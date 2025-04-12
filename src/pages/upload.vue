@@ -71,14 +71,14 @@ const contentPaste = async () => {
                 img.style.height = `200px` // 设置自定义高度
                 img.style.width = 'auto'
                 const src = img.getAttribute('src')
-                img.setAttribute('src', src)
-                imageUrls.push(await uploadImageViaURL(src))
+                const returnSrc = await uploadImageViaURL(src)
+                img.setAttribute('src', returnSrc)
             }
         }
     }, 100)
 }
 
-const parseEditorContent = async function () {
+const parseEditorContent = function () {
     const result = []
     let index = 0
     const nodes = editor.value.childNodes
@@ -127,7 +127,7 @@ const parseEditorContent = async function () {
 
 const sendContent = async function () {
     await nextTick()
-    const contentArray = await parseEditorContent()
+    const contentArray = parseEditorContent()
     const reqInfo = {
         title: title.value,
         coverImage: payloadCoverImage.value,
@@ -269,5 +269,5 @@ const getTaskInfo = async () => {
 
 <route lang="yaml">
 meta:
-layout: system
+  layout: system
 </route>

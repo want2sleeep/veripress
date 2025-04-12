@@ -3,7 +3,7 @@ import Carousel from '@/components/Carousel.vue'
 import TitleAnimation from '@/components/TitleAnimation.vue'
 import CardAnimation from '@/components/CardAnimation.vue'
 import ScrollAnimation from '@/components/ScrollAnimation.vue'
-import NavBar from '@/components/NavBar.vue'
+import AppBar from '@/components/layout/AppBar.vue'
 </script>
 
 <template>
@@ -11,7 +11,9 @@ import NavBar from '@/components/NavBar.vue'
         class="rounded rounded-md bg-animation"
         style="min-height: auto; height: 100%"
     >
-        <NavBar></NavBar>
+        <v-app-bar style="background: linear-gradient(to left, #1565c0, #308ae3fb, #42a5f5);">
+            <AppBar :system="true"/>
+        </v-app-bar>
         <v-main
             class="d-flex flex-column align-center justify-center"
             style="min-height: 300px; padding: 10%"

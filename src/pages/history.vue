@@ -2,7 +2,7 @@
 import {ref, onMounted} from 'vue'
 import {useDate} from 'vuetify'
 import service from '@/utils/request.js'
-import TaskStatus from '@/data/taskInfo.js'
+import Header from '@/data/tableHeader.js'
 
 const adapter = useDate()
 const search = ref('')
@@ -26,36 +26,7 @@ const record = ref({...DEFAULT_RECORD})
 const dialog = ref(false)
 const isEditing = ref(false)
 
-const headers = [
-    {
-        title: '文章标题',
-        key: 'title',
-        align: 'start'
-    },
-    {
-        title: '分区',
-        key: 'partitionName'
-    },
-    {
-        title: '上传时间',
-        key: 'createTime'
-    },
-    {
-        title: '字数',
-        key: 'wordCount', align: 'end'
-    },
-    {
-        title: '检测状态',
-        key: 'status',
-        align: 'end',
-        value: item => TaskStatus[item.status],
-    },
-    {
-        title: '操作',
-        key: 'actions', align: 'end',
-        sortable: false
-    },
-]
+const headers = Header
 
 const add = () => {
     isEditing.value = false
@@ -111,7 +82,6 @@ const getTableData = async () => {
         )
         articles.value = list.data.data.records
         pagination.value.total = list.data.data.total
-        console.log(list.data.data.total)
     } catch (error) {
         console.error('数据获取失败', error)
     } finally {
@@ -160,24 +130,24 @@ onMounted(() => {
                                     icon="mdi-book-multiple"
                                     size="x-small"
                                     start
-                                ></v-icon>
-
-                                Popular articles
+                                />
+                                检测记录
                             </v-toolbar-title>
 
-                            <v-btn
-                                class="me-2"
-                                prepend-icon="mdi-plus"
-                                rounded="lg"
-                                text="Add a Book"
-                                border
-                                @click="add"
-                            ></v-btn>
+                            <RouterLink to="/upload" class="text-black">
+                                <v-btn
+                                    class="me-2"
+                                    prepend-icon="mdi-plus"
+                                    rounded="lg"
+                                    text="上传文章"
+                                    border
+                                />
+                            </RouterLink>
                         </v-toolbar>
 
                         <v-text-field
                             v-model="search"
-                            label="Search"
+                            label="搜索文章"
                             prepend-inner-icon="mdi-magnify"
                             variant="outlined"
                             hide-details
@@ -200,22 +170,26 @@ onMounted(() => {
 
                     <template v-slot:item.actions="{ item }">
                         <div class="d-flex ga-2 justify-end">
-                            <v-btn
-                                color="primary"
-                                size="small"
-                                @click="edit(item.passageId)"
+                            <RouterLink
+                                :to="`/newsShow?passageId=${item.passageId}`"
+                                class="text-black"
                             >
-                                查看
-                            </v-btn>
-
-                            <router-link :to="`/detail/${item.passageId}`">
                                 <v-btn
                                     color="primary"
                                     size="small"
                                 >
+                                    查看
+                                </v-btn>
+                            </RouterLink>
+
+                                <v-btn
+                                    color="primary"
+                                    size="small"
+                                    :to="`/detail/${item.passageId}`"
+                                    :disabled="item.status !== 1"
+                                >
                                     详情
                                 </v-btn>
-                            </router-link>
 
                             <v-btn
                                 color="primary"
