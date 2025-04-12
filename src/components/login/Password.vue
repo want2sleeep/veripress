@@ -29,7 +29,7 @@ const login = async () => {
         loginType: 0,
     })
     if (success) {
-        await router.push('/dashboard')
+        await router.push('/')
     }
     loading.value = false
 }
