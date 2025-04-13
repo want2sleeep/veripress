@@ -82,7 +82,7 @@ const scrollToTop = () => {
         <p class="text-h6 mb-4 text-blue">
             在信息爆炸时代，慧析新闻通过智能技术赋能，帮助用户快速识别虚假新闻，构建清朗的网络空间，提升全民媒介素养，让真相触手可及。
         </p>
-        <RouterLink to="/dashboard">
+        <RouterLink to="/upload">
             <v-btn
                 v-if="!isButtonVisible"
                 class="start-button text-h5"

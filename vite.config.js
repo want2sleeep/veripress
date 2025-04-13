@@ -74,7 +74,6 @@ export default defineConfig({
                 target: 'http://47.108.139.11:9000',
                 changeOrigin: true,
             },
-
         },
     },
     css: {

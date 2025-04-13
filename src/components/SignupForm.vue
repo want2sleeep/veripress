@@ -18,7 +18,6 @@ const getCode = async () => {
     await userStore.sendCode(request)
 }
 
-
 const info = ref({})
 const getInfo = async () => {
     info.value = (await userStore.getInfo()).data
@@ -51,7 +50,7 @@ const getInfo = async () => {
                     <v-text-field
                         v-model="user.email"
                         variant="underlined"
-                        model-value="sdddada"
+                        model-value=""
                         label="邮箱"
                     />
                     <v-text-field
@@ -82,7 +81,7 @@ const getInfo = async () => {
                             text="下一步"
                             @click="getInfo"
                         />
-                        {{info}}
+                        {{ info }}
                     </div>
                     <p class="text-right ">
                         点击“下一步”，即表示您已阅读并同意我们的各项条款，包括
@@ -101,11 +100,8 @@ const getInfo = async () => {
                             />
                         </RouterLink>
                     </div>
-
                 </v-card-text>
-
             </v-card>
-
         </v-col>
     </v-row>
 </template>

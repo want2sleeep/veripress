@@ -142,14 +142,12 @@ const sendContent = async function () {
 }
 
 const getTaskInfo = async () => {
-    console.log('taskKey：', taskKey.value)
     let status = await Article.getTaskInfo(taskKey.value)
-    console.log('获取任务状态：', status)
-    while (status <= 0) {
+    while (status < 0) {
         status = await Article.getTaskInfo(taskKey.value)
         setTimeout(() => {
             console.log('获取任务状态：', status)
-        }, 1000)
+        }, 500)
     }
 }
 </script>
