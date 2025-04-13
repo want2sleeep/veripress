@@ -1,6 +1,16 @@
 import service from '@/utils/request.js'
 
 const Article = {
+    getUserArticles: async function (payload) {
+        try {
+            return await service.get('/passage-service/v1/fake_check_records', {
+                params: payload
+            })
+        } catch (error) {
+            console.error('获取用户文章失败', error)
+        }
+    },
+
     getPartitions: async function () {
         try {
             return await service.get('/passage-service/v1/partition-list')

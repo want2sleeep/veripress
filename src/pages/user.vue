@@ -13,8 +13,8 @@ const userStore = useUserStore();
         <v-card rounded="xl" flat>
             <v-img
                 class="text-white"
-                height="300px"
-                src="https://p3-sign.toutiaoimg.com/tos-cn-i-6w9my0ksvp/a0902aeb21f6459282261ec34762a00e~tplv-tt-origin-web:gif.jpeg?_iz=58558&from=article.pc_detail&lk3s=953192f4&x-expires=1744897579&x-signature=6Mrlnj3kSCALzS2SBRcNYLrboWk%3D"
+                height="500px"
+                src="https://images.pexels.com/photos/31356866/pexels-photo-31356866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 cover
             >
                 <div class="d-flex flex-column h-100">
