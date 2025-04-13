@@ -19,12 +19,21 @@
                 >
                     <v-card color="transparent" elevation="0">
                         <v-card-text
-                            style="font-size: 24px; font-weight: 700"
+                            style="
+                                font-size: 24px;
+                                font-weight: 700;
+                                font-family: SiYuanSongTi;
+                            "
                             >{{ slides[i].title }}</v-card-text
                         >
 
                         <v-card-text>
-                            <div class="text-h7">{{ slides[i].intro }}</div>
+                            <div
+                                class="text-h6"
+                                style="font-family: SiYuanSongTi"
+                            >
+                                {{ slides[i].intro }}
+                            </div>
                         </v-card-text>
                     </v-card>
                     <v-btn value="favorites" variant="text">

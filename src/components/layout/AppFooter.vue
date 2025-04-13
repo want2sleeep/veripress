@@ -1,15 +1,17 @@
 <template>
-    <v-footer class="bg-yellow-lighten-4" height="40" app>
-        <div
-            class="text-caption">
-            慧析新闻 Veripress
-        </div>
+    <v-footer
+        style="background: linear-gradient(270deg, #ffffff, #90caf9)"
+        height="40"
+        app
+    >
+        <div class="text-caption">慧析新闻 Veripress</div>
 
         <div
             class="text-caption text-disabled"
-            style="position: absolute; right: 16px;"
+            style="position: absolute; right: 16px"
         >
-            &copy; 2025-{{ (new Date()).getFullYear() }} <span class="d-none d-sm-inline-block">Veripress, LLC</span>
+            &copy; 2025-{{ new Date().getFullYear() }}
+            <span class="d-none d-sm-inline-block">Veripress, LLC</span>
             —
             <a
                 class="text-decoration-none on-surface"
@@ -23,9 +25,7 @@
     </v-footer>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <style scoped lang="sass">
 .social-link :deep(.v-icon)

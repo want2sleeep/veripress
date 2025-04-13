@@ -1,157 +1,157 @@
 <script setup>
-import service from '@/utils/request.js'
-import {nextTick} from 'vue'
-import Article from '@/api/article.js'
-import {useRouter} from 'vue-router'
-import Partition from '@/data/partition.js'
+import service from "@/utils/request.js";
+import { nextTick } from "vue";
+import Article from "@/api/article.js";
+import { useRouter } from "vue-router";
+import Partition from "@/data/partition.js";
 
-const editor = ref(null)
-const textContent = ref('')
-const imageUrls = []
-const taskKey = ref('')
-const title = ref('')
-const coverImage = ref(null)
-const payloadCoverImage = ref('')
-const partition = ref(1)
-const router = useRouter()
+const editor = ref(null);
+const textContent = ref("");
+const imageUrls = [];
+const taskKey = ref("");
+const title = ref("");
+const coverImage = ref(null);
+const payloadCoverImage = ref("");
+const partition = ref(1);
+const router = useRouter();
 
 const handlePaste = async (event) => {
-    event.preventDefault()
-    const clipboardData = event.clipboardData || window.clipboardData
+    event.preventDefault();
+    const clipboardData = event.clipboardData || window.clipboardData;
     let pastedData =
-        clipboardData.getData('text/html') ||
-        clipboardData.getData('text/plain')
+        clipboardData.getData("text/html") ||
+        clipboardData.getData("text/plain");
 
     // 如果包含HTML内容，则解析其中的 <img> 标签
-    if (pastedData && pastedData.indexOf('<img') !== -1) {
-        const parser = new DOMParser()
-        const doc = parser.parseFromString(pastedData, 'text/html')
-        const imgEls = doc.querySelectorAll('img')
+    if (pastedData && pastedData.indexOf("<img") !== -1) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(pastedData, "text/html");
+        const imgEls = doc.querySelectorAll("img");
         for (const img of imgEls) {
-            const src = img.getAttribute('src')
-            imageUrls.value.push(src)
+            const src = img.getAttribute("src");
+            imageUrls.value.push(src);
             try {
-                const response = await fetch(src)
-                const blob = await response.blob()
+                const response = await fetch(src);
+                const blob = await response.blob();
                 // 创建本地 URL，该 URL 仅在当前会话有效
-                const localUrl = URL.createObjectURL(blob)
-                img.setAttribute('src', localUrl)
+                const localUrl = URL.createObjectURL(blob);
+                img.setAttribute("src", localUrl);
             } catch (error) {
-                console.error('图片加载失败：', error)
+                console.error("图片加载失败：", error);
             }
         }
     }
-}
+};
 
 const uploadImageViaURL = async (url) => {
-    const data = await service.post('/passage-service/v1/image/url', {
+    const data = await service.post("/passage-service/v1/image/url", {
         url: url,
-    })
-    return data.data.data
-}
+    });
+    return data.data.data;
+};
 
 const uploadImageViaFile = async () => {
     if (!coverImage.value) {
-        console.error('未选择文件')
-        return
+        console.error("未选择文件");
+        return;
     }
-    const formData = new FormData()
-    formData.append('imageFile', coverImage.value)
-    const {data} = await Article.uploadImageViaFile(formData)
+    const formData = new FormData();
+    formData.append("imageFile", coverImage.value);
+    const { data } = await Article.uploadImageViaFile(formData);
     if (data.success) {
-        payloadCoverImage.value = data.data
+        payloadCoverImage.value = data.data;
     }
-}
+};
 
 const contentPaste = async () => {
     setTimeout(async () => {
         if (editor.value) {
-            const images = editor.value.querySelectorAll('img') // 获取所有 img
+            const images = editor.value.querySelectorAll("img"); // 获取所有 img
             for (const img of images) {
-                img.style.height = `200px` // 设置自定义高度
-                img.style.width = 'auto'
-                const src = img.getAttribute('src')
-                const returnSrc = await uploadImageViaURL(src)
-                img.setAttribute('src', returnSrc)
+                img.style.height = `200px`; // 设置自定义高度
+                img.style.width = "auto";
+                const src = img.getAttribute("src");
+                const returnSrc = await uploadImageViaURL(src);
+                img.setAttribute("src", returnSrc);
             }
         }
-    }, 100)
-}
+    }, 100);
+};
 
 const parseEditorContent = function () {
-    const result = []
-    let index = 0
-    const nodes = editor.value.childNodes
+    const result = [];
+    let index = 0;
+    const nodes = editor.value.childNodes;
 
     for (const node of nodes) {
         if (node.nodeType === Node.ELEMENT_NODE) {
             const img =
-                node.tagName === 'IMG' ? node : node.querySelector('img')
+                node.tagName === "IMG" ? node : node.querySelector("img");
             if (img) {
                 result.push({
                     type: 1,
-                    value: img.getAttribute('src'),
+                    value: img.getAttribute("src"),
                     order: index++,
-                })
-                const text = node.textContent.replace(/\s+/g, ' ').trim()
+                });
+                const text = node.textContent.replace(/\s+/g, " ").trim();
                 if (text) {
                     result.push({
                         type: 0,
                         value: text,
                         order: index++,
-                    })
+                    });
                 }
             } else {
-                const text = node.textContent.replace(/\s+/g, ' ').trim()
+                const text = node.textContent.replace(/\s+/g, " ").trim();
                 if (text) {
                     result.push({
                         type: 0,
                         value: text,
                         order: index++,
-                    })
+                    });
                 }
             }
         } else if (node.nodeType === Node.TEXT_NODE) {
-            const text = node.textContent.replace(/\s+/g, ' ').trim()
+            const text = node.textContent.replace(/\s+/g, " ").trim();
             if (text) {
                 result.push({
                     type: 0,
                     value: text,
                     order: index++,
-                })
+                });
             }
         }
     }
-    return result
-}
+    return result;
+};
 
 const sendContent = async function () {
-    await nextTick()
-    const contentArray = parseEditorContent()
+    await nextTick();
+    const contentArray = parseEditorContent();
     const reqInfo = {
         title: title.value,
         coverImage: payloadCoverImage.value,
         content: contentArray,
         partition: partition.value,
         status: 1,
-    }
-    const data = await Article.createArticle(reqInfo)
-    taskKey.value = data.data.data.taskKey
-    await getTaskInfo()
-    router.push('/history')
-}
+    };
+    const data = await Article.createArticle(reqInfo);
+    taskKey.value = data.data.data.taskKey;
+    await getTaskInfo();
+    router.push("/history");
+};
 
 const getTaskInfo = async () => {
-    console.log('taskKey：', taskKey.value)
-    let status = await Article.getTaskInfo(taskKey.value)
-    console.log('获取任务状态：', status)
+    console.log("taskKey：", taskKey.value);
+    let status = await Article.getTaskInfo(taskKey.value);
+    console.log("获取任务状态：", status);
     while (status <= 0) {
-        status = await Article.getTaskInfo(taskKey.value)
+        status = await Article.getTaskInfo(taskKey.value);
         setTimeout(() => {
-            console.log('获取任务状态：', status)
-        }, 1000)
+            console.log("获取任务状态：", status);
+        }, 1000);
     }
-}
+};
 </script>
 
 <template>
@@ -164,7 +164,9 @@ const getTaskInfo = async () => {
             color="blue-darken-2"
             rounded="xl"
         >
-            <v-card-title class="text-center font-weight-black text-h3 text-yellow-lighten-3">
+            <v-card-title
+                class="text-center font-weight-black text-h3 text-yellow-lighten-3"
+            >
                 上传文章
             </v-card-title>
 
@@ -178,10 +180,7 @@ const getTaskInfo = async () => {
                 <!--                    ref="editor"-->
                 <!--                    @paste="a"-->
                 <!--                />-->
-                <v-text-field
-                    v-model="title"
-
-                />
+                <v-text-field v-model="title" />
             </v-card-item>
 
             <v-card-item>
@@ -224,7 +223,7 @@ const getTaskInfo = async () => {
             </v-card-item>
 
             <v-card-actions>
-                <v-spacer/>
+                <v-spacer />
                 <v-btn
                     rounded="xl"
                     class="text-blue-darken-2 text-h5 font-weight-bold"
@@ -269,5 +268,5 @@ const getTaskInfo = async () => {
 
 <route lang="yaml">
 meta:
-  layout: system
+    layout: system
 </route>

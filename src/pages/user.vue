@@ -1,15 +1,16 @@
 <script setup>
-import useUserStore from '@/stores/user.js'
+import useUserStore from "@/stores/user.js";
 
-const userStore = useUserStore()
+const userStore = useUserStore();
 </script>
 
 <template>
-    <v-container class="pa-2">
-        <v-card
-            class="bg-white"
-            flat
-        >
+    <v-container
+        class="pa-2"
+        style="margin: auto; margin-top: 40px"
+        max-width="60vw"
+    >
+        <v-card rounded="xl" flat>
             <v-img
                 class="text-white"
                 height="300px"
@@ -20,10 +21,7 @@ const userStore = useUserStore()
                     <v-spacer></v-spacer>
 
                     <div class="d-flex justify-center">
-                        <v-avatar
-                            size="100"
-                            :image="userStore.user.image"
-                        />
+                        <v-avatar size="100" :image="userStore.user.image" />
                     </div>
 
                     <v-card-title class="pb-6 text-center">
@@ -32,8 +30,10 @@ const userStore = useUserStore()
                 </div>
             </v-img>
 
-            <v-list lines="two">
-
+            <v-list
+                lines="two"
+                class="bg-yellow-lighten-4 text-blue-darken-4 text-h6"
+            >
                 <v-list-item>
                     <template v-slot:prepend>
                         <v-avatar>
@@ -41,7 +41,9 @@ const userStore = useUserStore()
                         </v-avatar>
                     </template>
 
-                    <v-list-item-title>{{ userStore.user.name }}</v-list-item-title>
+                    <v-list-item-title>{{
+                        userStore.user.name
+                    }}</v-list-item-title>
                     <v-list-item-subtitle>用户名</v-list-item-subtitle>
                 </v-list-item>
 
@@ -54,7 +56,9 @@ const userStore = useUserStore()
                         </v-avatar>
                     </template>
 
-                    <v-list-item-title>{{ userStore.user.email }}</v-list-item-title>
+                    <v-list-item-title>{{
+                        userStore.user.email
+                    }}</v-list-item-title>
                     <v-list-item-subtitle>邮箱</v-list-item-subtitle>
                 </v-list-item>
 
@@ -76,11 +80,16 @@ const userStore = useUserStore()
                 <v-list-item>
                     <template v-slot:prepend>
                         <v-avatar>
-                            <v-icon color="indigo" icon="mdi-information"></v-icon>
+                            <v-icon
+                                color="indigo"
+                                icon="mdi-information"
+                            ></v-icon>
                         </v-avatar>
                     </template>
 
-                    <v-list-item-title>{{userStore.user.signature}}</v-list-item-title>
+                    <v-list-item-title>{{
+                        userStore.user.signature
+                    }}</v-list-item-title>
                     <v-list-item-subtitle>个性签名</v-list-item-subtitle>
                 </v-list-item>
 
@@ -88,27 +97,23 @@ const userStore = useUserStore()
 
                 <v-list-item>
                     <v-btn
-                        color="blue"
+                        class="text-h7 text-blue-darken-4"
+                        color="blue-lighten-4"
                         block
                         text="修改个人信息"
+                        rounded
                     />
                 </v-list-item>
                 <v-list-item>
-                    <v-btn
-                        color="red"
-                        block
-                        text="退出登录"
-                    />
+                    <v-btn color="blue" rounded block text="退出登录" />
                 </v-list-item>
             </v-list>
         </v-card>
     </v-container>
 </template>
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <route lang="yaml">
 meta:
-  layout: system
+    layout: system
 </route>

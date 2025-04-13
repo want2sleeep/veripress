@@ -41,7 +41,10 @@
                         class="cursor-pointer"
                         @click="goToNewsDetail(item.passageId)"
                     >
-                        <div class="text-subtitle-2" style="color: #fffde7">
+                        <div
+                            class="text-subtitle-2"
+                            style="color: #fffde7; font-family: SiYuanSongTi"
+                        >
                             <strong>{{ item.title }}</strong>
                         </div>
                     </v-alert>

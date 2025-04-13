@@ -1,5 +1,5 @@
 <script setup>
-import SideBarItems from '@/data/sideBarItem.js'
+import SideBarItems from "@/data/sideBarItem.js";
 </script>
 
 <template>
@@ -24,6 +24,4 @@ import SideBarItems from '@/data/sideBarItem.js'
     </v-list>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

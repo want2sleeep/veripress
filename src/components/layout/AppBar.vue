@@ -1,22 +1,22 @@
 <script setup>
-import useUserStore from '@/stores/user.js'
-import Home from '@/pages/home.vue'
-import useTabStore from '@/stores/tab.js'
+import useUserStore from "@/stores/user.js";
+import Home from "@/pages/home.vue";
+import useTabStore from "@/stores/tab.js";
 
 defineProps({
     system: Boolean,
-})
+});
 
-const userStore = useUserStore()
-const menu = ref(false)
-const tabStore = useTabStore()
+const userStore = useUserStore();
+const menu = ref(false);
+const tabStore = useTabStore();
 
 const logout = async () => {
-    const res = await userStore.logout()
+    const res = await userStore.logout();
     if (res.success) {
-        window.location.reload()
+        window.location.reload();
     }
-}
+};
 </script>
 
 <template>
@@ -25,12 +25,12 @@ const logout = async () => {
         class="d-flex align-center text-white"
         style="text-decoration: none"
     >
-        <div class="ml-8">
+        <div class="ml-8 font-weight-bold text-h6">
             Veripress 慧析新闻虚假检测平台
         </div>
     </RouterLink>
 
-    <v-spacer/>
+    <v-spacer />
 
     <v-tabs
         class="text-yellow-lighten-3"
@@ -47,21 +47,18 @@ const logout = async () => {
         />
     </v-tabs>
 
-    <v-spacer/>
+    <v-spacer />
 
     <div class="mr-8">
         <template v-if="userStore.isLogin">
-            <v-menu
-                v-model="menu"
-                :close-on-content-click="false"
-            >
+            <v-menu v-model="menu" :close-on-content-click="false">
                 <template v-slot:activator="{ props }">
                     <v-card
                         class="d-flex align-center pa-2"
                         variant="tonal"
                         flat
                     >
-                        <div class="mr-2">
+                        <div class="mr-2 text-white font-text6">
                             {{ userStore.user.name }}
                         </div>
                         <v-avatar
@@ -70,10 +67,10 @@ const logout = async () => {
                         />
                     </v-card>
                 </template>
-                <v-card>
+                <v-card class="bg-yellow-lighten-3" rounded="xl">
                     <v-card-text>
-                        <div class="mx-auto text-center">
-                            <v-avatar :image="userStore.user.image"/>
+                        <div class="mx-auto text-center text-blue-darken-3">
+                            <v-avatar :image="userStore.user.image" />
                             <p class="text-h6 mt-1">
                                 {{ userStore.user.name }}
                             </p>
@@ -84,6 +81,7 @@ const logout = async () => {
                             <RouterLink style="color: black" to="/user">
                                 <v-btn
                                     variant="text"
+                                    class="text-blue-darken-3"
                                     text="个人中心"
                                 />
                             </RouterLink>
@@ -91,6 +89,7 @@ const logout = async () => {
                             <v-btn
                                 variant="text"
                                 text="退出登录"
+                                class="text-blue text-h6"
                                 @click="logout"
                             />
                         </div>
@@ -109,6 +108,4 @@ const logout = async () => {
     </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

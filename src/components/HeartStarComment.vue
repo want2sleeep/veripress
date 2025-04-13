@@ -40,89 +40,93 @@
                 color="blue-lighten-2"
                 class="text-yellow-lighten-2"
             ></v-btn>
-            <span class="text-blue-darken-2">{{ detail.commentCounts || 0 }}</span>
+            <span class="text-blue-darken-2">{{
+                detail.commentCounts || 0
+            }}</span>
         </v-sheet>
     </v-sheet>
 </template>
 <script setup>
-import {defineProps} from 'vue'
-import {collectArticle, likeArticle} from '@/stores/newsService'
-import {ref} from 'vue'
+import { defineProps } from "vue";
+import { collectArticle, likeArticle } from "@/stores/newsService";
+import { ref } from "vue";
+import Article from "@/api/article";
 
-let detail = ref({})
-let isLiked = ref(false)
-let likeDetail = ref({})
-let isCollect = ref(false)
-let collectDetail = ref({})
+let detail = ref({});
+let isLiked = ref(false);
+let likeDetail = ref({});
+let isCollect = ref(false);
+let collectDetail = ref({});
 
 const props = defineProps({
-    newsDetail: Object,
-})
+    article: Object,
+});
 watch(
-    () => props.newsDetail,
+    () => props.article,
     (newValue) => {
         if (newValue?.data) {
-            detail.value = newValue.data
-            let storageKeyLikes = `liked-${detail.value.passageId}`
-            let storageKeyCollection = `collected-${detail.value.passageId}`
+            detail.value = newValue.data;
+            //console.log(detail.value);
+            let storageKeyLikes = `liked-${detail.value.passageId}`;
+            let storageKeyCollection = `collected-${detail.value.passageId}`;
 
             // 读取 localStorage，确保是 true/false
-            let storedValueLikes = localStorage.getItem(storageKeyLikes)
+            let storedValueLikes = localStorage.getItem(storageKeyLikes);
             let storedValueCollection =
-                localStorage.getItem(storageKeyCollection)
+                localStorage.getItem(storageKeyCollection);
             isLiked.value = storedValueLikes
                 ? JSON.parse(storedValueLikes)
-                : false
+                : false;
             isCollect.value = storedValueCollection
                 ? JSON.parse(storedValueCollection)
-                : false
+                : false;
         }
     },
     {
         immediate: true,
-    },
-)
+    }
+);
 
 /* 处理点赞 */
 const handleLike = async () => {
     if (!detail.value.passageId || !detail.value.authorId) {
-        console.error('passageId 或 authorId 为空，无法点赞')
-        return
+        console.error("passageId 或 authorId 为空，无法点赞");
+        return;
     }
-    let newTypeLikes = isLiked.value ? 0 : 1 // 切换点赞状态
+    let newTypeLikes = isLiked.value ? 0 : 1; // 切换点赞状态
     likeDetail.value = await likeArticle(
         detail.value.passageId,
         detail.value.authorId,
-        newTypeLikes,
-    )
+        newTypeLikes
+    );
     //console.log(likeDetail.value);
-    isLiked.value = !isLiked.value
+    isLiked.value = !isLiked.value;
     if (!likeDetail.value) {
-        alert('您已点赞过该文章')
+        alert("您已点赞过该文章");
     } else {
-        detail.value.likes += isLiked.value ? 1 : -1
-        if (detail.value.likes < 0) detail.value.likes = 0
+        detail.value.likes += isLiked.value ? 1 : -1;
+        if (detail.value.likes < 0) detail.value.likes = 0;
     }
-}
+};
 
 /* 处理收藏 */
 const handleCollect = async () => {
     if (!detail.value.passageId || !detail.value.authorId) {
-        console.error('passageId 或 authorId 为空，无法收藏')
-        return
+        console.error("passageId 或 authorId 为空，无法收藏");
+        return;
     }
-    let newTypeCollection = isCollect.value ? 0 : 1
+    let newTypeCollection = isCollect.value ? 0 : 1;
     collectDetail.value = await collectArticle(
         detail.value.passageId,
         detail.value.authorId,
-        newTypeCollection,
-    )
-    isCollect.value = !isCollect.value
+        newTypeCollection
+    );
+    isCollect.value = !isCollect.value;
     if (!collectDetail.value) {
-        alert('您已收藏过该文章')
+        alert("您已收藏过该文章");
     } else {
-        detail.value.collection += isCollect.value ? 1 : -1
-        if (detail.value.collection < 0) detail.value.collection = 0
+        detail.value.collection += isCollect.value ? 1 : -1;
+        if (detail.value.collection < 0) detail.value.collection = 0;
     }
-}
+};
 </script>

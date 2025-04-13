@@ -11,3 +11,9 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'ChuangKeJinGang';
+    src: url(./ChuangKeTieJinGangTi-2.otf);
+    font-weight: normal;
+    font-style: normal;
+}

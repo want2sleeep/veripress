@@ -36,8 +36,9 @@
                         style="
                             font-size: 16px;
                             font-weight: 600;
-                            height: 10px;
+                            max-height: 10px;
                             color: #fff176;
+                            font-family: SiYuanSongTi;
                         "
                         class="cursor-pointer"
                         @click="goToNewsDetail(item.passageId)"
@@ -50,7 +51,8 @@
                             font-size: 16px;
                             font-weight: 600;
                             color: white;
-                            height: 10px;
+                            max-height: 10px;
+                            font-family: SiYuanSongTi;
                         "
                         class="cursor-pointer"
                         @click="goToNewsDetail(item.passageId)"

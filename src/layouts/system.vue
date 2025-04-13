@@ -1,8 +1,7 @@
 <script setup>
-import AppFooter from '@/components/layout/AppFooter.vue'
-import AppBar from '@/components/layout/AppBar.vue'
-import SideBar from '@/components/layout/SideBar.vue'
-
+import AppFooter from "@/components/layout/AppFooter.vue";
+import AppBar from "@/components/layout/AppBar.vue";
+import SideBar from "@/components/layout/SideBar.vue";
 </script>
 
 <template>
@@ -10,9 +9,12 @@ import SideBar from '@/components/layout/SideBar.vue'
         <v-app-bar
             class="border-b-sm bg-blue"
             name="app-bar"
+            style="
+                background: linear-gradient(90deg, #1976d2, #42a5f5, #90caf9);
+            "
             flat
         >
-            <AppBar :system="false"/>
+            <AppBar :system="false" />
         </v-app-bar>
 
         <v-navigation-drawer
@@ -27,17 +29,15 @@ import SideBar from '@/components/layout/SideBar.vue'
                 );
             "
         >
-            <SideBar/>
+            <SideBar />
         </v-navigation-drawer>
 
         <v-main class="bg-blue-lighten-4">
-            <RouterView/>
+            <RouterView />
         </v-main>
 
-        <AppFooter/>
+        <AppFooter />
     </v-layout>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,28 +1,32 @@
 <script setup>
-import {useRoute} from 'vue-router'
-import {ref} from 'vue'
-import Article from '@/api/article.js'
-import FackRate from '@/components/FackRate.vue'
+import { useRoute } from "vue-router";
+import { ref } from "vue";
+import Article from "@/api/article.js";
+import FackRate from "@/components/FackRate.vue";
 
-const route = useRoute()
-const id = route.params.id
-const articleTitle = ref('')
-const articleContent = ref([])
-const fakeRate = ref('')
-const fakeReason = ref('')
+const route = useRoute();
+const id = route.params.id;
+const articleTitle = ref("");
+const articleContent = ref([]);
+const fakeRate = ref("");
+const fakeReason = ref("");
 
 const getData = async () => {
-    const articleData = await Article.getArticle(id)
-    articleTitle.value = computed(() => articleData.data.data.title)
-    articleContent.value = computed(() => articleData.data.data.content)
-    fakeRate.value = computed(() => articleData.data.data.fakeRate)
-    const fakeReasonData = await Article.getArticleFakeRate(id)
-    fakeReason.value = computed(() => fakeReasonData.data.data.reason.split(' ').filter((item, index) => index % 2 === 0 && index > 1))
-}
+    const articleData = await Article.getArticle(id);
+    articleTitle.value = computed(() => articleData.data.data.title);
+    articleContent.value = computed(() => articleData.data.data.content);
+    fakeRate.value = computed(() => articleData.data.data.fakeRate);
+    const fakeReasonData = await Article.getArticleFakeRate(id);
+    fakeReason.value = computed(() =>
+        fakeReasonData.data.data.reason
+            .split(" ")
+            .filter((item, index) => index % 2 === 0 && index > 1)
+    );
+};
 
 onMounted(async () => {
-    await getData()
-})
+    await getData();
+});
 </script>
 
 <template>
@@ -41,7 +45,9 @@ onMounted(async () => {
                 原始文章
             </v-card-title>
 
-            <v-card-text class="text-h5 text-center text-yellow-lighten-4 font-weight-bold">
+            <v-card-text
+                class="text-h5 text-center text-yellow-lighten-4 font-weight-bold"
+            >
                 {{ articleTitle.value }}
             </v-card-text>
 
@@ -49,15 +55,18 @@ onMounted(async () => {
                 <div
                     v-for="(item, index) in articleContent.value"
                     :key="index"
+                    class="text-h6"
+                    style="font-family: SiYuansONGtI"
                 >
                     <div v-if="item.type === 1">
-                        <v-img
-                            :src="item.value"
-                            max-height="400px"
-                        />
+                        <v-img :src="item.value" max-height="400px" />
                     </div>
                     <div v-else class="ma-4">
-                        {{ item.value.startsWith('YELLOW:') ? item.value.slice(7) : item.value }}
+                        {{
+                            item.value.startsWith("YELLOW:")
+                                ? item.value.slice(7)
+                                : item.value
+                        }}
                     </div>
                 </div>
             </v-card-text>
@@ -77,10 +86,7 @@ onMounted(async () => {
             </v-card-title>
 
             <v-card-item class="text-center">
-                <FackRate
-                    :fakeRate="fakeRate.value"
-                    :passageId="id"
-                />
+                <FackRate :fakeRate="fakeRate.value" :passageId="id" />
             </v-card-item>
 
             <v-card-item>
@@ -92,7 +98,9 @@ onMounted(async () => {
                         size="large"
                     >
                         <template v-slot:icon>
-                            <span class="text-yellow-lighten-2">{{ index + 1 }}</span>
+                            <span class="text-yellow-lighten-2">{{
+                                index + 1
+                            }}</span>
                         </template>
                         <v-card
                             variant="flat"
@@ -116,11 +124,9 @@ onMounted(async () => {
     </v-container>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <route lang="yaml">
 meta:
-  layout: system
+    layout: system
 </route>
